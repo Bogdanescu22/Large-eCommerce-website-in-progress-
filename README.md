@@ -36,7 +36,7 @@ git clone https://github.com/USERNAME/REPO-NAME.git
 
 ### 2. Install dependencies
 ```sh
-cd front-end
+cd fornt-end
 npm install
 
 cd ../back-end

@@ -18,6 +18,7 @@ Attention! The site is still under construction (I am writing this on March 14, 
 - Integration with payment methods  
 - User dashboard (can I see order history, account details, added reviews)
 - Users can add product reviews, which will first reach the admin and be reviewed by him.
+- Search Bar for users. I created a search bar with postgresql full text search that also involves fuzzy search.
 - More features, you will see if you use the site.
   
 ## Technologies Used

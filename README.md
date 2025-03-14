@@ -1,6 +1,6 @@
 # My E-Commerce Site
 
-Attention! The site is still under construction (I am writing this on March 14, 2025). It does not have all the features presented yet. For example, many category pages have not yet been created or are empty. Many changes will be added from now on. My role in this project was to create a website from scratch by myself, which would include all the possible functionalities for a large-scale e-commerce website. There is still much to add.
+Attention! The site is still under construction (I am writing this on March 14, 2025). It does not have all the features presented yet. For example, many category pages have not yet been created or are empty. Many changes will be added from now on. My role in this project was to create a website from scratch by myself, which would include all the possible functionalities for a large-scale e-commerce website. There is still much to add. 
 
 ## Screenshot
 

@@ -410,7 +410,7 @@ app.get('/cart/data/:user_id', async (req, res) => {
     console.log("Rezultatele interogării:", result.rows); // Vezi ce returnează exact
     if (result.rows.length === 0) {
       console.log("⚠Nu sunt produse în coș pentru acest user.");
-      return res.status(400).json({message:"Nu sunt produse in cos pentru acest user!"}); // Returnează un array gol în loc de eroare
+      return res.status(400).json({message:"Nu sunt produse in cos pentru acest user!"});
     }
 
     res.status(200).json(result.rows);
@@ -973,7 +973,7 @@ app.post('/admin/reset-password/:token', async (req, res) => {
     const hashedPassword = await bcrypt.hash(newPassword, 10);
 
     // Actualizăm admin-ul cu noile informații (folosim parametri anonimi)
-    await updateAdmin(admin.id, null, null); // Resetăm token-ul și data de expirare, deoarece s-au schimbat
+    await updateAdmin(admin.id, null, null); 
 
     const query = 'UPDATE admins SET password=$1, resetPasswordToken=null, resetPasswordExpires=null WHERE id=$2 RETURNING *;';
     const values = [hashedPassword, admin.id];

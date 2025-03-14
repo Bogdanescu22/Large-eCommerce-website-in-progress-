@@ -78,7 +78,7 @@ nodemon server.js
 
 ## Author
 
-Created by **Pantelimon Bogdan Mihai** – [GitHub](https://github.com/(Bogdanescu22))
+Created by **Pantelimon Bogdan Mihai** – [GitHub](https://github.com/Bogdanescu22)
 
 ## License
 

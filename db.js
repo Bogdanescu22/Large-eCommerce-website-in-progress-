@@ -5,11 +5,11 @@ dotenv.config();
 
 // Creăm o instanță a clientului
 const client = new pg.Client({
-  user: process.env.DB_USER,       // trebuie să fie un string
-  host: process.env.DB_HOST,       // trebuie să fie un string
-  database: process.env.DB_DATABASE, // trebuie să fie un string
-  password: process.env.DB_PASSWORD, // trebuie să fie un string
-  port: Number(process.env.DB_PORT), // trebuie convertit la număr
+  user: process.env.DB_USER,       
+  host: process.env.DB_HOST,       
+  database: process.env.DB_DATABASE, 
+  password: process.env.DB_PASSWORD, 
+  port: Number(process.env.DB_PORT),
 });
 
 client.connect()  

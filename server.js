@@ -400,22 +400,22 @@ app.post('/cart', async (req, res) => {
 
 app.get('/cart/data/:user_id', async (req, res) => {
   const user_id = req.params.user_id;
-  console.log("📌 Cerere primită pentru user_id:", user_id); 
+  console.log("Cerere primită pentru user_id:", user_id); 
 
   try {
     const query = 'SELECT * FROM cart WHERE user_id=$1;';
-    console.log("📌 Executăm interogarea:", query);
+    console.log("Executăm interogarea:", query);
     const result = await client.query(query, [user_id]);
 
-    console.log("📌 Rezultatele interogării:", result.rows); // Vezi ce returnează exact
+    console.log("Rezultatele interogării:", result.rows); // Vezi ce returnează exact
     if (result.rows.length === 0) {
-      console.log("⚠️ Nu sunt produse în coș pentru acest user.");
+      console.log("⚠Nu sunt produse în coș pentru acest user.");
       return res.status(400).json({message:"Nu sunt produse in cos pentru acest user!"}); // Returnează un array gol în loc de eroare
     }
 
     res.status(200).json(result.rows);
   } catch (err) {
-    console.error("❌ Eroare la obținerea produselor din coș:", err);
+    console.error("Eroare la obținerea produselor din coș:", err);
     res.status(500).json({ error: "Eroare la obținerea produselor din coș." });
   }
 });
@@ -483,7 +483,7 @@ app.patch('/cart/quantity/update/:product_id/:user_id', async (req, res) => {
   const { quantity: newQuantity, product_price } = req.body; // Preluăm noua cantitate și (opțional) prețul
 
   try {
-    console.log("📥 Primit de la frontend:", { user_id, product_id, newQuantity, product_price });
+    console.log("Primit de la frontend:", { user_id, product_id, newQuantity, product_price });
 
     let finalProductPrice = product_price;
 
@@ -512,12 +512,12 @@ app.patch('/cart/quantity/update/:product_id/:user_id', async (req, res) => {
       return res.status(404).json({ message: "Produsul nu a fost găsit în coș." });
     }
 
-    console.log("📤 Rezultat query:", result.rows[0]);
+    console.log("Rezultat query:", result.rows[0]);
 
     res.status(200).json({ message: "Cantitatea și prețul total au fost actualizate", cart: result.rows[0] });
 
   } catch (err) {
-    console.error("❌ Eroare la actualizarea cantității și a prețului:", err);
+    console.error("Eroare la actualizarea cantității și a prețului:", err);
     res.status(500).json({ message: "Eroare la modificarea cantității produsului din coș.", error: err });
   }
 });
@@ -909,7 +909,7 @@ const transporter = nodemailer.createTransport({
 
 // Endpoint pentru solicitarea resetării parolei
 const updateAdmin = async (adminId, resetPasswordToken, resetPasswordExpires) => {
-  console.log('Updating admin with ID:', adminId); // 🔍 Debugging
+  console.log('Updating admin with ID:', adminId); 
 
   const query = 'UPDATE admins SET resetPasswordToken=$1, resetPasswordExpires=$2 WHERE id=$3 RETURNING *;';
   const values = [resetPasswordToken, resetPasswordExpires, adminId];

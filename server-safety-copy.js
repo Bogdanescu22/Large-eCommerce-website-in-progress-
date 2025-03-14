@@ -10,7 +10,7 @@ import { v4 as uuidv4 } from "uuid";
 import {getUserByEmail,addUser,getUserById} from "./models/userModel.js";
 import {getAllProducts,getProductById,addProduct,updateProduct,deleteProduct} from "./models/productModel.js";
 import {addOrder,getOrdersByUserId,getOrderDetails} from "./models/ordersModel.js";
-import { getAdminByEmail, addAdmin, updateAdmin, getAdminByResetToken} from "./models/adminModel.js";
+import { getAdminByEmail, addAdmin, getAdminByResetToken} from "./models/adminModel.js";
 import crypto from "crypto";
 import nodemailer from "nodemailer";
 import bcrypt from "bcryptjs";
@@ -25,7 +25,7 @@ import { fileURLToPath } from "url";
 dotenv.config();  // Încărcăm variabilele de mediu din .env
 
 const app = express();
-const PORT = 5000;
+const PORT = process.env.PORT
 
 app.use(bodyParser.json());
 app.use(cookieParser()); // Adăugăm cookie-parser
@@ -43,8 +43,8 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 passport.use(
   new GoogleStrategy(
     {
-      clientID: "137116061424-gd6msgnj9lod2famqpfchrim31jkncbo.apps.googleusercontent.com",
-      clientSecret: "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",
+      clientID: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       callbackURL: "http://localhost:5000/auth/google/callback",
     },
     async (accessToken, refreshToken, profile, done) => {
@@ -75,8 +75,8 @@ passport.use(
 passport.use(
   new FacebookStrategy(
     {
-      clientID: "970411857749968",
-      clientSecret: "59d84c5086035d3dc5717c01097782fd",
+      clientID: process.env.FACEBOOK_CLIENT_ID,
+      clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
       callbackURL: "http://localhost:5000/auth/facebook/callback",
       profileFields: ["id", "displayName", "email"],
     },
@@ -108,7 +108,7 @@ passport.use(
 
 app.use(
   session({
-    secret: "c7e4a8d9f1b62c3d8f6a4e5b7d2c9f1e0a7b4d6e8c3f1a5d9e2b7c4a6f8d3e1",
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
   })
@@ -181,6 +181,51 @@ app.get("/products", async (req, res) => {
   }
 });
 
+app.get('/search-result/:text', async(req,res) =>{
+
+const text = req.params.text;
+
+try{
+const query= "SELECT * FROM products WHERE to_tsvector('romanian', unaccent(name || ' ' || product_details || ' ' || color || ' ' || brand)) @@ plainto_tsquery('romanian', unaccent($1)) OR unaccent(name) % unaccent($1) OR unaccent(product_details) % unaccent($1) OR unaccent(color) % unaccent($1) OR brand  %  $1;";
+
+
+
+const result = await client.query(query,[text]);
+res.status(200).json(result.rows);
+console.log(result.rows);
+}
+catch (err) {
+console.error(err);
+res.status(500).json({err:"Eroare la obtinerea datelor produsului filtrat", details:err.message})
+}
+});
+
+
+
+app.post(`/reviews_approval/:product_id/:user_id`, async(req,res) =>{
+const product_id = req.params.product_id;
+const user_id = req.params.user_id;
+const {review_stars, description} = req.body
+
+try{
+
+const query = `INSERT INTO reviews_approval (user_id, product_id, review_stars, description) VALUES ($1, $2, $3, $4) RETURNING *`;
+const values =[user_id, product_id, review_stars, description];
+
+const result= await client.query(query,values);
+
+res.status(200).json(result.rows);
+
+}
+catch (err){
+console.error(err);
+res.status(500).json({message:"Eroare la inserarea reviews in reviews_aproval", details: err.message})
+}
+})
+
+
+
+
 
 
 
@@ -202,6 +247,23 @@ res.status(500).json({err: "Eroare la obtinerea datelor produsului", details:err
 }
 });
 
+
+app.get('/products/:product_id', async(req, res) => {
+  const product_id = req.params.product_id;
+  
+  try{
+  
+  const query='SELECT * FROM products WHERE id=$1';
+  
+  const result= await client.query(query,[product_id]);
+  
+  res.status(200).json(result.rows[0])
+  
+  } catch (err){
+  console.error(err);
+  res.status(500).json({err: "Eroare la obtinerea datelor produsului", details:err.message})
+  }
+  });
 
 
 
@@ -338,22 +400,22 @@ app.post('/cart', async (req, res) => {
 
 app.get('/cart/data/:user_id', async (req, res) => {
   const user_id = req.params.user_id;
-  console.log("📌 Cerere primită pentru user_id:", user_id); 
+  console.log("Cerere primită pentru user_id:", user_id); 
 
   try {
     const query = 'SELECT * FROM cart WHERE user_id=$1;';
-    console.log("📌 Executăm interogarea:", query);
+    console.log("Executăm interogarea:", query);
     const result = await client.query(query, [user_id]);
 
-    console.log("📌 Rezultatele interogării:", result.rows); // Vezi ce returnează exact
+    console.log("Rezultatele interogării:", result.rows); // Vezi ce returnează exact
     if (result.rows.length === 0) {
-      console.log("⚠️ Nu sunt produse în coș pentru acest user.");
+      console.log("⚠Nu sunt produse în coș pentru acest user.");
       return res.status(400).json({message:"Nu sunt produse in cos pentru acest user!"}); // Returnează un array gol în loc de eroare
     }
 
     res.status(200).json(result.rows);
   } catch (err) {
-    console.error("❌ Eroare la obținerea produselor din coș:", err);
+    console.error("Eroare la obținerea produselor din coș:", err);
     res.status(500).json({ error: "Eroare la obținerea produselor din coș." });
   }
 });
@@ -450,12 +512,12 @@ app.patch('/cart/quantity/update/:product_id/:user_id', async (req, res) => {
       return res.status(404).json({ message: "Produsul nu a fost găsit în coș." });
     }
 
-    console.log("📤 Rezultat query:", result.rows[0]);
+    console.log("Rezultat query:", result.rows[0]);
 
     res.status(200).json({ message: "Cantitatea și prețul total au fost actualizate", cart: result.rows[0] });
 
   } catch (err) {
-    console.error("❌ Eroare la actualizarea cantității și a prețului:", err);
+    console.error("Eroare la actualizarea cantității și a prețului:", err);
     res.status(500).json({ message: "Eroare la modificarea cantității produsului din coș.", error: err });
   }
 });
@@ -531,8 +593,6 @@ res.status(500).json({mesaj:"Eroare la Eroare la inserarea adresei si contactulu
 
 
 
-
-
 app.post("/orders/:user_id", async (req,res)=>{ 
 const user_id= req.params.user_id;
 const {total_price, billing_id, payment_method} = req.body;
@@ -578,6 +638,37 @@ res.status(500).json({mesaj:"Eroare la inserarea produsului in order_items", err
 });
 
 
+app.get('/orders_fetch/:user_id', async (req, res) => {
+  const user_id = req.params.user_id;
+
+  try {
+    const query = `
+      SELECT orders.id AS order_id, 
+             orders.total_price, 
+             orders.payment_method, 
+             order_items.quantity, 
+             order_items.price AS product_price, 
+             products.id AS product_id, 
+             products.name AS product_name, 
+             products.image_url
+      FROM orders
+      JOIN order_items ON orders.id = order_items.order_id
+      JOIN products ON order_items.product_id = products.id
+      WHERE orders.user_id = $1
+      ORDER BY orders.id DESC;
+    `;
+
+    const result = await client.query(query, [user_id]);
+
+    res.status(200).json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Eroare la obținerea comenzilor", details: err.message });
+  }
+});
+
+
+
 app.get("/orders/latest_order/:user_id", async (req, res) => {
   const user_id = req.params.user_id;
 
@@ -606,16 +697,8 @@ app.get("/orders/:user_id", async (req, res) => {
 
   try {
     const query = `
-      SELECT 
-        user_orders_view.order_id, 
-        user_orders_view.quantity, 
-        user_orders_view.total_price, 
-        user_orders_view.product_name, 
-        products.image_url, 
-        user_orders_view.product_id
-      FROM user_orders_view
-      JOIN products ON user_orders_view.product_id = products.id 
-      WHERE user_orders_view.user_id = $1
+      SELECT * FROM orders
+      WHERE user_id=$1
     `;
 
     const result = await client.query(query, [user_id]);
@@ -626,6 +709,11 @@ app.get("/orders/:user_id", async (req, res) => {
     res.status(500).json({ error: "Eroare la obținerea comenzilor", details: err.message });
   }
 });
+
+
+
+
+
 
 
 
@@ -744,7 +832,7 @@ app.post("/admin/login", async (req, res) => {
       maxAge: 3600000   // Expiră după 1 oră (3600000 ms)
     });
 
-    res.json({ message: "Autentificare reușită!" });
+    res.redirect("/admin-panel")
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Eroare la autentificare" });
@@ -756,12 +844,12 @@ const protectAdminRoute = (req, res, next) => {
   const token = req.cookies.adminToken; // Citim token-ul din cookie
 
   if (!token) {
-    return res.status(401).json({ error: "Autentificare necesară!" });
+    return res.redirect("/admin/login");
   }
 
   jwt.verify(token, secretKey, (err, decoded) => {
     if (err) {
-      return res.status(403).json({ error: "Token invalid sau expirat!" });
+      return res.redirect("/admin/login")
     }
 
     req.admin = decoded; // Adăugăm info despre admin în request
@@ -811,83 +899,90 @@ app.post("/admin/logout", (req, res) => {
 
 
 
-// Configurare Nodemailer pentru trimiterea emailurilor
 const transporter = nodemailer.createTransport({
   service: "gmail", // Poți schimba providerul
   auth: {
-    user: "pantelimonbogdanmihai92@gmail.com", // Înlocuiește cu emailul tău
-    pass: "mjxr zfhn taok zcyr" // Folosește un app password, nu parola reală
+    user: process.env.SMTP_USER, // Înlocuiește cu emailul tău
+    pass: process.env.SMTP_PASS // Folosește un app password, nu parola reală
   }
 });
 
 // Endpoint pentru solicitarea resetării parolei
-app.post("/admin/reset-password", async (req, res) => {
-  const { email } = req.body;
+const updateAdmin = async (adminId, resetPasswordToken, resetPasswordExpires) => {
+  console.log('Updating admin with ID:', adminId); // 🔍 Debugging
+
+  const query = 'UPDATE admins SET resetPasswordToken=$1, resetPasswordExpires=$2 WHERE id=$3 RETURNING *;';
+  const values = [resetPasswordToken, resetPasswordExpires, adminId];
+
+  const result = await client.query(query, values);
+
+  console.log('Admin updated:', result.rows[0]);
+};
+
+// Endpoint pentru resetarea parolei
+app.post('/admin/reset-password', async (req, res) => {
+  const { email2 } = req.body;
 
   try {
-    const admin = await getAdminByEmail(email);
+    // Căutăm admin-ul după email
+    const resAdmin = await client.query('SELECT * FROM admins WHERE email = $1', [email2]);
+    const admin = resAdmin.rows[0];
     if (!admin) {
-      return res.status(404).json({ error: "Adminul nu a fost găsit!" });
+      return res.status(404).json({ error: 'Adminul nu a fost găsit in tabel!' });
     }
 
     // Generăm un token securizat pentru resetare
-    const resetToken = crypto.randomBytes(32).toString("hex");
+    const resetToken = crypto.randomBytes(32).toString('hex');
     const resetTokenExpires = new Date(Date.now() + 3600000); // Valabil 1 oră
 
-    // Salvăm token-ul în baza de date
-    await updateAdmin(admin.id, {
-      resetPasswordToken: resetToken,
-      resetPasswordExpires: resetTokenExpires
-    });
+    // Salvăm token-ul în baza de date folosind funcția de mai sus
+    await updateAdmin(admin.id, resetToken, resetTokenExpires);
 
     // Trimitem email cu link-ul de resetare
-    const resetLink = `http://localhost:5000/admin/reset-password/${resetToken}`;
+    const resetLink = `http://localhost:3000/admin/reset-password/${token}`;
     const mailOptions = {
-      from: "pantelimonbogdanmihai92@gmail.com",
-      to: email,
-      subject: "Resetare Parolă Admin",
-      text: `Dă clic pe acest link pentru a-ți reseta parola: ${resetLink}`
+      from: process.env.SMTP_PASS,
+      to: email2,
+      subject: 'Resetare Parolă Admin',
+      text: `Dă clic pe acest link pentru a-ți reseta parola: ${resetLink}`,
     };
 
     await transporter.sendMail(mailOptions);
 
-    res.json({ message: "Email-ul de resetare a fost trimis!" });
+    res.json({ message: 'Email-ul de resetare a fost trimis!' });
   } catch (err) {
-    console.error("Eroare la trimiterea emailului:", err);
-res.status(500).json({ error: `Eroare la trimiterea emailului: ${err.message}` });
+    console.error('Eroare la trimiterea emailului:', err);
+    res.status(500).json({ error: `Eroare la trimiterea emailului: ${err.message}` });
   }
 });
 
-// Endpoint pentru schimbarea parolei
-app.post("/admin/reset-password/:token", async (req, res) => {
+// Endpoint pentru schimbarea parolei folosind token-ul de resetare
+app.post('/admin/reset-password/:token', async (req, res) => {
   const { token } = req.params;
   const { newPassword } = req.body;
 
   try {
-    const admin = await getAdminByResetToken(token);
+    // Căutăm admin-ul folosind token-ul de resetare
+    const resAdmin = await client.query('SELECT * FROM admins WHERE resetPasswordToken = $1', [token]);
+    const admin = resAdmin.rows[0];
     if (!admin || new Date(admin.resetPasswordExpires) < new Date()) {
-      return res.status(400).json({ error: "Token invalid sau expirat!" });
+      return res.status(400).json({ error: 'Token invalid sau expirat!' });
     }
 
     // Criptăm noua parolă
     const hashedPassword = await bcrypt.hash(newPassword, 10);
 
-    // Creăm un obiect de actualizări
-    const updates = {
-      password: hashedPassword,
-      resetPasswordToken: null,  // Ștergem token-ul
-      resetPasswordExpires: null // Ștergem data de expirare
-    };
+    // Actualizăm admin-ul cu noile informații (folosim parametri anonimi)
+    await updateAdmin(admin.id, null, null); // Resetăm token-ul și data de expirare, deoarece s-au schimbat
 
-    // Actualizăm admin-ul cu noile informații
-    await updateAdmin(admin.id, updates);
+    const query = 'UPDATE admins SET password=$1, resetPasswordToken=null, resetPasswordExpires=null WHERE id=$2 RETURNING *;';
+    const values = [hashedPassword, admin.id];
+    await client.query(query, values);
 
-    res.json({ message: "Parola a fost schimbată cu succes!" });
+    res.redirect("http://localhost:3000/admin/reset-password/succes")
   } catch (err) {
-    console.error("Eroare la resetarea parolei:", err);
-
-    // 🔥 Trimite eroarea completă în Postman (pentru debugging)
-    res.status(500).json({ error: "Eroare la resetarea parolei", details: err.message });
+    console.error('Eroare la resetarea parolei:', err);
+    res.status(500).json({ error: 'Eroare la resetarea parolei', details: err.message });
   }
 });
 

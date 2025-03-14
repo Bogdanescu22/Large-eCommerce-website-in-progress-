@@ -1,0 +1,46 @@
+.footer {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr; /* Două coloane egale */
+    gap: 40px; /* Spațiu între coloane */
+    padding: 20px;
+    background-color: #78a481; /* Culoare fundal */
+    color: white;
+  }
+  
+  
+  .footer .footer-column {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  
+  .title {
+    font-weight: bold;
+    font-size: 16px;
+    margin-bottom:15px;
+  }
+  
+  .productFooter {
+  margin: 5px;
+  font-size: 14px;
+  }
+  
+  
+  html, body {
+    height: 100%;
+    margin: 0;
+  }
+  
+  .home-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  
+  .main-content {
+    flex-grow: 1;
+  }
+  
+  
+  /* Footer */
+  

@@ -1,0 +1,72 @@
+/* productPage.css */
+
+/* Stiluri pentru titlul paginii */
+.productPage-main {
+    padding: 20px;
+    background-color: #f9f9f9;
+  }
+  
+  .productPage-productTitle h1 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  /* Stiluri pentru imaginea și informațiile produsului */
+  .image_cartinfo-div {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  .product-page-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .cartinfo-prodcut-page {
+    max-width: 300px;
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .product-page-stock {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+  }
+  
+  .product-page-price {
+    font-size: 1.5rem;
+    color: #007bff;
+    margin-bottom: 15px;
+  }
+  
+  .product-page-cart-button {
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .product-page-cart-button:hover {
+    background-color: #218838;
+  }
+  
+  /* Detalii produs */
+  .product-page-details h2 {
+    font-size: 1.8rem;
+    color: #333;
+  }
+  
+  .product-page-details p {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #555;
+  }
+  

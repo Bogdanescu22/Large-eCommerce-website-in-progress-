@@ -163,6 +163,54 @@ res.status(401).json({message:"Nu esti autentificat"})
 });
 
 
+//Rute pt Informatii users
+
+app.delete("/profile-picture/delete/:user_id", async (req,res) => {
+
+const user_id= req.params.user_id;
+
+try{
+
+const query="UPDATE users SET profile_picture = NULL WHERE id=$1 RETURNING*";
+const result = await client.query(query,[user_id]);
+
+res.status(200).json(result.rows)
+} catch (err) {
+console.error(err);
+res.status(500).json({error:"Eroare la stergerea fotografiei de profil", details: err.details})
+}
+})
+
+
+app.patch("/profile-picture/add/:user_id", async (req,res) => {
+
+const user_id= req.params.user_id;
+const {profile_picture}= req.body
+
+try{
+
+const query= "UPDATE users SET profile_picture=$1 WHERE id=$2 RETURNING*"
+const values = [profile_picture, user_id]
+
+const result = await client.query(query,values)
+
+res.status(200).json("Fotografia de profil a fost actualizata:", result.rows[0])
+} catch (err) {
+console.error(err)
+res.status(500).json({message:"Eroare la schimbarea fotografiei de profil:", details: err.details})
+}
+})
+
+
+
+
+
+
+
+
+//Rute pt Informatii users
+
+
 app.get("/logout", (req, res) => {
   req.logout(() => {
     res.redirect("http://localhost:3000/");
@@ -400,22 +448,22 @@ app.post('/cart', async (req, res) => {
 
 app.get('/cart/data/:user_id', async (req, res) => {
   const user_id = req.params.user_id;
-  console.log("Cerere primită pentru user_id:", user_id); 
+  console.log("📌 Cerere primită pentru user_id:", user_id); 
 
   try {
     const query = 'SELECT * FROM cart WHERE user_id=$1;';
-    console.log("Executăm interogarea:", query);
+    console.log("📌 Executăm interogarea:", query);
     const result = await client.query(query, [user_id]);
 
-    console.log("Rezultatele interogării:", result.rows); // Vezi ce returnează exact
+    console.log("📌 Rezultatele interogării:", result.rows); // Vezi ce returnează exact
     if (result.rows.length === 0) {
-      console.log("⚠Nu sunt produse în coș pentru acest user.");
-      return res.status(400).json({message:"Nu sunt produse in cos pentru acest user!"});
+      console.log("⚠️ Nu sunt produse în coș pentru acest user.");
+      return res.status(400).json({message:"Nu sunt produse in cos pentru acest user!"}); // Returnează un array gol în loc de eroare
     }
 
     res.status(200).json(result.rows);
   } catch (err) {
-    console.error("Eroare la obținerea produselor din coș:", err);
+    console.error("❌ Eroare la obținerea produselor din coș:", err);
     res.status(500).json({ error: "Eroare la obținerea produselor din coș." });
   }
 });
@@ -483,7 +531,7 @@ app.patch('/cart/quantity/update/:product_id/:user_id', async (req, res) => {
   const { quantity: newQuantity, product_price } = req.body; // Preluăm noua cantitate și (opțional) prețul
 
   try {
-    console.log("Primit de la frontend:", { user_id, product_id, newQuantity, product_price });
+    console.log("📥 Primit de la frontend:", { user_id, product_id, newQuantity, product_price });
 
     let finalProductPrice = product_price;
 
@@ -512,12 +560,12 @@ app.patch('/cart/quantity/update/:product_id/:user_id', async (req, res) => {
       return res.status(404).json({ message: "Produsul nu a fost găsit în coș." });
     }
 
-    console.log("Rezultat query:", result.rows[0]);
+    console.log("📤 Rezultat query:", result.rows[0]);
 
     res.status(200).json({ message: "Cantitatea și prețul total au fost actualizate", cart: result.rows[0] });
 
   } catch (err) {
-    console.error("Eroare la actualizarea cantității și a prețului:", err);
+    console.error("❌ Eroare la actualizarea cantității și a prețului:", err);
     res.status(500).json({ message: "Eroare la modificarea cantității produsului din coș.", error: err });
   }
 });
@@ -909,7 +957,7 @@ const transporter = nodemailer.createTransport({
 
 // Endpoint pentru solicitarea resetării parolei
 const updateAdmin = async (adminId, resetPasswordToken, resetPasswordExpires) => {
-  console.log('Updating admin with ID:', adminId); 
+  console.log('Updating admin with ID:', adminId); // 🔍 Debugging
 
   const query = 'UPDATE admins SET resetPasswordToken=$1, resetPasswordExpires=$2 WHERE id=$3 RETURNING *;';
   const values = [resetPasswordToken, resetPasswordExpires, adminId];
@@ -939,7 +987,7 @@ app.post('/admin/reset-password', async (req, res) => {
     await updateAdmin(admin.id, resetToken, resetTokenExpires);
 
     // Trimitem email cu link-ul de resetare
-    const resetLink = `http://localhost:3000/admin/reset-password/${token}`;
+    const resetLink = `http://localhost:3000/admin/reset-password/${resetToken}`;
     const mailOptions = {
       from: process.env.SMTP_PASS,
       to: email2,
@@ -957,13 +1005,13 @@ app.post('/admin/reset-password', async (req, res) => {
 });
 
 // Endpoint pentru schimbarea parolei folosind token-ul de resetare
-app.post('/admin/reset-password/:token', async (req, res) => {
-  const { token } = req.params;
+app.post('/admin/reset-password/:resetToken', async (req, res) => {
+  const { resetToken } = req.params;
   const { newPassword } = req.body;
 
   try {
     // Căutăm admin-ul folosind token-ul de resetare
-    const resAdmin = await client.query('SELECT * FROM admins WHERE resetPasswordToken = $1', [token]);
+    const resAdmin = await client.query('SELECT * FROM admins WHERE resetPasswordToken = $1', [resetToken]);
     const admin = resAdmin.rows[0];
     if (!admin || new Date(admin.resetPasswordExpires) < new Date()) {
       return res.status(400).json({ error: 'Token invalid sau expirat!' });
@@ -973,7 +1021,7 @@ app.post('/admin/reset-password/:token', async (req, res) => {
     const hashedPassword = await bcrypt.hash(newPassword, 10);
 
     // Actualizăm admin-ul cu noile informații (folosim parametri anonimi)
-    await updateAdmin(admin.id, null, null); 
+    await updateAdmin(admin.id, null, null); // Resetăm token-ul și data de expirare, deoarece s-au schimbat
 
     const query = 'UPDATE admins SET password=$1, resetPasswordToken=null, resetPasswordExpires=null WHERE id=$2 RETURNING *;';
     const values = [hashedPassword, admin.id];
@@ -1036,6 +1084,10 @@ app.get("/payment-status/:paymentIntentId", async (req, res) => {
 app.listen(PORT, () => {
   console.log(`Serverul rulează la adresa http://localhost:${PORT}`);
 });
+
+
+
+
 
 
 

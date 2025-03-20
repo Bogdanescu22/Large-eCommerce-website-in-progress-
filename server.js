@@ -20,7 +20,9 @@ import dotenv from "dotenv";  // Adăugat pentru încărcarea fișierului .env
 import Stripe from "stripe";
 import { error } from "console";
 import path from "path";
-import { fileURLToPath } from "url";
+import multer from "multer";
+import multerS3 from "multer-s3";
+import aws from "aws-sdk";
 
 dotenv.config();  // Încărcăm variabilele de mediu din .env
 
@@ -36,6 +38,25 @@ app.use(
     credentials: true, // Permite transmiterea de cookies și sesiuni
   })
 );
+
+const s3 = new aws.S3({ 
+  accessKeyId: process.env.AWS_ACCES_KEY_ID,
+  secretAccessKey: process.env.AWS_SECRET_ACCES_KEY_ID,
+  region: "eu-north-1", // Trebuie să fie STRING, deci între ghilimele!
+});
+
+
+const upload = multer({
+  storage: multerS3({
+    s3: s3,
+    bucket: 'my-app-uploads-devsite ', // Numele bucket-ului tău
+    acl: 'public-read',  // Permite acces public la fișierele încărcate
+    key: function (req, file, cb) {
+      // Numele fișierului pe care îl salvezi pe S3
+      cb(null, `profile-pictures/${req.params.user_id}-${Date.now()}.webp`);
+    }
+  })
+});
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
@@ -182,24 +203,37 @@ res.status(500).json({error:"Eroare la stergerea fotografiei de profil", details
 })
 
 
-app.patch("/profile-picture/add/:user_id", async (req,res) => {
+app.patch("/profile-picture/addPicture/:user_id", upload.single("profile_picture"), async (req, res) => {
+  const user_id = req.params.user_id;
 
-const user_id= req.params.user_id;
-const {profile_picture}= req.body
+  // Verificăm dacă imaginea a fost încărcată cu succes
+  if (!req.file) {
+    return res.status(400).json({ message: "Imaginea este necesară!" });
+  }
 
-try{
+  try {
+    const imageUrl = req.file.location; // URL-ul imaginii din S3
 
-const query= "UPDATE users SET profile_picture=$1 WHERE id=$2 RETURNING*"
-const values = [profile_picture, user_id]
+    // Actualizăm baza de date cu noul URL al imaginii
+    const query = "UPDATE users SET profile_picture = $1 WHERE id = $2 RETURNING *";
+    const values = [imageUrl, user_id];
 
-const result = await client.query(query,values)
+    const result = await client.query(query, values);
 
-res.status(200).json("Fotografia de profil a fost actualizata:", result.rows[0])
-} catch (err) {
-console.error(err)
-res.status(500).json({message:"Eroare la schimbarea fotografiei de profil:", details: err.details})
-}
-})
+    res.status(200).json({
+      message: "Fotografia de profil a fost actualizată",
+      user: result.rows[0],
+      imageUrl: imageUrl,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({
+      message: "Eroare la schimbarea fotografiei de profil",
+      details: err.message,
+    });
+  }
+});
+
 
 
 

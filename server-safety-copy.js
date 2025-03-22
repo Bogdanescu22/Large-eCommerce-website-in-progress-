@@ -20,7 +20,11 @@ import dotenv from "dotenv";  // Adăugat pentru încărcarea fișierului .env
 import Stripe from "stripe";
 import { error } from "console";
 import path from "path";
-import { fileURLToPath } from "url";
+import multer from "multer";
+import multerS3 from "multer-s3";
+import aws from "aws-sdk";
+import { S3Client } from "@aws-sdk/client-s3";
+
 
 dotenv.config();  // Încărcăm variabilele de mediu din .env
 
@@ -36,6 +40,25 @@ app.use(
     credentials: true, // Permite transmiterea de cookies și sesiuni
   })
 );
+
+const s3 = new S3Client({
+  region: process.env.AWS_REGION, // Pune regiunea corectă
+  credentials: {
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY_ID,
+  },
+});
+
+const upload = multer({
+  storage: multerS3({
+    s3: s3,
+    bucket: 'my-app-uploads-devsite', // Numele bucket-ului tău
+    key: function (req, file, cb) {
+      // Numele fișierului pe care îl salvezi pe S3
+      cb(null, `profile-pictures/${req.params.user_id}-${Date.now()}.webp`);
+    }
+  })
+});
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
@@ -161,6 +184,60 @@ res.json({user: req.user})
 res.status(401).json({message:"Nu esti autentificat"})
 }
 });
+
+
+//Rute pt Informatii users
+
+app.delete("/profile-picture/delete/:user_id", async (req,res) => {
+
+const user_id= req.params.user_id;
+
+try{
+
+const query="UPDATE users SET profile_picture = NULL WHERE id=$1 RETURNING*";
+const result = await client.query(query,[user_id]);
+
+res.status(200).json(result.rows)
+} catch (err) {
+console.error(err);
+res.status(500).json({error:"Eroare la stergerea fotografiei de profil", details: err.details})
+}
+})
+
+
+app.patch('/profile-picture/addPicture/:user_id', upload.single("profile_picture"), async (req, res) => {
+  const user_id = req.params.user_id.trim();
+
+  // Verificăm dacă imaginea a fost încărcată cu succes
+  if (!req.file) {
+    return res.status(400).json({ message: "Imaginea este necesară!" });
+  }
+
+  try {
+    const imageUrl = req.file.location; // URL-ul imaginii din S3
+
+    // Actualizăm baza de date cu noul URL al imaginii
+    const query = "UPDATE users SET profile_picture = $1 WHERE id = $2 RETURNING *";
+    const values = [imageUrl, user_id];
+
+    const result = await client.query(query, values);
+
+    res.status(200).json({
+      message: "Fotografia de profil a fost actualizată",
+      user: result.rows[0],
+      imageUrl: imageUrl,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({
+      message: "Eroare la schimbarea fotografiei de profil",
+      details: err.message,
+    });
+  }
+});
+
+
+//Rute pt Informatii users
 
 
 app.get("/logout", (req, res) => {
@@ -400,22 +477,22 @@ app.post('/cart', async (req, res) => {
 
 app.get('/cart/data/:user_id', async (req, res) => {
   const user_id = req.params.user_id;
-  console.log("Cerere primită pentru user_id:", user_id); 
+  console.log("📌 Cerere primită pentru user_id:", user_id); 
 
   try {
     const query = 'SELECT * FROM cart WHERE user_id=$1;';
-    console.log("Executăm interogarea:", query);
+    console.log("📌 Executăm interogarea:", query);
     const result = await client.query(query, [user_id]);
 
-    console.log("Rezultatele interogării:", result.rows); // Vezi ce returnează exact
+    console.log("📌 Rezultatele interogării:", result.rows); // Vezi ce returnează exact
     if (result.rows.length === 0) {
-      console.log("⚠Nu sunt produse în coș pentru acest user.");
+      console.log("⚠️ Nu sunt produse în coș pentru acest user.");
       return res.status(400).json({message:"Nu sunt produse in cos pentru acest user!"}); // Returnează un array gol în loc de eroare
     }
 
     res.status(200).json(result.rows);
   } catch (err) {
-    console.error("Eroare la obținerea produselor din coș:", err);
+    console.error("❌ Eroare la obținerea produselor din coș:", err);
     res.status(500).json({ error: "Eroare la obținerea produselor din coș." });
   }
 });
@@ -512,12 +589,12 @@ app.patch('/cart/quantity/update/:product_id/:user_id', async (req, res) => {
       return res.status(404).json({ message: "Produsul nu a fost găsit în coș." });
     }
 
-    console.log("Rezultat query:", result.rows[0]);
+    console.log("📤 Rezultat query:", result.rows[0]);
 
     res.status(200).json({ message: "Cantitatea și prețul total au fost actualizate", cart: result.rows[0] });
 
   } catch (err) {
-    console.error("Eroare la actualizarea cantității și a prețului:", err);
+    console.error("❌ Eroare la actualizarea cantității și a prețului:", err);
     res.status(500).json({ message: "Eroare la modificarea cantității produsului din coș.", error: err });
   }
 });
@@ -939,7 +1016,7 @@ app.post('/admin/reset-password', async (req, res) => {
     await updateAdmin(admin.id, resetToken, resetTokenExpires);
 
     // Trimitem email cu link-ul de resetare
-    const resetLink = `http://localhost:3000/admin/reset-password/${token}`;
+    const resetLink = `http://localhost:3000/admin/reset-password/${resetToken}`;
     const mailOptions = {
       from: process.env.SMTP_PASS,
       to: email2,
@@ -957,13 +1034,13 @@ app.post('/admin/reset-password', async (req, res) => {
 });
 
 // Endpoint pentru schimbarea parolei folosind token-ul de resetare
-app.post('/admin/reset-password/:token', async (req, res) => {
-  const { token } = req.params;
+app.post('/admin/reset-password/:resetToken', async (req, res) => {
+  const { resetToken } = req.params;
   const { newPassword } = req.body;
 
   try {
     // Căutăm admin-ul folosind token-ul de resetare
-    const resAdmin = await client.query('SELECT * FROM admins WHERE resetPasswordToken = $1', [token]);
+    const resAdmin = await client.query('SELECT * FROM admins WHERE resetPasswordToken = $1', [resetToken]);
     const admin = resAdmin.rows[0];
     if (!admin || new Date(admin.resetPasswordExpires) < new Date()) {
       return res.status(400).json({ error: 'Token invalid sau expirat!' });
@@ -1034,5 +1111,4 @@ app.get("/payment-status/:paymentIntentId", async (req, res) => {
 
 
 app.listen(PORT, () => {
-  console.log(`Serverul rulează la adresa http://localhost:${PORT}`);
-}); */
+  console.log(`Serverul rulează la adresa http://localhost:${PORT}`); */

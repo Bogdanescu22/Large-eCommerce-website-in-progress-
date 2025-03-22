@@ -64,6 +64,8 @@ DB_PORT=your_database_port
 STRIPE_PUBLIC_KEY=your_stripe_public_key
 AWS_ACCES_KEY_ID=your_aws_acces_key
 AWS_SECRET_ACCES_KEY_ID=your_aws_secret_acces_key
+AWS_REGION=your_aws_region
+
 
 ```
 

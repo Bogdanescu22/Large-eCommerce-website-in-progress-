@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from "react";
 
 function ImageCropper({ imageSrc, onSave, onClose, user_id }) {
@@ -24,12 +23,24 @@ function ImageCropper({ imageSrc, onSave, onClose, user_id }) {
     const deltaX = e.clientX - startPos.current.x;
     const deltaY = e.clientY - startPos.current.y;
 
+    console.log("Deltax",deltaX);
+    console.log("Deltay",deltaY);
+    console.log("Clientx",e.clientX);
+    console.log("Clienty",e.clientY);
+    console.log("startx:",startPos.current.x);
+    console.log("starty:",startPos.current.y);
+
     setPosition((prev) => ({
       x: prev.x + deltaX,
       y: prev.y + deltaY,
     }));
 
+    console.log("Positionx",position.x);
+    console.log("Positiony",position.y);
+
+
     startPos.current = { x: e.clientX, y: e.clientY };
+    console.log("Startpos2",startPos.current);
   };
 
   // Oprește mutarea imaginii
@@ -42,32 +53,48 @@ function ImageCropper({ imageSrc, onSave, onClose, user_id }) {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
     const img = imageRef.current;
-  
+
+    // Setăm dimensiunile canvas-ului conform cropBox-ului
     canvas.width = cropBox.width;
     canvas.height = cropBox.height;
-  
+
+    // Calculăm poziția imaginii care va fi decupată
+    // Dacă imaginea nu este mutată, poziția ar trebui să fie (0, 0), altfel luăm poziția curentă
+    const offsetX = position.x;
+    const offsetY = position.y;
+
+    // Calculăm corect poziția de decupare ținând cont de scalare și offset
+    const cropX = (cropBox.x - offsetX) / scale; // Calculăm offset-ul corect pentru X
+    const cropY = (cropBox.y - offsetY) / scale; // Calculăm offset-ul corect pentru Y
+    const cropWidth = cropBox.width /// scale; // Scalăm lățimea decupajului
+    const cropHeight = cropBox.height /// scale; // Scalăm înălțimea decupajului
+
+    // Desenăm imaginea pe canvas la dimensiunea cropBox-ului
     ctx.drawImage(
       img,
-      -position.x + cropBox.x,
-      -position.y + cropBox.y,
-      img.width * scale,
-      img.height * scale
+      cropX, // Poziția X a imaginii de decupat (corectă)
+      cropY, // Poziția Y a imaginii de decupat (corectă)
+      cropWidth, // Lățimea imaginii de decupat
+      cropHeight, // Înălțimea imaginii de decupat
+      0, // Poziția X pe canvas
+      0, // Poziția Y pe canvas
+      cropBox.width, // Lățimea pe canvas
+      cropBox.height // Înălțimea pe canvas
     );
-  
+
     canvas.toBlob(async (blob) => {
       if (!blob) return;
-  
+
       const formData = new FormData();
       formData.append("profile_picture", blob);
-  
+
       try {
-        // 🛠️ Aici adăugăm userId în URL
         const response = await fetch(`http://localhost:5000/profile-picture/addPicture/${user_id}`, {
           method: "PATCH",
           body: formData,
           credentials: "include",
         });
-  
+
         const data = await response.json();
         if (data.imageUrl) {
           onSave(data.imageUrl); // Salvează URL-ul imaginii din S3
@@ -77,8 +104,6 @@ function ImageCropper({ imageSrc, onSave, onClose, user_id }) {
       }
     }, "image/webp");
   };
-  
-  
 
   return (
     <div className="cropper-overlay">
@@ -135,3 +160,4 @@ function ImageCropper({ imageSrc, onSave, onClose, user_id }) {
 }
 
 export default ImageCropper;
+

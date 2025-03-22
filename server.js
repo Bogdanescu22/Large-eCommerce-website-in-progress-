@@ -23,6 +23,8 @@ import path from "path";
 import multer from "multer";
 import multerS3 from "multer-s3";
 import aws from "aws-sdk";
+import { S3Client } from "@aws-sdk/client-s3";
+
 
 dotenv.config();  // Încărcăm variabilele de mediu din .env
 
@@ -39,18 +41,18 @@ app.use(
   })
 );
 
-const s3 = new aws.S3({ 
-  accessKeyId: process.env.AWS_ACCES_KEY_ID,
-  secretAccessKey: process.env.AWS_SECRET_ACCES_KEY_ID,
-  region: "eu-north-1", // Trebuie să fie STRING, deci între ghilimele!
+const s3 = new S3Client({
+  region: process.env.AWS_REGION, // Pune regiunea corectă
+  credentials: {
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY_ID,
+  },
 });
-
 
 const upload = multer({
   storage: multerS3({
     s3: s3,
-    bucket: 'my-app-uploads-devsite ', // Numele bucket-ului tău
-    acl: 'public-read',  // Permite acces public la fișierele încărcate
+    bucket: 'my-app-uploads-devsite', // Numele bucket-ului tău
     key: function (req, file, cb) {
       // Numele fișierului pe care îl salvezi pe S3
       cb(null, `profile-pictures/${req.params.user_id}-${Date.now()}.webp`);
@@ -203,8 +205,8 @@ res.status(500).json({error:"Eroare la stergerea fotografiei de profil", details
 })
 
 
-app.patch("/profile-picture/addPicture/:user_id", upload.single("profile_picture"), async (req, res) => {
-  const user_id = req.params.user_id;
+app.patch('/profile-picture/addPicture/:user_id', upload.single("profile_picture"), async (req, res) => {
+  const user_id = req.params.user_id.trim();
 
   // Verificăm dacă imaginea a fost încărcată cu succes
   if (!req.file) {
@@ -233,13 +235,6 @@ app.patch("/profile-picture/addPicture/:user_id", upload.single("profile_picture
     });
   }
 });
-
-
-
-
-
-
-
 
 
 //Rute pt Informatii users

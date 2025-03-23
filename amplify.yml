@@ -1,0 +1,16 @@
+version: 1
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - npm ci  # Instalează dependențele
+    build:
+      commands:
+        - npm run build  # Rulează build-ul pentru frontend
+  artifacts:
+    baseDirectory: frontend/build  # Directorul unde se află fișierele build
+    files:
+      - '**/*'  # Include toate fișierele din directorul build
+  cache:
+    paths:
+      - node_modules/**/*

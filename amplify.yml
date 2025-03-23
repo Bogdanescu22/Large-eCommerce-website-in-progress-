@@ -8,7 +8,7 @@ frontend:
       commands:
         - npm run build  # Rulează build-ul pentru frontend
   artifacts:
-    baseDirectory: frontend/build  # Directorul unde se află fișierele build
+    baseDirectory: fornt-end/build  # Directorul unde se află fișierele build
     files:
       - '**/*'  # Include toate fișierele din directorul build
   cache:

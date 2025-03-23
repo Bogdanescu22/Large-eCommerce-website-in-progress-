@@ -1,0 +1,1560 @@
+body {
+  font-family: "Arimo", serif;
+}
+
+html, body {
+  overflow-x: hidden;
+}
+
+button {
+  font-family: "Arimo", sans-serif;
+}
+
+/* Header */
+.header {
+  display: flex; /* Activăm flexbox pentru containerul principal */
+  align-items: center; /* Aliniem elementele pe verticală */
+  background-color: #78a481;
+  height: 75px;
+  padding: 10px 20px; /* Adaugă puțin padding pe stânga și dreapta pentru estetică */
+  font-family: "Arimo", serif;
+  color: white;
+  width: 100%;
+  position: relative;
+  justify-content: space-between;
+  margin-bottom: 0;
+}
+
+.toggle-menu {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 750px) {
+  .toggle-menu {
+    display: none;
+  }
+
+  .toggle-menu.active {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+@media (min-width: 750px) {
+  .toggle-button {
+    display: none;
+  }
+}
+
+.toggle-menu {
+  z-index: 1;
+}
+
+.header.active .logo,
+.header.active .searchButton,
+.header.active .cartButton {
+  display: none;
+}
+
+.header.active {
+  height: 500px;
+  align-items: flex-start;
+  padding-top: 41px;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 41px;
+}
+
+.toggle-menu.active {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin-top: 10px;
+  align-items: flex-start;
+}
+
+.header.active .menu {
+  flex-direction: column-reverse;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.header.active .menuDiv {
+  margin-left: 0;
+}
+
+.toggle-button {
+  background-color: #78a481;
+  color: white;
+  font-weight: 200;
+  border: none;
+  font-size: 25px;
+  margin-left: 11px;
+}
+
+.header.active .toggle-button {
+  border: 1px solid white;
+  margin-left: 0;
+}
+
+.menu {
+  display: flex; /* Flexbox pentru a aranja elementele meniului */
+  align-items: center; /* Aliniază meniul pe verticală */
+  margin-right: 30px;
+  color: white;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.menuDiv {
+  margin-left: 20px; /* Adaugă spațiu între elementele meniului */
+}
+
+.menuDiv p {
+  font-size: 18px;
+}
+
+.logInButton {
+  padding: 8px 16px;
+  font-size: 18px;
+  cursor: pointer;
+  background-color: #ff4d67;
+  border-radius: 4px;
+  border: none;
+  color: white;
+}
+
+.logInButton:hover {
+  background: #d43f57;
+}
+
+.searchButton,
+.cartButton {
+  padding: 8px 16px;
+  font-size: 18px;
+  cursor: pointer;
+  background-color: #78a481;
+  border-radius: 4px;
+  border: none;
+  margin-right: 0px;
+}
+
+.cartButton {
+  padding-left: 8px;
+}
+
+.cartButton-image {
+  position: relative;
+  margin: 0;
+}
+
+.cart-count {
+  background-color: #ff4d67;
+  color: white;
+  border-radius: 100px;
+  padding: 2.2px 4.4px;
+  font-size: 11px;
+  margin: 0;
+  position: absolute;
+  margin-left: -13px;
+  margin-top: 3px;
+}
+
+.search-overlay {
+  position: absolute; /* Se poziționează peste header */
+  top: 0;
+  left: 0; /* Îl menținem la marginea din stânga */
+  width: 100%; /* Lățime egală cu header-ul */
+  height: 90px; /* Înălțime egală cu header-ul */
+  background-color: #78a481; /* Fundal semi-transparent */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translateX(100%); /* Inițial, este în afara ecranului (în dreapta) */
+  transition: transform 0.3s ease-in-out;
+}
+
+.search-overlay.active {
+  transform: translateX(0); /* Când devine activ, îl aducem la poziția normală */
+}
+
+.search-overlay.active input {
+cursor: text;
+}
+
+@media (max-width: 750px) {
+  .search-overlay {
+    opacity: 0;
+    transform: 0;
+  }
+
+  .search-overlay.active {
+    transform: translateY(100%);
+    opacity: 1;
+  }
+}
+
+.header {
+  position: relative;
+  z-index: 10; /* Se asigură că overlay-ul este peste header */
+}
+
+.search-input {
+  width: 60%;
+  padding: 10px;
+  font-size: 18px;
+  border: none;
+  border-radius: 5px;
+}
+
+.close-button {
+  background: #ff4d67;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 5px;
+}
+
+.close-button:hover {
+  background: #d43f57;
+}
+
+.search-input:focus {
+  outline: none;
+}
+
+/* Footer */
+
+.footer {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr; /* Două coloane egale */
+  gap: 40px; /* Spațiu între coloane */
+  padding: 20px;
+  background-color: #78a481; /* Culoare fundal */
+  color: white;
+}
+
+.footer .footer-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  font-weight: bold;
+  font-size: 16px;
+  margin-bottom: 15px;
+}
+
+.productFooter {
+  margin: 5px;
+  font-size: 14px;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+.home-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex-grow: 1;
+}
+
+/* Footer */
+
+/* HomePage */
+
+.hero-div {
+  position: relative;
+  display: flex;
+  height: 500px;
+  background-image: url("./Images/image2_6027c802b4 (1).jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding-left: 50px; /* Distanță față de marginea stângă */
+  color: white; /* Culoare text */
+}
+
+.hero-text {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Spațiu între ele */
+  z-index: 15;
+  margin: 10px;
+  padding-top: 150px;
+}
+
+.titleHomePageHero {
+  font-size: 48px;
+  margin: 0;
+}
+
+.subtitleHomePageHero {
+  font-size: 24px;
+  margin: 0;
+  font-weight: normal;
+}
+
+.hero-div::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #57a767a2;
+}
+
+.product-cards-div {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2 coloane */
+  gap: 40px; /* Spațiu între carduri */
+  padding: 100px;
+}
+
+.product-card {
+  background-color: #78a481;
+  padding: 0;
+  padding-bottom: 40px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.product-card img {
+  height: auto;
+  border-radius: 8px; /* Evită distorsiunea imaginii */
+  object-fit: cover;
+  display: block;
+}
+
+.overlay-title {
+  position: absolute;
+  background-color: #d43f58bd;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 23px;
+  top: 0;
+  left: 0;
+  width: 100%; /* Overlay pe întreaga lățime */
+  height: 100%;
+}
+
+.home-card-image {
+  position: relative;
+  width: 100%;
+}
+
+.product-card button {
+  background-color: transparent;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 40px;
+  font-size: 20px;
+  border: 1px solid white;
+}
+
+/* Imagini card */
+.home-card-image img {
+  width: 100%; /* Asigură-te că imaginea umple containerul */
+  position: relative;
+}
+
+/* Media Query pentru mobil */
+@media (max-width: 768px) {
+  .product-cards-div {
+    grid-template-columns: 1fr; /* O singură coloană pe ecrane mai mici */
+  }
+}
+
+@media (max-width: 768px) {
+  .product-cards-div {
+    grid-template-columns: 1fr; /* O singură coloană pe ecrane mai mici */
+    padding: 50px;
+  }
+}
+
+/* HomePage */
+
+/* TelefaonePage */
+
+.hero-div-telefoanePage {
+  background-image: url("./Images/16_evolution-iphone-every-model-2007-2016 (1).png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  height: 500px;
+  padding-left: 50px;
+  color: white;
+  position: relative;
+  display: flex;
+}
+
+.hero-text-Telefoane {
+  font-size: clamp(24px, 5vw, 40px);
+  z-index: 10;
+  padding-top: 150px;
+}
+
+.hero-div-telefoanePage::before {
+  content: "";
+  position: absolute;
+  background-color: #57a767a2;
+  background-size: cover;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.phone-cards-div {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Mereu 3 coloane */
+  gap: 20px;
+  padding: 40px;
+}
+
+.phone-card {
+  width: 100%; /* Ocupă toată coloana */
+  margin: auto; /* Centrează fiecare card în coloană */
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.185);
+  padding-top: 20px;
+}
+
+.phone-card-image {
+  width: 250px;
+  height: auto;
+  object-fit: cover;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.phone-card-button {
+  width: 100%;
+  color: white;
+  background-color: #78a481;
+  border: none;
+  font-size: 18px;
+  padding: 15px;
+  cursor: pointer;
+}
+
+.phone-card-button:hover {
+  background-color: #ff4d67;
+}
+
+.phone-card-title {
+  font-size: 23px;
+  margin-left: 15px;
+  font-weight: 400;
+}
+
+.phone-card-price {
+  font-size: 30px;
+  margin-top: 0px;
+  margin-left: 15px;
+  color: #ff4d67;
+  font-weight: 600;
+}
+
+/* CartPage */
+
+.cartPage main {
+  background-color: #f1f1f1;
+}
+
+.indisponibil {
+  color: #ff4d67;
+}
+
+.disponibil {
+  color: #78a481;
+}
+
+.cart-card {
+  display: grid;
+  grid-template-columns: 2fr 2fr 2fr 1fr;
+  background-color: white;
+  margin-bottom: 20px;
+  padding: 20px;
+  column-width: 200px;
+  column-gap: 15px;
+}
+
+.image-CartCard {
+  width: 140px;
+}
+
+.cart-cards-div {
+  padding: 120px 60px;
+}
+
+@media (max-width: 680px) {
+  .cart-card {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+@media (max-width: 680px) {
+  .image-CartCard {
+    width: 150px;
+  }
+}
+
+.total-CartPage {
+  font-size: 35px;
+  margin-top: 40px !important;
+  margin-bottom: 25px;
+}
+
+.title-CartCard {
+  font-weight: 300;
+}
+
+.price-CartCard {
+  font-size: 30px;
+}
+
+.cart-delete-button {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-end;
+}
+
+.cart-cards-div button {
+  color: white;
+  background-color: #ff4d67;
+  border-radius: 15px;
+  border: none;
+  font-size: 20px;
+  font-weight: 300;
+  padding: 15px;
+  cursor: pointer;
+}
+
+.cart-cards-div button:hover {
+  background-color: #d43f57;
+}
+
+.add-quantity button {
+  background-color: white;
+  color: #afb1b8;
+  font-size: 35px;
+  font-weight: 500;
+  padding-bottom: 0;
+}
+
+.minus-quantity button {
+  background-color: white;
+  color: #afb1b8;
+  font-size: 10px;
+  font-weight: 100;
+  padding-bottom: 0;
+}
+
+.minus-quantity button:hover {
+  background-color: white;
+}
+
+.add-quantity button:hover {
+  background-color: white;
+}
+
+.cart-delete-button button {
+  background-color: white;
+  color: #afb1b8;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.cart-delete-button button:hover {
+  background-color: white;
+  color: #9c9fa7;
+}
+
+.cart-card.active {
+  transform: translateX(200%);
+  transition: 0.5s ease-in-out;
+}
+
+/* CartPage */
+
+/* Details Page */
+
+.details-logout-div {
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+}
+
+.details-logout-button {
+  padding: 21px;
+  margin-left: auto;
+}
+
+.details-orders-history-div {
+  padding: 20px;
+  padding-top: 0;
+}
+
+@media (max-width: 550px) {
+  .details-logout-div {
+    grid-template-columns: 1fr;
+  }
+
+  .details-logout-button {
+    margin-right: auto;
+    margin-left: 0;
+    padding-left: 0;
+    padding-top: 20px;
+  }
+}
+
+.details-logout {
+  background-color: #ff4d67;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 15px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.details-logout:hover {
+  background-color: #d43f57;
+}
+
+.details-div p {
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.details-div .details-span {
+  font-size: 17px;
+  font-weight: 300;
+}
+
+.details-div h1 {
+  font-size: 33px;
+}
+
+.details-orders-history-div h2 {
+  font-size: 33px;
+}
+
+
+.account-details-card-div2{
+margin: 10px;
+background-color: white;
+}
+
+.details-card{
+border: 2px solid #d4d1d1;
+margin-bottom: 15px;
+display: grid;
+grid-template-columns: repeat(2, 1fr);
+padding: 20px;
+}
+
+.account-details-page{
+background-color: #f1f1f1;
+}
+
+.details-card-img-div img {
+width:140px
+}
+
+.quantity-details-div {
+text-align: end;
+}
+
+.quantity-details-div p {
+font-size: 22px;
+margin: 0;
+color: #afb1b8;
+font-weight: 600;
+}
+
+.details-card-price{
+font-weight: 700;
+font-size: 26px;
+margin-top: 19px;
+}
+
+.details-card-title{
+font-size: 20px;
+font-weight: normal;
+margin-bottom:0px
+}
+
+.account-details-card-div2{
+padding: 38px;
+margin: 27px 0px;
+}
+
+.image-text-details-div{
+display: flex;
+flex-direction: row;
+}
+
+.details-card-text-div h2 {
+font-size: 26px;
+}
+
+.account-details-card-div2 h2{
+font-size: clamp(20px, 5vw, 26px);
+}
+
+.details-card-price{
+font-size: clamp(20px, 5vw, 26px)
+}
+
+.quantity-details-div p{
+font-size: clamp(21px, 5vw, 26px)
+}
+
+.account-details-card-div-h2 {
+display: grid;
+grid-template-columns: repeat(2, 1fr);
+margin-bottom: 20px;
+}
+
+@media(max-width:670px) {
+.account-details-card-div-h2{
+grid-template-columns: 1fr
+}
+
+.account-details-card-div-h2-total h2{
+text-align: start;
+}
+}
+
+@media(max-width:676px){
+.details-card-title{
+margin-top: 1px;
+}
+}
+
+@media(max-width:476px){
+.image-text-details-div{
+flex-direction: column;
+}
+
+.details-card{
+grid-template-columns: 1fr;
+}
+
+/*
+.details-card-img-div{
+margin-right: auto;
+margin-left: auto;
+}*/
+
+.details-card-title{
+margin-top: 16px;
+}
+
+}
+
+.account-details-card-div-h2 span{
+font-weight: 200;
+}
+
+.account-details-card-div-h2-total {
+text-align: end;
+}
+
+/*Details page*/
+
+/* === Stiluri generale === */
+.search-overlay {
+  position: absolute; /* Sau fixed, dacă vrei să fie pe toată pagina */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 90px;
+  background-color: #78a481;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translateX(100%);
+  transition: transform 0.3s ease-in-out;
+  z-index: 100; /* Asigură-te că este mai mare decât orice alt element */
+}
+
+.search-overlay.active {
+  transform: translateX(0);
+}
+
+/* Pentru ecrane mici */
+@media (max-width: 750px) {
+  .search-overlay {
+    transform: translateY(-100%);
+    z-index: 100;
+  }
+
+  .search-overlay.active {
+    transform: translateY(0%);
+    z-index: 100;
+  }
+}
+
+.hero-text {
+  z-index: 1; /* Mai mic decât search-overlay */
+}
+
+.hero-div {
+  z-index: 1; /* Mai mic decât overlay */
+}
+
+/* Product page */
+
+.product-page-stock {
+  font-size: 26px;
+}
+
+.product-page-stock.disponibil {
+  color: #78a481 !important;
+}
+
+.product-page-stock.indisponibil {
+  color: #ff4d67 !important;
+}
+
+.char-limit-details-div{
+display: none;
+}
+
+.char-limit-details-div.active{
+display: grid;
+color:#ff4d67
+}
+
+.product-page-input-details-div.active1{
+outline: none;
+border: 2px solid #ff4d67;
+}
+
+/* Product page */
+
+/* CheckOutPage */
+
+.CheckOutPage-div main {
+  padding: 30px;
+}
+
+.billingData-form-div {
+  padding-left: 35px;
+}
+
+.billingData-form-div .form {
+  padding-right: 35px;
+}
+
+.billingData-form-div select {
+cursor: pointer;
+}
+
+.checkOutForm-div {
+  padding: 10px 35px;
+  margin-top: 15px;
+  margin-bottom: 35px;
+}
+
+.CheckOutPage-div .billingData-form-div form input,
+select {
+  margin-bottom: 10px;
+  font-size: 16px;
+  padding: 5px;
+  border: 1px solid #c4c7cf;
+}
+
+.checkoutForm div {
+  margin-bottom: 15px;
+}
+
+.custom-checkbox {
+  display: none;
+}
+
+/* Stilizarea label-ului pentru a crea un checkbox personalizat */
+.checkbox-label {
+  position: relative;
+  padding-left: 30px; /* Spațiu pentru caseta checkbox */
+  cursor: pointer;
+  font-size: 16px;
+}
+
+/* Crearea efectului pentru checkbox-ul personalizat */
+.checkbox-label::before {
+  content: "";
+  position: absolute;
+  height: 10px;
+  width: 10px;
+  left: 0;
+  top: 0;
+  border: 4px solid #c4c7cf;
+  background-color: white;
+  border-radius: 30px;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+/* Când checkbox-ul este selectat, modifică stilul */
+.custom-checkbox:checked + .checkbox-label::before {
+  background-color: #ff4d67; /* Culoare verde când este selectat */
+  border-color: #c4c7cf;
+}
+
+.cardForm-div {
+  max-width: 500px;
+  border: 2px solid #c4c7cf;
+  padding: 10px;
+}
+
+.cardForm-div button {
+  background-color: #ff4d67;
+  color: white;
+  border: none;
+  font-size: 20px;
+  padding: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.succesPage-main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.succesPage-main div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
+  text-align: center;
+  padding: 35px;
+}
+
+.succesPage-main div button {
+  font-size: 20px;
+  color: white;
+  background-color: #ff4d67;
+  border-radius: 4px;
+  border: none;
+  padding: 15px;
+  cursor: pointer;
+}
+
+.succesPage-main div h2 {
+  font-size: clamp(24px, 5vw, 35px);
+  line-height: 1.7;
+}
+
+/* CheckOutPage */
+
+
+/* Search Page*/
+.search-result-page-h1-order-by-div {
+display: grid;
+grid-template-columns: repeat(2,1fr);
+padding: 20px;
+padding-top: 35px;
+}
+
+.search-result-page-order-by {
+text-align: end;
+padding: 20px;
+padding-right: 0px;
+}
+
+.search-result-page-order-by label {
+margin-right: 5px;
+}
+
+.search-result-page-h1 span{
+font-weight: 400;
+}
+
+
+.search-result-page-filters-productCards-div {
+  display: grid;
+  grid-template-columns: 1fr 4fr; /* Fără paranteze */
+  padding: 35px;
+  column-gap: 18px;
+}
+
+
+.search-result-page-productCards-div{
+display: grid;
+grid-template-columns: repeat(4,1fr);
+column-gap: 18px;
+row-gap: 18px;
+}
+
+@media(max-width:1350px) {
+.search-result-page-productCards-div{
+grid-template-columns: repeat(3,1fr);
+}
+}
+
+@media(max-width:1090px) {
+  .search-result-page-productCards-div{
+  grid-template-columns: repeat(2,1fr);
+  }
+
+  .search-result-page-filters-productCards-div{
+  grid-template-columns: 1fr;
+  }
+
+  }
+
+  @media(max-width:590px) {
+    .search-result-page-productCards-div{
+    grid-template-columns: 2fr
+    }
+    }
+
+.search-result-page-filters-card{
+margin-bottom: 10px;
+background-color: white;
+padding: 20px;
+}
+
+.search-result-page{
+background:#f4f4f4 ;
+}
+
+.search-result-page-filters-card input{
+margin-bottom: 15px;
+}
+
+.price{
+display: flex;
+flex-direction: column;
+}
+
+.phone-card {
+  width: 100%; /* Ocupă toată coloana */
+  margin: auto; /* Centrează fiecare card în coloană */
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.185);
+  padding-top: 20px;
+}
+
+.phone-card-title-searchPage {
+  font-size: 23px;
+  margin-left: 15px;
+  font-weight: 400;
+}
+
+.title-search-div{
+height:100px
+}
+
+.phone-card-image-SearchPage {
+  width: 250px;
+  min-height: 250px ;
+  margin-left: auto;
+  margin-right: auto;
+  object-fit: cover;
+}
+
+
+.phone-card-SearchPage {
+  width: 100%; 
+  margin: auto; 
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.185);
+  padding-top: 20px;
+  background:white
+}
+
+@media(max-width:654px){
+.search-result-page-order-by{
+padding-top: 25px;
+}
+}
+
+@media(max-width:1090px){
+  .search-result-page-filters-div{
+  display:none;
+  }
+  
+  .search-result-page-filters-div.active{
+  display: grid;
+  margin-bottom: 25px;
+}
+
+  .price-buttons-div{
+  display: none;
+  }
+
+  .price-buttons-div.active{
+  display:grid
+  }
+
+  .brand-div-options{
+  display: none;
+  }
+
+  .brand-div-options.active{
+  display: grid;
+  }
+
+  .brand-h1-incon-div{
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  }
+
+  .brand-icon-div{
+  text-align: end;
+  padding-top: 17px;
+  }
+
+  .filters-button-div{
+  padding-left:35px;
+  }
+
+  .filters-button-div button{
+  border:none;
+  font-size: 17px;
+  background-color: #ff4d67;
+  color: white;
+  border-radius: 5px;
+  padding: 6px 15px;
+  }
+
+
+
+
+  }
+
+  @media(min-width:1090px){
+  .brand-icon-div{
+  display: none;
+  }
+
+  .filters-button-div{
+  display:none;
+  }
+  }
+
+  .search-result-page-h1-order-by-div{
+  padding-bottom: 10px;
+  }
+
+/* SearchPage */
+
+
+
+
+
+/* Admin Section  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
+
+/* MainPage */
+
+
+.admin-header-div{
+background-color: #78a481;
+text-align: end;
+padding: 20px;
+}
+
+.admin-main-panel-page{
+display: flex;
+height: 100vh;
+align-items: center;
+justify-content: flex-start;
+padding: 0px 35px;
+padding-left: 55px;
+}
+
+.admin-main-panel-page h2{
+font-size: 35px;
+cursor: pointer;
+}
+
+.admin-main-panel-page > div {
+width: 100vw;
+}
+
+.admin-main-panel-page hr {
+width: 60vw;
+margin-left: 0px;
+height: 2px;
+background-color: #78a481;
+}
+
+
+
+/* MainPage */
+
+
+/* Header */
+
+.admin-header-button {
+  padding: 8px 16px;
+  font-size: 18px;
+  cursor: pointer;
+  background-color: #ff4d67;
+  border-radius: 4px;
+  border: none;
+  color: white;
+  margin-right: 25px
+}
+
+.admin-header-button:hover{
+background: #d43f57;
+}
+
+/* Header */
+
+/* LogIn Page */
+
+.admin-login-page-main{
+height: 100vh;
+background: #ebebeb;
+display: flex;
+flex-direction: row;
+align-items: center;
+justify-content: center;
+}
+
+.admin-login-page-form{
+background-color: white;
+padding: 40px 35px;
+text-align: center;
+}
+
+.admin-login-page-form hr {
+height: 1px;
+background-color: #78a481;
+margin-bottom: 19px;
+}
+
+.admin-login-page-form input {
+margin-bottom: 18px;
+border: 1px, solid, #afb1b8;
+border-radius: 5px;
+color:#afb1b8;
+padding-top: 14px;
+padding-bottom: 14px;
+padding-left: 8px;
+font-size: 15px;
+}
+
+.admin-login-page-form h1{
+font-size:29px
+}
+
+.admin-login-page-form input:focus{
+outline: none;
+}
+
+.admin-login-page-form button {
+background-color: #ff4d67;
+border: none;
+text-align: center;
+color: white;
+font-size: 15px;
+width: 200px;
+padding: 14px 0px;
+cursor: pointer;
+border-radius: 5px;
+}
+
+.admin-login-page-form button:hover{
+background-color: #d43f57;
+}
+
+.admin-login-page-form p {
+color:#afb1b8 ;
+cursor: pointer;
+}
+
+.admin-forgot-password-form.activeForgot{
+display: none;
+}
+
+.admin-login-page-form.activeForm{
+display:none;
+}
+
+.admin-forgot-password-form{
+  background-color: white;
+  padding: 40px 35px;
+  text-align: center;
+}
+
+.admin-forgot-password-form button {
+  background-color: #ff4d67;
+  border: none;
+  text-align: center;
+  color: white;
+  font-size: 15px;
+  width: 200px;
+  padding: 14px 0px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.admin-forgot-password-form input {
+  margin-bottom: 18px;
+  border: 1px, solid, #afb1b8;
+  border-radius: 5px;
+  color:#afb1b8;
+  padding-top: 14px;
+  padding-bottom: 14px;
+  padding-left: 8px;
+  font-size: 15px;
+}
+
+.admin-forgot-password-form input:focus{
+outline: none;
+}
+.admin-forgot-password-form hr{
+height: 1px;
+background-color: #78a481;
+margin-bottom: 19px;}
+
+
+.admin-forgot-password-form-input input{
+margin-bottom: 0px;
+}
+/* LogIn Page */
+
+/* Reset Password Page */
+
+.admin-password-reset-page main{
+
+display: flex;
+align-items: center;
+justify-content: flex-start;
+padding: 45px;
+}
+
+.admin-password-reset-page-form-div hr {
+height: 1px;
+background: #78a481;
+margin-bottom: 25px;
+}
+
+.admin-password-reset-page-button-div {
+margin-top: 15px;
+}
+.admin-password-reset-page-button-div button {
+background-color: #ff4d67;
+color: white;
+border: none;
+border: 5px;
+font-size: 16px;
+padding: 5px 10px;
+border-radius: 5px;
+cursor: pointer;
+}
+
+.admin-password-reset-page-form-div input {
+font-size:16px ;
+padding: 5px 10px;
+}
+
+/* Reset Password Page */
+
+
+
+
+/* Succes Page*/
+
+.reset-password-succes-page main {
+height: 100vh;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+.reset-password-succes-page-form-div {
+text-align: center;
+}
+
+.reset-password-succes-page-form-div button{
+  background-color: #ff4d67;
+  color: white;
+  border: none;
+  border: 5px;
+  font-size: 21px;
+  padding: 15px 45px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.reset-password-succes-page-form-div h2{
+font-size: 40px;
+margin-top: 0px;
+}
+
+  
+
+
+
+
+
+
+
+
+
+
+.user-profile-photo-div img{
+width: 120px;
+height: 120px;
+border-radius: 100px;
+border: 4px solid #78a481
+}
+
+.user-profile-photo-div span {
+background-color: #ff4d67;
+cursor: pointer;
+}
+
+.user-profile-photo-div svg{
+cursor: pointer;
+}
+
+.delete-add-profile-photo-div {
+display: none;
+}
+
+.delete-add-profile-photo-div.active{
+display: flex;
+flex-direction: column;
+padding-left: 0px;
+margin-left: 15px;
+}
+
+.delete-add-profile-photo-div.active p{
+margin: 10px 0px;
+font-size: 15px;
+font-weight: 400;
+}
+
+.delete-add-profile-photo-div.active div{
+background-color: white;
+padding: 10px;
+width: 200px;
+cursor: pointer;
+}
+
+.delete-add-profile-photo-div.active div:hover{
+background-color: #78a481;
+color: white;
+cursor: pointer;
+}
+
+.delete-add-profile-photo-div.active{
+padding: 10px;
+width: 200px;
+}
+
+.user-profile-photo-div{
+display: flex;
+flex-direction: row;
+}
+
+.blur-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  backdrop-filter: blur(10px);
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 5000;
+}
+
+.account-details-page {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 100vh; /* Asigură-te că părintele are o înălțime minimă */
+}
+
+.add-picture-div{
+background-color: white;
+z-index: 6000;
+}
+
+
+.blur-overlay{
+display: flex;
+align-items: center;
+justify-content: center;
+}
+
+body.no-scroll{
+overflow: hidden;
+}
+
+.add-picture-adjust-picture-square-focus-div{
+background-color: rgba(255, 255, 0, 0);
+width: 240px;
+height: 240px;
+border: 2px,solid, #d4d1d1;
+position: absolute;
+z-index: 6000;
+}
+
+.add-picture-adjust-picture-frame-div{
+background-color: red;
+padding: 70px;
+width: 500px;
+height: 350px;
+position: relative;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+
+.add-picture-adjust-picture-div{
+background-color: purple;
+padding: 15px;
+}
+
+.add-picture-adjust-picture-frame-div img {
+max-width:500px;
+max-height: 350px;
+object-fit: contain;
+}
+
+/* Succes Page */
+
+
+
+/* Admin Section  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */

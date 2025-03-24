@@ -32,12 +32,12 @@ const app = express();
 const PORT = process.env.PORT
 
 app.use(bodyParser.json());
-app.use(cookieParser()); // Adăugăm cookie-parser
+app.use(cookieParser()); 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(
   cors({
-    origin: "https://main.d28iato4526846.amplifyapp.com", // Permite cereri de la localhost:3000
-    credentials: true, // Permite transmiterea de cookies și sesiuni
+    origin: "https://main.d28iato4526846.amplifyapp.com", 
+    credentials: true, 
   })
 );
 

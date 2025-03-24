@@ -25,7 +25,7 @@ function Header() {
     if (isLogged) {
       navigate("/account-details");
     } else {
-      window.location.href = "/login";
+      navigate("/login");
     }
   };
 

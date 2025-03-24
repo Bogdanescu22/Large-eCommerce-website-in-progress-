@@ -24,7 +24,7 @@ function AccountDetails() {
 
   // Fetch user
   useEffect(() => {
-    fetch("http://localhost:5000/auth/user", { credentials: "include" })
+    fetch("http://13.61.15.214:5000/auth/user", { credentials: "include" })
       .then((res) => res.json())
       .then(({ user }) => {
         setUser(user);  // Setează user-ul când datele au fost încărcate
@@ -38,7 +38,7 @@ function AccountDetails() {
   // Fetch orders
   useEffect(() => {
     if (user && user.id) {
-      fetch(`http://localhost:5000/orders_fetch/${user.id}`, { credentials: "include" })
+      fetch(`http://13.61.15.214:5000/orders_fetch/${user.id}`, { credentials: "include" })
         .then((res) => res.json())
         .then((data) => setOrders(data))
         .catch((error) => console.error("Eroare:", error));
@@ -48,7 +48,7 @@ function AccountDetails() {
   // Șterge fotografia de profil
   const deleteProfilePhoto = () => {
     if (!user || !user.id) return;  // Verifică dacă user-ul și user.id sunt disponibile
-    fetch(`http://localhost:5000/profile-picture/delete/${user.id}`, {
+    fetch(`http://13.61.15.214:5000/profile-picture/delete/${user.id}`, {
       credentials: "include",
       method: "DELETE",
     })
@@ -109,7 +109,7 @@ function AccountDetails() {
           <div className="user-profile-photo-div">
             <div className="picture-div">
               <img
-                src={user.profile_picture ? `http://localhost:5000${user.profile_picture}` : "/default-profile.png"}
+                src={user.profile_picture ? `http://13.61.15.214:5000${user.profile_picture}` : "/default-profile.png"}
                 alt="Profil"
               />
               <span onClick={() => setAddPicture(true)}>✏️</span>
@@ -121,7 +121,7 @@ function AccountDetails() {
           <p>Adresa: <span>{user.address || "N/A"}</span></p>
         </div>
 
-        <button onClick={() => (window.location.href = "http://localhost:5000/logout")}>Logout</button>
+        <button onClick={() => (window.location.href = "http://13.61.15.214:5000/logout")}>Logout</button>
 
         {error && <div className="error-message">{error}</div>}
 

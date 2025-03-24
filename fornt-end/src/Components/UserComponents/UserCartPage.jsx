@@ -12,7 +12,7 @@ function UserCartPage() {
   useEffect(() => {
     const getUserId = async () => {
       try {
-        const response = await fetch("http://localhost:5000/auth/user", {
+        const response = await fetch("http://13.61.15.214:5000/auth/user", {
           credentials: "include",
         });
 
@@ -37,7 +37,7 @@ function UserCartPage() {
 
     const fetchCartItems = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/cart/data/${userId}`, {
+        const response = await fetch(`http://13.61.15.214:5000/cart/data/${userId}`, {
           credentials: "include",
         });
 
@@ -59,7 +59,7 @@ function UserCartPage() {
       return;
     }
 
-    fetch(`http://localhost:5000/cart/total/${userId}`, { credentials: "include" })
+    fetch(`http://13.61.15.214:5000/cart/total/${userId}`, { credentials: "include" })
       .then((res) => {
         if (!res.ok) throw new Error("Eroare la preluarea totalului coșului");
         return res.json();

@@ -3,11 +3,11 @@ import Header from "../UserComponents/Header";
 
 function LogInPage() {
   function pressGoogle() {
-    window.location.href = "http://localhost:5000/auth/google";
+    window.location.href = "http://13.61.15.214:5000/auth/google";
   }
 
   function pressFacebook() {
-    window.location.href = "http://localhost:5000/auth/facebook";
+    window.location.href = "http://13.61.15.214:5000/auth/facebook";
   }
 
   return (

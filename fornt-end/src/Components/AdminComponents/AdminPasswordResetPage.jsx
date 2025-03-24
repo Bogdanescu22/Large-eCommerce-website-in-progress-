@@ -9,7 +9,7 @@ const[newPassword, setNewPassword] = useState("")
 const {token} = useParams();
 
 const ResetPassword = () => {
-fetch(`http://localhost:5000/admin/reset-password/${token}`, {credentials: "include",
+fetch(`http://13.61.15.214:5000/admin/reset-password/${token}`, {credentials: "include",
 method:"POST",
 headers:{"Content-Type":"application/json"},
 body: JSON.stringify({

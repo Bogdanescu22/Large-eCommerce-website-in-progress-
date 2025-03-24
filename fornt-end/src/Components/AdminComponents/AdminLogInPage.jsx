@@ -16,7 +16,7 @@ if(!email2){
 return
 }
 
-fetch('http://localhost:5000/admin/reset-password', {
+fetch('http://13.61.15.214:5000/admin/reset-password', {
 method:"POST",
 credentials: "include",
 headers:{"Content-Type":"application/json"},

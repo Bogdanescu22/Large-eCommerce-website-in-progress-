@@ -11,7 +11,7 @@ const AccountDetailsCardDiv = () => {
 
 // Fetch user
   useEffect(() => {
-    fetch("http://localhost:5000/auth/user", { credentials: "include" })
+    fetch("http://13.61.15.214:5000/auth/user", { credentials: "include" })
       .then((res) => {
         if (!res.ok) {
           throw new Error("Eroare la obținerea utilizatorului");
@@ -30,7 +30,7 @@ const AccountDetailsCardDiv = () => {
       return;
     }
     
-    fetch(`http://localhost:5000/orders_fetch/${user.id}`, { credentials: "include" })
+    fetch(`http://13.61.15.214:5000/orders_fetch/${user.id}`, { credentials: "include" })
       .then((res) => res.json())
       .then((data) => {
         console.log("Răspuns server orders_fetch:", data);

@@ -25,7 +25,7 @@ const CheckOutPage = () => {
 
   // 1. Asigură-te că obții userId din momentul în care este disponibil
   useEffect(() => {
-    fetch("http://localhost:5000/auth/user", { credentials: "include" })
+    fetch("http://13.61.15.214:5000/auth/user", { credentials: "include" })
       .then((res) => res.json())
       .then((data) => {
         setUser_Id(data.user.id);
@@ -37,7 +37,7 @@ const CheckOutPage = () => {
   // 2. Obține produsele din coș
   useEffect(() => {
     if (!user_id) return;
-    fetch(`http://localhost:5000/cart/data/${user_id}`, { credentials: "include" })
+    fetch(`http://13.61.15.214:5000/cart/data/${user_id}`, { credentials: "include" })
       .then((res) => {
         console.log("Răspuns server:", res); // Log pentru răspunsul HTTP
         return res.json();
@@ -52,7 +52,7 @@ const CheckOutPage = () => {
   // 3. Obține totalul coșului
   useEffect(() => {
     if (!user_id) return;
-    fetch(`http://localhost:5000/cart/total/${user_id}`, { credentials: "include" })
+    fetch(`http://13.61.15.214:5000/cart/total/${user_id}`, { credentials: "include" })
       .then((res) => res.json())
       .then((data) => {
         setTotal(data.total);
@@ -83,7 +83,7 @@ const CheckOutPage = () => {
    
     console.log("Datele de facturare:", billingInfo); // Log pentru datele de facturare
 
-    fetch(`http://localhost:5000/billing_info/${user_id}`, {
+    fetch(`http://13.61.15.214:5000/billing_info/${user_id}`, {
       credentials: "include",
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -99,7 +99,7 @@ const CheckOutPage = () => {
 
   // Functia de trimitere comenzii
   const orders = () => {
-    return fetch(`http://localhost:5000/orders/${user_id}`, {
+    return fetch(`http://13.61.15.214:5000/orders/${user_id}`, {
       credentials: "include",
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -126,7 +126,7 @@ const CheckOutPage = () => {
   const order_items = (order_id) => {
     cartItems.forEach((item) => {
       console.log("Produs trimis:", item); // Verifică ce date sunt trimise
-      fetch("http://localhost:5000/order_items", {
+      fetch("http://13.61.15.214:5000/order_items", {
         credentials: "include",
         method: "POST",
         headers: { "Content-Type": "application/json" },

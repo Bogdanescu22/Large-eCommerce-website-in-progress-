@@ -25,7 +25,7 @@ function Header() {
     if (isLogged) {
       navigate("/account-details");
     } else {
-      window.location.href = "https://main.d28iato4526846.amplifyapp.com/login";
+      window.location.href = "/login";
     }
   };
 

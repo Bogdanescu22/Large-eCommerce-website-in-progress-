@@ -36,13 +36,13 @@ app.use(cookieParser()); // Adăugăm cookie-parser
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(
   cors({
-    origin: "https://main.d28iato4526846.amplifyapp.com", // Permite cereri de la localhost:3000
-    credentials: true, // Permite transmiterea de cookies și sesiuni
+    origin: "https://main.d28iato4526846.amplifyapp.com", 
+    credentials: true,
   })
 );
 
 const s3 = new S3Client({
-  region: process.env.AWS_REGION, // Pune regiunea corectă
+  region: process.env.AWS_REGION, 
   credentials: {
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY_ID,
@@ -52,7 +52,7 @@ const s3 = new S3Client({
 const upload = multer({
   storage: multerS3({
     s3: s3,
-    bucket: 'my-app-uploads-devsite', // Numele bucket-ului tău
+    bucket: 'my-app-uploads-devsite',
     key: function (req, file, cb) {
       // Numele fișierului pe care îl salvezi pe S3
       cb(null, `profile-pictures/${req.params.user_id}-${Date.now()}.webp`);

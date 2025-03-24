@@ -88,7 +88,7 @@ function Header() {
         </button>
 
         {/* Buton de coș */}
-        <button className={`cartButton ${menu ? "active" : ""}`} onClick={() => (window.location.href = '/cart')}>
+        <button className={`cartButton ${menu ? "active" : ""}`} onClick={() => (window.location.href = "/cart")}>
           <div className="cartDiv">
             <img className="cartButton-image" src="/Images/_Pngtree_vector_shopping_cart_icon_4142519-removebg-preview (1).png" width="40" />
             {cartCount > 0 && <span className="cart-count">{cartCount}</span>}

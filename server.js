@@ -68,7 +68,7 @@ passport.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: "http://localhost:5000/auth/google/callback",
+      callbackURL: "http://13.61.15.214:5000/auth/google/callback",
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
@@ -100,7 +100,7 @@ passport.use(
     {
       clientID: process.env.FACEBOOK_CLIENT_ID,
       clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
-      callbackURL: "http://localhost:5000/auth/facebook/callback",
+      callbackURL: "http://13.61.15.214:5000/auth/facebook/callback",
       profileFields: ["id", "displayName", "email"],
     },
     async (accessToken, refreshToken, profile, done) => {
@@ -158,14 +158,14 @@ passport.deserializeUser(async (id, done) => {
 app.get("/auth/google", passport.authenticate("google", { scope: ["profile", "email"] }));
 
 app.get("/auth/google/callback", passport.authenticate("google", { failureRedirect: "/" }), (req, res) => {
-  res.redirect("http://localhost:3000");
+  res.redirect("https://main.d28iato4526846.amplifyapp.com");
 });
 
 // Autentificare Facebook
 app.get("/auth/facebook", passport.authenticate("facebook", { scope: ["email"] }));
 
 app.get("/auth/facebook/callback", passport.authenticate("facebook", { failureRedirect: "/" }), (req, res) => {
-  res.redirect("http://localhost:3000");
+  res.redirect("https://main.d28iato4526846.amplifyapp.com");
 });
 
 
@@ -242,7 +242,7 @@ app.patch('/profile-picture/addPicture/:user_id', upload.single("profile_picture
 
 app.get("/logout", (req, res) => {
   req.logout(() => {
-    res.redirect("http://localhost:3000/");
+    res.redirect("https://main.d28iato4526846.amplifyapp.com");
   });
 });
 
@@ -1016,7 +1016,7 @@ app.post('/admin/reset-password', async (req, res) => {
     await updateAdmin(admin.id, resetToken, resetTokenExpires);
 
     // Trimitem email cu link-ul de resetare
-    const resetLink = `http://localhost:3000/admin/reset-password/${resetToken}`;
+    const resetLink = `https://main.d28iato4526846.amplifyapp.com/admin/reset-password/${resetToken}`;
     const mailOptions = {
       from: process.env.SMTP_PASS,
       to: email2,
@@ -1056,7 +1056,7 @@ app.post('/admin/reset-password/:resetToken', async (req, res) => {
     const values = [hashedPassword, admin.id];
     await client.query(query, values);
 
-    res.redirect("http://localhost:3000/admin/reset-password/succes")
+    res.redirect("https://main.d28iato4526846.amplifyapp.com/admin/reset-password/succes")
   } catch (err) {
     console.error('Eroare la resetarea parolei:', err);
     res.status(500).json({ error: 'Eroare la resetarea parolei', details: err.message });

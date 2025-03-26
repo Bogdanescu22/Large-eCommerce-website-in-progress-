@@ -21,7 +21,7 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<LogInPage />} />
-          <Route path="/telefoane" element={<TelefoanePage />} />
+          <Route exact path="/telefoane" element={<TelefoanePage />} />
           <Route path="/cart" element={<UserCartPage />} />
           <Route path="/checkout" element={<CheckOutPage />} />
           <Route path="/account-details" element={<AccountDetails />} />

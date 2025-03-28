@@ -348,7 +348,7 @@ app.get('/products/:product_id', async(req, res) => {
 
 
 //Rute pt cardurile din paginile pt produse//
-app.get("http://13.61.15.214:5000/telefoane-cards", async (req, res) => {
+app.get("/telefoane-cards", async (req, res) => {
   try {
     const result = await client.query(
       "SELECT id, image_url, name, price, category FROM products WHERE category = 'telefoane'"

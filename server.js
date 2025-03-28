@@ -41,6 +41,10 @@ app.use(
   })
 );
 
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+});
+
 
 
 const s3 = new S3Client({
@@ -1109,6 +1113,12 @@ app.get("/payment-status/:paymentIntentId", async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
+});
+
+app.use(express.static(path.join(__dirname, 'fornt-end/build')));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'fornt-end/build', 'index.html'));
 });
 
 

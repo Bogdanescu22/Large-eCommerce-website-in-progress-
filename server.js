@@ -36,7 +36,7 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(
   cors({
-    origin: 'https://main.d28iato4526846.amplifyapp.com', 
+    origin: '*', 
     credentials: true, 
   })
 );

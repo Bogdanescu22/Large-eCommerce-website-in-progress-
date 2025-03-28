@@ -36,7 +36,7 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(
   cors({
-    origin: "https://main.d28iato4526846.amplifyapp.com", 
+    origin: 'https://main.d28iato4526846.amplifyapp.com', 
     credentials: true, 
   })
 );
@@ -348,7 +348,7 @@ app.get('/products/:product_id', async(req, res) => {
 
 
 //Rute pt cardurile din paginile pt produse//
-app.get("/telefoane-cards", async (req, res) => {
+app.get("http://13.61.15.214:5000/telefoane-cards", async (req, res) => {
   try {
     const result = await client.query(
       "SELECT id, image_url, name, price, category FROM products WHERE category = 'telefoane'"

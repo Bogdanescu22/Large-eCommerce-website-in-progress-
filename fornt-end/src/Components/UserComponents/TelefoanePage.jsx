@@ -9,7 +9,7 @@ const[telefoane, setTelefoane]=useState([]);
 
 useEffect(()=> {
 fetch("http://13.61.15.214:5000/telefoane-cards")
-console.log("Cerere pentru /telefoane-cards primită");
+console.log("Cerere pentru /telefoane-cards primită")
 .then((res)=>res.json())
 .then((data) => {
 console.log("Datele primite:", data);  // Verifică structura datelor

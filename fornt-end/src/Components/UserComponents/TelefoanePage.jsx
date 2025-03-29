@@ -15,7 +15,7 @@ console.log("Cerere pentru /telefoane-cards primită")
 console.log("Datele primite:", data);  // Verifică structura datelor
 setTelefoane(data);
 })
-.catch((err) => console.log("Eroare la fetch",err))
+.catch((err) => console.log("Eroare la fetch pt telefoane page",err))
 },[]);
 
 return (

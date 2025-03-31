@@ -36,14 +36,10 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(
   cors({
-    origin: "https://main.d28iato4526846.amplifyapp.com/", 
+    origin: "https://devsite.cfd/", 
     credentials: true, 
   })
 );
-
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
-});
 
 
 
@@ -74,7 +70,7 @@ passport.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: "http://13.61.15.214:5000/auth/google/callback",
+      callbackURL: "https://api.devsite.cfd/auth/google/callback",
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
@@ -106,7 +102,7 @@ passport.use(
     {
       clientID: process.env.FACEBOOK_CLIENT_ID,
       clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
-      callbackURL: "http://13.61.15.214:5000/auth/facebook/callback",
+      callbackURL: "https://api.devsite.cfd/auth/facebook/callback",
       profileFields: ["id", "displayName", "email"],
     },
     async (accessToken, refreshToken, profile, done) => {
@@ -164,14 +160,14 @@ passport.deserializeUser(async (id, done) => {
 app.get("/auth/google", passport.authenticate("google", { scope: ["profile", "email"] }));
 
 app.get("/auth/google/callback", passport.authenticate("google", { failureRedirect: "/" }), (req, res) => {
-  res.redirect("https://main.d28iato4526846.amplifyapp.com");
+  res.redirect("https://devsite.cfd/");
 });
 
 // Autentificare Facebook
 app.get("/auth/facebook", passport.authenticate("facebook", { scope: ["email"] }));
 
 app.get("/auth/facebook/callback", passport.authenticate("facebook", { failureRedirect: "/" }), (req, res) => {
-  res.redirect("https://main.d28iato4526846.amplifyapp.com");
+  res.redirect("https://devsite.cfd/");
 });
 
 
@@ -248,7 +244,7 @@ app.patch('/profile-picture/addPicture/:user_id', upload.single("profile_picture
 
 app.get("/logout", (req, res) => {
   req.logout(() => {
-    res.redirect("https://main.d28iato4526846.amplifyapp.com");
+    res.redirect("https://devsite.cfd/");
   });
 });
 

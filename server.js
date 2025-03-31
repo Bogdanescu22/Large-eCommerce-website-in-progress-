@@ -1121,6 +1121,9 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'fornt-end/build', 'index.html'));
 });
 
+app.get("/health", (req, res)=> {
+res.status(200).json({message:"Serverul este activ!"})
+});
 
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`Serverul rulează la adresa http://localhost:${PORT}`);

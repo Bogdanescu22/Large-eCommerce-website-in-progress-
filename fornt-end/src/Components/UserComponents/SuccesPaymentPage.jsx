@@ -10,7 +10,7 @@ const SuccesPage = () => {
 
   // Fetch pentru userId
   useEffect(() => {
-    fetch("http://13.61.15.214:5000/auth/user", { credentials: "include" })
+    fetch("https://api.devsite.cfd/auth/user", { credentials: "include" })
       .then((res) => res.json())
       .then((data) => {
         console.log("🟢 User data:", data);
@@ -29,7 +29,7 @@ const SuccesPage = () => {
 
     console.log(`🟡 Fetching order for userId: ${userId}`);
 
-    fetch(`http://13.61.15.214:5000/orders/latest_order/${userId}`, { credentials: "include" })
+    fetch(`https://api.devsite.cfd/orders/latest_order/${userId}`, { credentials: "include" })
       .then((res) => {
         if (!res.ok) {
           throw new Error(`HTTP error! Status: ${res.status}`);

@@ -89,7 +89,7 @@ function ImageCropper({ imageSrc, onSave, onClose, user_id }) {
       formData.append("profile_picture", blob);
 
       try {
-        const response = await fetch(`http://13.61.15.214:5000/profile-picture/addPicture/${user_id}`, {
+        const response = await fetch(`https://api.devsite.cfd/profile-picture/addPicture/${user_id}`, {
           method: "PATCH",
           body: formData,
           credentials: "include",

@@ -12,7 +12,7 @@ function ProductPageHtml({ name_product, image_product, stock_product, product_p
   useEffect(() => {
     const getUserId = async () => {
       try {
-        const response = await fetch("http://13.61.15.214:5000/auth/user", {
+        const response = await fetch("https://api.devsite.cfd/auth/user", {
           credentials: "include",
         });
 
@@ -43,7 +43,7 @@ function ProductPageHtml({ name_product, image_product, stock_product, product_p
     if(!starsReviews || !description) {
     return alert("Campurile nota si descriere sunt obligatorii!")
     }
-    fetch(`http://13.61.15.214:5000/reviews_approval/${product_id}/${user_id}`, {
+    fetch(`https://api.devsite.cfd/reviews_approval/${product_id}/${user_id}`, {
       method: "POST",
       credentials: "include",
       headers: { "Content-Type": "application/json" },

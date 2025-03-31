@@ -9,7 +9,7 @@ const ProductPage = () => {
   useEffect(() => {
     if (!name) return;
 
-    fetch(`http://13.61.15.214:5000/products/${name}`)
+    fetch(`https://api.devsite.cfd/products/${name}`)
       .then((res) => res.json())
       .then((data) => {
         console.log("Datele primite:", data);

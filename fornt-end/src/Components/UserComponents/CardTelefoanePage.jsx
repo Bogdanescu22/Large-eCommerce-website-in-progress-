@@ -10,7 +10,7 @@ function CardTelefoanePage({ productId, imgURL, name, price, category }) {
   useEffect(() => {
     const getUserId = async () => {
       try {
-        const response = await fetch("http://13.61.15.214:5000/auth/user", {
+        const response = await fetch("https://api.devsite.cfd/auth/user", {
           credentials: "include",
         });
 
@@ -49,7 +49,7 @@ function CardTelefoanePage({ productId, imgURL, name, price, category }) {
     };
 
     try {
-      const response = await fetch("http://13.61.15.214:5000/cart", {
+      const response = await fetch("https://api.devsite.cfd/cart", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

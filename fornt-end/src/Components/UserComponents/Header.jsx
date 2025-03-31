@@ -12,7 +12,7 @@ function Header() {
 
   // Verificarea autentificării
   useEffect(() => {
-    fetch("https://13.61.15.214:5000/check-auth", { credentials: "include" })
+    fetch("https://api.devsite.cfd/check-auth", { credentials: "include" })
       .then((res) => res.json())
       .then((data) => {
         setIsLogged(data.isLogged);
@@ -31,7 +31,7 @@ function Header() {
 
   useEffect(() => {
     if (userID) {
-      fetch(`https://13.61.15.214:5000/cart/total-quantity/${userID}`, { credentials: "include" })
+      fetch(`https://api.devsite.cfd/cart/total-quantity/${userID}`, { credentials: "include" })
         .then((res) => res.json())
         .then((data) => setCartCount(data.total_quantity || 0))
         .catch((error) => console.error("Error:", error));

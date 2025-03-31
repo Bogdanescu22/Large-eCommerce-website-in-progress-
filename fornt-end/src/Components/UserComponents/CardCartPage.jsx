@@ -8,7 +8,7 @@ function CardCartPage({ imgURL, title, quantity, price, onStockCheck, user_id, o
   const [deleteItem, setDeleteItem]=useState(null);
 
   useEffect(() => {
-    fetch("http://13.61.15.214:5000/products")
+    fetch("https://api.devsite.cfd/products")
       .then((res) => res.json())
       .then((products) => {
         const foundProduct = products.find((product) => product.image_url === imgURL);
@@ -37,7 +37,7 @@ function CardCartPage({ imgURL, title, quantity, price, onStockCheck, user_id, o
   const updateQuantityInDatabase = (newQuantity) => {
     if (!productID || !user_id) return;
 
-    fetch(`http://13.61.15.214:5000/cart/quantity/update/${productID}/${user_id}`, {
+    fetch(`https://api.devsite.cfd/cart/quantity/update/${productID}/${user_id}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({quantity: newQuantity}), 
@@ -67,7 +67,7 @@ const Decrease = () => {
 };
 
 const deleteCartProduct= () => {
-  fetch(`http://13.61.15.214:5000/cart/delete/${user_id}/${productID}`,{
+  fetch(`https://api.devsite.cfd/cart/delete/${user_id}/${productID}`,{
   method:"DELETE",
   credentials:"include"})
   .then((res)=>res.json())

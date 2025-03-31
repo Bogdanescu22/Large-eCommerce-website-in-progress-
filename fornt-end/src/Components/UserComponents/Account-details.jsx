@@ -109,7 +109,7 @@ function AccountDetails() {
           <div className="user-profile-photo-div">
             <div className="picture-div">
               <img
-                src={user.profile_picture ? `http://13.61.15.214:5000${user.profile_picture}` : "/default-profile.png"}
+                src={user.profile_picture ? `https://api.devsite.cfd${user.profile_picture}` : "/default-profile.png"}
                 alt="Profil"
               />
               <span onClick={() => setAddPicture(true)}>✏️</span>
@@ -121,7 +121,7 @@ function AccountDetails() {
           <p>Adresa: <span>{user.address || "N/A"}</span></p>
         </div>
 
-        <button onClick={() => (window.location.href = "http://13.61.15.214:5000/logout")}>Logout</button>
+        <button onClick={() => (window.location.href = "https://api.devsite.cfd/logout")}>Logout</button>
 
         {error && <div className="error-message">{error}</div>}
 

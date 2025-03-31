@@ -17,7 +17,7 @@ console.log("Campurile amount si currency sunt obligatorii")
 return
 };
 
-fetch("http://13.61.15.214:5000/create-payment-intent",{
+fetch("https://api.devsite.cfd/create-payment-intent",{
 method:"POST",
 headers:{"Content-Type":"application/json"},
 body: JSON.stringify({amount, currency})

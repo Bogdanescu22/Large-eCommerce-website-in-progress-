@@ -8,7 +8,7 @@ function TelefoanePage () {
 const[telefoane, setTelefoane]=useState([]);
 
 useEffect(()=> {
-fetch("https://13.61.15.214:5000/telefoane-cards")
+fetch("https://api.devsite.cfd/telefoane-cards")
 console.log("Cerere pentru /telefoane-cards primită")
 .then((res)=>res.json())
 .then((data) => {

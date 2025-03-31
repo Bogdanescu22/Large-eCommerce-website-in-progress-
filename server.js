@@ -348,7 +348,7 @@ app.get('/products/:product_id', async(req, res) => {
 
 
 //Rute pt cardurile din paginile pt produse//
-app.get("/telefoane-cards", async (req, res) => {
+app.get("https://api.devsite.cfd/telefoane-cards", async (req, res) => {
   try {
     const result = await client.query(
       "SELECT id, image_url, name, price, category FROM products WHERE category = 'telefoane'"

@@ -36,7 +36,7 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(
   cors({
-    origin: "https://devsite.cfd/", 
+    origin: ['https://www.devsite.cfd', 'http://localhost:3000'], 
     credentials: true, 
   })
 );

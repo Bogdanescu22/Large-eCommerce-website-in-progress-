@@ -17,8 +17,6 @@ setTelefoane(data);
 .catch((err) => console.log("Eroare la fetch pt telefoane page",err))
 },[]);
 
-console.log("Se renderizează pagina de telefoane");
-
 return (
   <div className="telefoane-container">
     <Header />

@@ -1,18 +1,18 @@
 import React from "react";
-import HomePage from "./UserComponents/Homepage";
+import HomePage from "./UserComponents/Homepage.jsx";
 import { BrowserRouter as Router, Route, Routes,} from "react-router-dom";
-import LogInPage from "./UserComponents/LogIn";
-import TelefoanePage from "./UserComponents/TelefoanePage";
-import UserCartPage from "./UserComponents/UserCartPage";
-import CheckOutPage from "./UserComponents/CheckoutPage";
-import AccountDetails from "./UserComponents/Account-details";
-import ProductPage from "./UserComponents/ProductPage";
-import SuccesPage from "./UserComponents/SuccesPaymentPage";
-import SearchResultPage from "./UserComponents/SearchResultPage";
-import MainPage from "./AdminComponents/MainPage";
-import AdminLoginPage from "./AdminComponents/AdminLogInPage";
-import AdminPasswordResetPage from "./AdminComponents/AdminPasswordResetPage";
-import ResetPasswordSucces from "./AdminComponents/ResetPasswordSucces";
+import LogInPage from "./UserComponents/LogIn.jsx";
+import TelefoanePage from "./UserComponents/TelefoanePage.jsx";
+import UserCartPage from "./UserComponents/UserCartPage.jsx";
+import CheckOutPage from "./UserComponents/CheckoutPage.jsx";
+import AccountDetails from "./UserComponents/Account-details.jsx";
+import ProductPage from "./UserComponents/ProductPage.jsx";
+import SuccesPage from "./UserComponents/SuccesPaymentPage.jsx";
+import SearchResultPage from "./UserComponents/SearchResultPage.jsx";
+import MainPage from "./AdminComponents/MainPage.jsx";
+import AdminLoginPage from "./AdminComponents/AdminLogInPage.jsx";
+import AdminPasswordResetPage from "./AdminComponents/AdminPasswordResetPage.jsx";
+import ResetPasswordSucces from "./AdminComponents/ResetPasswordSucces.jsx";
 
 function App() {
   return (

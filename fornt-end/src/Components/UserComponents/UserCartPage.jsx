@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import Header from "./Header";
-import Footer from "./Footer";
-import CardCartPage from "./CardCartPage";
+import Header from "./Header.jsx";
+import Footer from "./Footer.jsx";
+import CardCartPage from "./CardCartPage.jsx";
 
 function UserCartPage() {
   const [cartItems, setCartItems] = useState([]);

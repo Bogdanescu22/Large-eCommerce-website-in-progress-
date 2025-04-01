@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import ProductPageHtml from "./ProductPageHtml";
+import ProductPageHtml from "./ProductPageHtml.jsx";
 
 const ProductPage = () => {
   const { name } = useParams();

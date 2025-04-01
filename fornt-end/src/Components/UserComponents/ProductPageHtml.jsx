@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from "react";
-import Header from "./Header";
-import Footer from "./Footer";
+import Header from "./Header.jsx";
+import Footer from "./Footer.jsx";
 
 function ProductPageHtml({ name_product, image_product, stock_product, product_price, product_details, product_id }) {
   const [starsReviews, setStarsReviews] = useState(0); // 🔥 Corectat numele

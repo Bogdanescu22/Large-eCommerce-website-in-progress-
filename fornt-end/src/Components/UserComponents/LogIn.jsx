@@ -1,5 +1,5 @@
 import React from "react";
-import Header from "../UserComponents/Header";
+import Header from "../UserComponents/Header.jsx";
 
 function LogInPage() {
   function pressGoogle() {

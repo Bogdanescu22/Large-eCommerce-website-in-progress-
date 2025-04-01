@@ -1,6 +1,6 @@
 import React from "react";
-import Header from "../UserComponents/Header";
-import Footer from "../UserComponents/Footer";
+import Header from "../UserComponents/Header.jsx";
+import Footer from "../UserComponents/Footer.jsx";
 
 const ProductDetails = ({ product }) => {
   return (

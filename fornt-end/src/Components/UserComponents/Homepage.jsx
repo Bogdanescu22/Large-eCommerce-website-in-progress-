@@ -1,7 +1,7 @@
 import React from "react";
-import Header from "../UserComponents/Header";
-import Footer from "./Footer";
-import CardHomePage from "./CardHomePage";
+import Header from "../UserComponents/Header.jsx";
+import Footer from "./Footer.jsx";
+import CardHomePage from "./CardHomePage.jsx";
 import cardsinfo from "./HomePageArray";
 
 

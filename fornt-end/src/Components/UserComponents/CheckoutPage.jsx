@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import Header from "./Header";
-import Footer from "./Footer";
-import CheckoutForm from "./CheckoutForm";
+import Header from "./Header.jsx";
+import Footer from "./Footer.jsx";
+import CheckoutForm from "./CheckoutForm.jsx";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 

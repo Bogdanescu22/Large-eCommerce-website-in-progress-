@@ -7,7 +7,7 @@ function LogInPage() {
   }
 
   function pressFacebook() {
-    window.location.href = "/auth/facebook";
+    window.location.href = "https://api.devsite.cfd/auth/facebook";
   }
 
   return (

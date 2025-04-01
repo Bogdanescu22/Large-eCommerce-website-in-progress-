@@ -1,7 +1,7 @@
 import React, {useEffect,useState} from "react";
 import Header from "./Header.jsx";
 import Footer from "./Footer.jsx";
-import CardTelefoanePage from "./CardTelefoanePage";
+import CardTelefoanePage from "./CardTelefoanePage.jsx";
 
 function TelefoanePage () {
 

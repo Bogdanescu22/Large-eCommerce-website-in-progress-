@@ -28,7 +28,7 @@ return (
       </div>
       <div className="product-cards-div">
         {telefoane.length === 0 ? (
-          <p>Se încarcă telefoanele sau nu există produse disponibile...</p>
+          <p>Se încarcă telefoanele sau nu există produse ...</p>
         ) : (
           telefoane.map((produs) => (
             <CardTelefoanePage

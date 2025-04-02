@@ -1122,7 +1122,7 @@ res.status(200).json({message:"Serverul este activ!"})
 });
 
 app.listen(PORT, '0.0.0.0', () => {
-  console.log(`Serverul rulează la adresa http://localhost:${PORT}`);
+  console.log(`Serverul rulează la adresa https://api.devsite.cfd`);
 });
 
 

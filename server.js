@@ -359,12 +359,12 @@ app.get("/telefoane-cards", async (req, res) => {
   }
 }); 
 
-app.get("ceasuri-cards", async (req, res) => {
+app.get("/ceasuri-cards", async (req, res) => {
   try {
     const result = await client.query(
       "SELECT id, image_url, title, price FROM products WHERE category = 'ceasuri'"
     );
-    res.json(result.rows); // Returnează doar produsele din categoria "telefoane"
+    res.json(result.rows); 
   } catch (err) {
     res.status(500).json({ error: "Eroare la interogarea bazei de date!" });
   }
@@ -375,7 +375,7 @@ app.get("/tablete-cards", async (req, res) => {
     const result = await client.query(
       "SELECT id, image_url, title, price FROM products WHERE category = 'tablete'"
     );
-    res.json(result.rows); // Returnează doar produsele din categoria "telefoane"
+    res.json(result.rows); 
   } catch (err) {
     res.status(500).json({ error: "Eroare la interogarea bazei de date!" });
   }
@@ -386,7 +386,7 @@ app.get("/accesorii si periferice-cards", async (req, res) => {
     const result = await client.query(
       "SELECT id, image_url, title, price FROM products WHERE category = 'accesorii si periferice'"
     );
-    res.json(result.rows); // Returnează doar produsele din categoria "telefoane"
+    res.json(result.rows); 
   } catch (err) {
     res.status(500).json({ error: "Eroare la interogarea bazei de date!" });
   }
@@ -397,7 +397,7 @@ app.get("/televizoare si streaming-cards", async (req, res) => {
     const result = await client.query(
       "SELECT id, image_url, title, price FROM products WHERE category = 'televizoare si streaming'"
     );
-    res.json(result.rows); // Returnează doar produsele din categoria "telefoane"
+    res.json(result.rows); 
   } catch (err) {
     res.status(500).json({ error: "Eroare la interogarea bazei de date!" });
   }
@@ -408,7 +408,7 @@ app.get("/boxe inteligente-cards", async (req, res) => {
     const result = await client.query(
       "SELECT id, image_url, title, price FROM products WHERE category = 'boxe inteligente'"
     );
-    res.json(result.rows); // Returnează doar produsele din categoria "telefoane"
+    res.json(result.rows); 
   } catch (err) {
     res.status(500).json({ error: "Eroare la interogarea bazei de date!" });
   }
@@ -419,7 +419,7 @@ app.get("/desktops-cards", async (req, res) => {
     const result = await client.query(
       "SELECT id, image_url, title, price FROM products WHERE category = 'desktops'"
     );
-    res.json(result.rows); // Returnează doar produsele din categoria "telefoane"
+    res.json(result.rows); 
   } catch (err) {
     res.status(500).json({ error: "Eroare la interogarea bazei de date!" });
   }

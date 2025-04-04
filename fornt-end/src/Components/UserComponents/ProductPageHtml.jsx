@@ -106,8 +106,10 @@ function ProductPageHtml({ name_product, image_product, stock_product, product_p
         </div>
 
         <div className="product-page-reviews-description-div">
+          <h2>Recenzii</h2>
           <div className="product-page-star-reviews-div">
-            {[1, 2, 3, 4, 5].map((star) => (
+            <div><h3>Adauga o nota</h3></div>
+             <div>{[1, 2, 3, 4, 5].map((star) => (
               <span
                 key={star}
                 onClick={() => handleStarClick(star)}
@@ -122,10 +124,14 @@ function ProductPageHtml({ name_product, image_product, stock_product, product_p
                 ★
               </span>
             ))}
+            </div>
           </div>
           <div className="product-page-details-div">
-          <input className={`product-page-input-details-div ${description.length > 500 ? "active1" : ""}`} onChange={(e)=>handleProductDescription(e)} type="text" placeholder="Descrie experienta ta cu produsul">
-          </input>
+          <textarea 
+          className={`product-page-input-details-div ${description.length > 500 ? "active1" : ""}`} 
+          onChange={(e) => handleProductDescription(e)}
+         placeholder="Descrie experienta ta cu produsul">
+        </textarea>
           <p className={`char-limit-details-div ${description.length > 500 ? "active" : ""}`}>Ai depasit numarul maxim de caractere (500)!</p>
           </div>
           <div className="product-page-reviews-button-div">

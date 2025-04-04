@@ -34,12 +34,21 @@ const PORT = process.env.PORT
 app.use(bodyParser.json());
 app.use(cookieParser()); 
 app.use(bodyParser.urlencoded({ extended: true }));
+const allowedOrigins = ['https://www.devsite.cfd']; // Lista domeniilor permise
+
 app.use(
   cors({
-    origin: 'https://www.devsite.cfd', 
-    credentials: true, 
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
+    credentials: true,
   })
 );
+
 
 
 

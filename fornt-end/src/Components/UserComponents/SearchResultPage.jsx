@@ -21,7 +21,7 @@ const SearchResultPage = () => {
   useEffect(() => {
     const getUserId = async () => {
       try {
-        const response = await fetch("http://localhost:5000/auth/user", {
+        const response = await fetch("https://api.devsite.cfd/auth/user", {
           credentials: "include",
         });
         if (!response.ok) {
@@ -42,7 +42,7 @@ const SearchResultPage = () => {
       return;
     }
 
-    fetch(`http://localhost:5000/search-result/${text}`, { credentials: "include" })
+    fetch(`https://api.devsite.cfd/search-result/${text}`, { credentials: "include" })
       .then((res) => res.json())
       .then((data) => {
         setSearchedProduct(data);

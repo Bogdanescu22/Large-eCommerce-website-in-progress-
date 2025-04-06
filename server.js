@@ -36,7 +36,7 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(
   cors({
-    origin: "https://devsite.cfd",
+    origin: ["https://devsite.cfd", "https://www.devsite.cfd"],
     credentials: true,
   })
 );

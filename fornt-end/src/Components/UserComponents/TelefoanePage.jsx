@@ -11,7 +11,7 @@ useEffect(()=> {
 fetch("https://api.devsite.cfd/telefoane-cards")
 .then((res)=>res.json())
 .then((data) => {
-console.log("Datele primite:", data);  // Verifică structura datelor
+console.log("Datele primite:", data);  
 setTelefoane(data);
 })
 .catch((err) => console.log("Eroare la fetch pt telefoane page",err))

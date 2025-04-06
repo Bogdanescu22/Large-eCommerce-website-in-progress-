@@ -28,12 +28,6 @@ import { S3Client } from "@aws-sdk/client-s3";
 
 dotenv.config();  // Încărcăm variabilele de mediu din .env
 
-const app = express();
-const PORT = process.env.PORT
-
-app.use(bodyParser.json());
-app.use(cookieParser()); 
-app.use(bodyParser.urlencoded({ extended: true }));
 app.use(
   cors({
     origin: ["https://devsite.cfd", "https://www.devsite.cfd"],
@@ -41,7 +35,12 @@ app.use(
   })
 );
 
+const app = express();
+const PORT = process.env.PORT
 
+app.use(bodyParser.json());
+app.use(cookieParser()); 
+app.use(bodyParser.urlencoded({ extended: true }));
 
 
 const s3 = new S3Client({

@@ -28,12 +28,12 @@ import { S3Client } from "@aws-sdk/client-s3";
 
 dotenv.config();  // Încărcăm variabilele de mediu din .env
 
-app.use(
-  cors({
-    origin: ["https://devsite.cfd", "https://www.devsite.cfd"],
-    credentials: true,
-  })
-);
+//app.use(
+ // cors({
+  //  origin: ["https://devsite.cfd", "https://www.devsite.cfd"],
+   // credentials: true,
+  //})
+//);
 
 const app = express();
 const PORT = process.env.PORT
@@ -1111,15 +1111,7 @@ app.get("/payment-status/:paymentIntentId", async (req, res) => {
   }
 });
 
-app.use(express.static(path.join(__dirname, 'fornt-end/build')));
 
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'fornt-end/build', 'index.html'));
-});
-
-app.get("/health", (req, res)=> {
-res.status(200).json({message:"Serverul este activ!"})
-});
 
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`Serverul rulează la adresa https://api.devsite.cfd`);

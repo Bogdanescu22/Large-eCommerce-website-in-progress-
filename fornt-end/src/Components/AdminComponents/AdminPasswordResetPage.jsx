@@ -9,7 +9,7 @@ const[newPassword, setNewPassword] = useState("")
 const {resetToken} = useParams();
 
 const ResetPassword = () => {
-fetch(`http://localhost:5000/admin/resetpassword/${resetToken}`, {
+fetch(`https://api.devsite.cfd/admin/resetpassword/${resetToken}`, {
 method:"POST",
 headers:{"Content-Type":"application/json"},
 body: JSON.stringify({

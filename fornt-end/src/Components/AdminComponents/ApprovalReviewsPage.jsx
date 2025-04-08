@@ -10,7 +10,7 @@ const [review, setReview]= useState([]);
 
 
 useEffect(() => {
-fetch("http://localhost:5000/admin/reviews_for_approval", {credentials: "include"})
+fetch("https://api.devsite.cfd/admin/reviews_for_approval", {credentials: "include"})
 .then((res)=> res.json())
 .then((data)=> {
 console.log(data);
@@ -23,7 +23,7 @@ console.error("Eroare:", error);
 },[])
 
 const handleButton = () => {
-  fetch("http://localhost:5000/admin/send_reviews", {
+  fetch("https://api.devsite.cfd/send_reviews", {
     credentials: "include",
     method: "POST",
     headers: { "Content-Type": "application/json" },

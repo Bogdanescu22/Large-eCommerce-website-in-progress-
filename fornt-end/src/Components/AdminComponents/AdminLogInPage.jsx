@@ -96,7 +96,7 @@ const AdminLoginPage = () => {
   const ForgotPassword = () => { 
     if (!email2) return;
 
-    fetch("http://localhost:5000/admin/reset-password", { 
+    fetch("https://api.devsite.cfd/reset-password", { 
       method: "POST", 
       credentials: "include", 
       headers: { "Content-Type": "application/json" }, 
@@ -109,7 +109,7 @@ const AdminLoginPage = () => {
 
   const Login = (e) => { 
     e.preventDefault(); 
-    fetch("http://localhost:5000/admin/login", {  
+    fetch("https://api.devsite.cfd/admin/login", {  
       method: "POST", 
       credentials: "include", // 🔥 Adăugat pentru cookie
       headers: { "Content-Type": "application/json" }, 

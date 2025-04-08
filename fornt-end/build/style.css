@@ -12,11 +12,11 @@ button {
 
 /* Header */
 .header {
-  display: flex; /* Activăm flexbox pentru containerul principal */
-  align-items: center; /* Aliniem elementele pe verticală */
+  display: flex;
+  align-items: center; 
   background-color: #78a481;
   height: 75px;
-  padding: 10px 20px; /* Adaugă puțin padding pe stânga și dreapta pentru estetică */
+  padding: 10px 20px; 
   font-family: "Arimo", serif;
   color: white;
   width: 100%;
@@ -101,8 +101,8 @@ button {
 }
 
 .menu {
-  display: flex; /* Flexbox pentru a aranja elementele meniului */
-  align-items: center; /* Aliniază meniul pe verticală */
+  display: flex; 
+  align-items: center; 
   margin-right: 30px;
   color: white;
   flex-direction: row;
@@ -110,7 +110,7 @@ button {
 }
 
 .menuDiv {
-  margin-left: 20px; /* Adaugă spațiu între elementele meniului */
+  margin-left: 20px; 
 }
 
 .menuDiv p {
@@ -164,7 +164,7 @@ button {
 }
 
 .search-overlay {
-  position: absolute; /* Se poziționează peste header */
+  position: absolute;
   top: 0;
   left: 0; /* Îl menținem la marginea din stânga */
   width: 100%; /* Lățime egală cu header-ul */
@@ -832,6 +832,9 @@ text-align: end;
   z-index: 1; /* Mai mic decât overlay */
 }
 
+
+
+
 /* Product page */
 
 .product-page-stock {
@@ -859,6 +862,159 @@ color:#ff4d67
 outline: none;
 border: 2px solid #ff4d67;
 }
+
+
+.image_cartinfo-div{
+display:grid;
+grid-template-columns: repeat(2,1fr);
+}
+
+.product-page-image > img {
+width: 500px;
+align-items: center;
+margin-left: auto;
+margin-right: auto ;
+}
+
+.product-page-image {
+display: flex;
+align-items: center;
+justify-content: center;
+}
+
+.productPage-main{
+padding: 60px 45px;
+
+}
+
+.productPage-productTitle h1 {
+font-size: 40px;
+margin-bottom: 45px;
+}
+
+.product-page-price {
+font-size: 30px;
+margin-top: 15px;
+margin-bottom: 22px;
+}
+
+.product-page-stock {
+font-size: 21px;
+margin-bottom: 5px;
+}
+
+div.cartinfo-prodcut-page > button {
+background-color: #ff4d67;
+color: white;
+font-size: 20px;
+border:none;
+padding: 15px 30px;
+border-radius: 4px;
+cursor: pointer;
+};
+
+div.cartinfo-prodcut-page > button:hover {
+background-color: #d43f57;
+}
+
+.product-page-details h2 {
+font-size: 30px;
+font-weight: 500;
+}
+
+.product-page-details p {
+font-size: 17px;
+}
+
+.product-page-reviews-description-div h2{
+margin-top: 35px;
+margin-bottom: 20px;
+font-weight: 500;
+font-size: 30px;
+}
+
+.product-page-star-reviews-div {
+display: flex;
+flex-direction: row;
+}
+
+div.product-page-star-reviews-div h3 {
+margin-top: 7px;
+margin-bottom: 10px;
+margin-right: 15px;
+font-weight: 400;
+}
+
+.product-page-star-reviews-div {
+margin-bottom: 15px;
+}
+
+.product-page-details-div > input {
+font-size: 15px;
+border: 2px solid #78a481;
+}
+
+.product-page-details-div > input:focus {
+outline: none;
+}
+
+.product-page-details-div > input {
+width: 280px;
+height: 100px;
+display:flex;
+justify-content: flex-start;
+}
+
+.product-page-details-div textarea {
+  width: 280px;
+  height: 100px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 5px; 
+  text-align: left; 
+  resize: none;
+  font-family: "Arimo", serif;
+  font-size: 15px;
+}
+
+.product-page-details-div textarea::placeholder {
+  text-align: left;
+  vertical-align: top;
+}
+
+.product-page-details-div {
+margin-bottom: 15px;
+}
+
+.product-page-reviews-button-div button {
+background-color: #ff4d67;
+color: white;
+font-size: 15px;
+border:none;
+padding: 10px 25px;
+border-radius: 4px;
+cursor: pointer;
+}
+
+.image_cartinfo-div {
+margin-bottom: 30px
+}
+
+
+
+
+@media (max-width: 820px) {
+  .image_cartinfo-div {grid-template-columns: 1fr;}
+  .product-page-image img {
+  width: 390px
+  }
+}
+
+.product-page-image {
+  margin-bottom:20px;
+  }
+
 
 /* Product page */
 
@@ -1239,83 +1395,47 @@ background: #d43f57;
 /* Header */
 
 /* LogIn Page */
-
 .admin-login-page-main{
-height: 100vh;
-background: #ebebeb;
-display: flex;
-flex-direction: row;
-align-items: center;
-justify-content: center;
-}
-
-.admin-login-page-form{
-background-color: white;
-padding: 40px 35px;
-text-align: center;
-}
-
-.admin-login-page-form hr {
-height: 1px;
-background-color: #78a481;
-margin-bottom: 19px;
-}
-
-.admin-login-page-form input {
-margin-bottom: 18px;
-border: 1px, solid, #afb1b8;
-border-radius: 5px;
-color:#afb1b8;
-padding-top: 14px;
-padding-bottom: 14px;
-padding-left: 8px;
-font-size: 15px;
-}
-
-.admin-login-page-form h1{
-font-size:29px
-}
-
-.admin-login-page-form input:focus{
-outline: none;
-}
-
-.admin-login-page-form button {
-background-color: #ff4d67;
-border: none;
-text-align: center;
-color: white;
-font-size: 15px;
-width: 200px;
-padding: 14px 0px;
-cursor: pointer;
-border-radius: 5px;
-}
-
-.admin-login-page-form button:hover{
-background-color: #d43f57;
-}
-
-.admin-login-page-form p {
-color:#afb1b8 ;
-cursor: pointer;
-}
-
-.admin-forgot-password-form.activeForgot{
-display: none;
-}
-
-.admin-login-page-form.activeForm{
-display:none;
-}
-
-.admin-forgot-password-form{
+  height: 100vh;
+  background: #ebebeb;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  }
+  
+  .admin-login-page-form{
   background-color: white;
   padding: 40px 35px;
   text-align: center;
-}
-
-.admin-forgot-password-form button {
+  }
+  
+  .admin-login-page-form hr {
+  height: 1px;
+  background-color: #78a481;
+  margin-bottom: 19px;
+  }
+  
+  .admin-login-page-form input {
+  margin-bottom: 18px;
+  border: 1px, solid, #afb1b8;
+  border-radius: 5px;
+  color:#afb1b8;
+  padding-top: 14px;
+  padding-bottom: 14px;
+  padding-left: 8px;
+  font-size: 15px;
+  }
+  
+  .admin-login-page-form h1{
+  font-size:29px
+  }
+  
+  .admin-login-page-form input:focus{
+  outline: none;
+  }
+  
+  .admin-login-page-form button {
   background-color: #ff4d67;
   border: none;
   text-align: center;
@@ -1325,32 +1445,69 @@ display:none;
   padding: 14px 0px;
   cursor: pointer;
   border-radius: 5px;
-}
+  }
+  
+  .admin-login-page-form button:hover{
+  background-color: #d43f57;
+  }
+  
+  .admin-login-page-form p {
+  color:#afb1b8 ;
+  cursor: pointer;
+  }
+  
+  .admin-forgot-password-form.activeForgot{
+  display: none;
+  }
+  
+  .admin-login-page-form.activeForm{
+  display:none;
+  }
+  
+  .admin-forgot-password-form{
+    background-color: white;
+    padding: 40px 35px;
+    text-align: center;
+  }
+  
+  .admin-forgot-password-form button {
+    background-color: #ff4d67;
+    border: none;
+    text-align: center;
+    color: white;
+    font-size: 15px;
+    width: 200px;
+    padding: 14px 0px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .admin-forgot-password-form input {
+    margin-bottom: 18px;
+    border: 1px, solid, #afb1b8;
+    border-radius: 5px;
+    color:#afb1b8;
+    padding-top: 14px;
+    padding-bottom: 14px;
+    padding-left: 8px;
+    font-size: 15px;
+  }
+  
+  .admin-forgot-password-form input:focus{
+  outline: none;
+  }
+  .admin-forgot-password-form hr{
+  height: 1px;
+  background-color: #78a481;
+  margin-bottom: 19px;}
+  
+  
+  .admin-forgot-password-form-input input{
+  margin-bottom: 0px;
+  }
+  /* LogIn Page */
 
-.admin-forgot-password-form input {
-  margin-bottom: 18px;
-  border: 1px, solid, #afb1b8;
-  border-radius: 5px;
-  color:#afb1b8;
-  padding-top: 14px;
-  padding-bottom: 14px;
-  padding-left: 8px;
-  font-size: 15px;
-}
 
-.admin-forgot-password-form input:focus{
-outline: none;
-}
-.admin-forgot-password-form hr{
-height: 1px;
-background-color: #78a481;
-margin-bottom: 19px;}
-
-
-.admin-forgot-password-form-input input{
-margin-bottom: 0px;
-}
-/* LogIn Page */
 
 /* Reset Password Page */
 
@@ -1553,8 +1710,138 @@ max-height: 350px;
 object-fit: contain;
 }
 
+
+.cropper-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  backdrop-filter: blur(8px);
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cropper-container {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.cropper-frame {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  overflow: hidden;
+  border: 2px solid #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: grab;
+}
+
+.croppable-image {
+  position: absolute;
+  max-width: none;
+  max-height: none;
+  cursor: grab;
+}
+
+.cropper-box {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  border: 2px dashed yellow;
+}
+
+/* Stiluri pentru containerul de crop */
+.add-picture-adjust-picture-frame-div {
+  position: relative;
+  width: 500px; /* Lățime mai mare */
+  height: 300px; /* Înălțime mai mare */
+  border: 2px solid #ccc;
+  overflow: hidden;
+}
+
+.croppable-image {
+  cursor: move; /* Asigură-te că imaginea are cursorul 'move' */
+}
+
+
+
+
+
 /* Succes Page */
 
 
 
 /* Admin Section  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
+
+/* Admin Review Approval Page */
+.imageApprovalReview-div img {
+width: 300px;
+}
+
+.admin-approval-reviews-panel-main {
+padding: 40px
+}
+
+.detailsApprovalReview-div span {
+font-weight: 300;
+}
+
+.whole-card-without-buttons {
+border:1px, solid #c4c7cf;
+padding: 40px;
+}
+
+.descriptionApprovalReview-div div {
+border: 1px solid #c4c7cf;
+padding: 15px;
+}
+
+.cardApprovalReview-div-image-and-details {
+display:grid;
+grid-template-columns: repeat(2,1fr);
+}
+
+.imageApprovalReview-div {
+display: flex;
+justify-content: end;
+}
+
+.reviewApproval-div {
+margin-bottom: 37px;
+}
+
+.buttonsApprovalReview-div {
+display: grid;
+grid-template-columns: repeat(2,1fr);
+padding: 15px 45px;
+}
+
+.rejectButton-div, .approveButton-div{
+display: flex;
+justify-content: center;
+}
+
+.buttonsApprovalReview-div button {
+border: none;
+font-size: 18px;
+padding: 15px;
+cursor: pointer;
+color: white;
+border-radius: 4px;
+padding: 10px 20px;
+}
+
+.approveButton-div button{
+background-color: #78a481;
+}
+
+.rejectButton-div button {
+background-color: #ff4d67;
+}

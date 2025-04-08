@@ -109,9 +109,9 @@ const AdminLoginPage = () => {
 
   const Login = (e) => { 
     e.preventDefault(); 
-    fetch("/admin/login", { 
-      credentials: "include", 
+    fetch("http://localhost:5000/admin/login", {  
       method: "POST", 
+      credentials: "include", // 🔥 Adăugat pentru cookie
       headers: { "Content-Type": "application/json" }, 
       body: JSON.stringify({ email, password }) 
     })
@@ -119,7 +119,11 @@ const AdminLoginPage = () => {
         if (!res.ok) throw new Error("Eroare la fetch pt login");
         return res.json();
       })
-      .then((data) => console.log("Login cu succes:", data))
+      .then((data) => {
+        console.log("Login cu succes:", data);
+        // 🔄 Redirect frontend
+        window.location.href = "/admin-panel";
+      })
       .catch((error) => console.error("Eroare la login", error));
   };
 

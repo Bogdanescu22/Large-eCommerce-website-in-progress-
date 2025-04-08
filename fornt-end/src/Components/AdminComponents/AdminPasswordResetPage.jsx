@@ -6,15 +6,25 @@ const AdminPasswordResetPage = () => {
 
 const[newPassword, setNewPassword] = useState("")
 
-const {token} = useParams();
+const {resetToken} = useParams();
 
 const ResetPassword = () => {
-fetch(`http://13.61.15.214:5000/admin/reset-password/${token}`, {credentials: "include",
+fetch(`http://localhost:5000/admin/resetpassword/${resetToken}`, {
 method:"POST",
 headers:{"Content-Type":"application/json"},
 body: JSON.stringify({
 newPassword
 })
+})
+.then((res) => {
+if(!res.ok) {
+throw new Error("Eroare la fetch-ul pt resetarea parolei"),
+res.json()
+}
+})
+.then((data) => {
+console.log("Parola resetata cu succes:", data)
+window.location.href = "/admin/reset-password/succes"
 })
 .catch((error)=> console.error("Eroare la fetch-ul pt resetarea parolei:", error))
 }
@@ -27,7 +37,7 @@ return(
 <h1>Resetare parola admin</h1>
 <hr />
 <input onChange={(event)=> setNewPassword(event.target.value)}type="text" placeholder="Parola noua"></input>
-<button onClick={()=>ResetPassword()}>Trimite</button>
+<div className="admin-password-reset-page-button-div"><button onClick={()=>ResetPassword()}>Trimite</button></div>
 </div>
 </main>
 </div>

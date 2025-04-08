@@ -13,6 +13,8 @@ return(
 <h2>Gestionare produse</h2>
 <hr />
 <h2>Gestionare comenzi</h2>
+<hr />
+<h2 onClick={() => {window.location.href="/admin/reviews-approval"}}>Gestionare reviews</h2>
 </div>
 </main>
 </div>

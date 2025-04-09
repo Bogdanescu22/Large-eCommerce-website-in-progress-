@@ -1,7 +1,7 @@
 import React from "react";
 
 
-const ApprovalReviewsCard = ({userId, productId, description, starsReviews, imageUrl, handleButton,}) => {
+const ApprovalReviewsCard = ({userId, productId, description,zoomImageFunction, starsReviews, handleForbidButton, imageUrl, handleButton, handleStatus}) => {
 return(
 <div className="reviewApproval-div">
   <div className="whole-card-without-buttons">
@@ -12,13 +12,13 @@ return(
         <div>
         {[1, 2, 3, 4, 5].map((star) => (
         <span
-        key={productId}
+        key={`${star}-${productId}`}
         style={{fontSize: "24px",color: star <= starsReviews ? "gold" : "grey"}}
         >★
         </span>))}
         </div>
       </div>
-      <div className="imageApprovalReview-div"><img src={imageUrl != null? imageUrl : "https://olg.cc/wp-content/uploads/2015/01/placehold-800x500.jpg"}></img></div>
+      <div className="imageApprovalReview-div"><img onClick={(img)=>zoomImageFunction(img)} src={imageUrl != null? imageUrl : "https://olg.cc/wp-content/uploads/2015/01/placehold-800x500.jpg"}></img></div>
     </div>
     <div>
       <div className="descriptionApprovalReview-div">
@@ -29,8 +29,8 @@ return(
     </div>
     <div>
       <div className="buttonsApprovalReview-div">
-        <div className="approveButton-div"><button onClick={handleButton}>Aproba</button></div>
-        <div className="rejectButton-div"><button onClick={handleButton}>Respinge</button></div>
+        <div className="approveButton-div"><button value="approve" onClick={handleButton}>Aproba</button></div>
+        <div className="rejectButton-div"><button onClick={handleForbidButton}>Respinge</button></div>
       </div>
     </div>
   </div>

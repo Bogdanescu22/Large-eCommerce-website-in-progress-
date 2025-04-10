@@ -1,7 +1,7 @@
 import React from "react";
 
 
-const ApprovalReviewsCard = ({userId, productId, description,zoomImageFunction, starsReviews, handleForbidButton, imageUrl, handleButton, handleStatus}) => {
+const ApprovalReviewsCard = ({userId, productId, description,zoomImageFunction, starsReviews, handleForbidButton1, imageUrl, handleButton, handleStatus}) => {
 return(
 <div className="reviewApproval-div">
   <div className="whole-card-without-buttons">
@@ -30,7 +30,7 @@ return(
     <div>
       <div className="buttonsApprovalReview-div">
         <div className="approveButton-div"><button value="approve" onClick={handleButton}>Aproba</button></div>
-        <div className="rejectButton-div"><button onClick={handleForbidButton}>Respinge</button></div>
+        <div className="rejectButton-div"><button onClick={handleForbidButton1}>Respinge</button></div>
       </div>
     </div>
   </div>

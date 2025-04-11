@@ -50,6 +50,7 @@ function CardTelefoanePage({ productId, imgURL, name, price, category }) {
 
     try {
       const response = await fetch("https://api.devsite.cfd/cart", {
+        credentials: "include",
         method: "POST",
         headers: {
           "Content-Type": "application/json",

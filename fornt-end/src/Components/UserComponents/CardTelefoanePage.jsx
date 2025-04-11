@@ -48,25 +48,8 @@ function CardTelefoanePage({ productId, imgURL, name, price, category }) {
       quantity: 1,
     };
 
-    // Adăugăm cererea OPTIONS pentru preflight
     try {
-      const optionsResponse = await fetch('https://api.devsite.cfd/cart', {
-        method: 'OPTIONS',
-        headers: {
-          'Access-Control-Request-Method': 'POST',
-          'Access-Control-Request-Headers': 'Content-Type',
-          'Origin': 'https://www.devsite.cfd',
-        },
-      });
-      console.log('OPTIONS Response Status:', optionsResponse.status); // Arată statusul 204
-
-      if (optionsResponse.status !== 204) {
-        throw new Error("Cererea OPTIONS nu a avut succes.");
-      }
-
-      // Acum facem cererea POST
       const response = await fetch("https://api.devsite.cfd/cart", {
-        credentials: "include",
         method: "POST",
         headers: {
           "Content-Type": "application/json",

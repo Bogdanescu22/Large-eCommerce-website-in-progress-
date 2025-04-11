@@ -40,7 +40,12 @@ return () => clearInterval(interval)
       <main className="main-content">
         <div className="hero-div">
           <div className="hero-text"
-          style={{background: `url(${backgroundImagesHeroDiv[bgIndex]})`}}> 
+          style={{
+            background: `url(${backgroundImagesHeroDiv[bgIndex]})`,
+            backgroundSize: "cover" ,
+            backgroundPosition: "center",
+            transition: "background-image 1s ease-in-out"
+            }}> 
             <h1 className="titleHomePageHero">Bun venit pe site-ul nostru</h1>
             <h2 className="subtitleHomePageHero">Descoperă cele mai bune oferte</h2>
           </div>

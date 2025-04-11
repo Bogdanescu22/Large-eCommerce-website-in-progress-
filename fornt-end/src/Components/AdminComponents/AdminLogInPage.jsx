@@ -96,7 +96,7 @@ const AdminLoginPage = () => {
   const ForgotPassword = () => { 
     if (!email2) return;
 
-    fetch("https://api.devsite.cfd/reset-password", { 
+    fetch("https://api.devsite.cfd/admin/reset-password", { 
       method: "POST", 
       credentials: "include", 
       headers: { "Content-Type": "application/json" }, 

@@ -1018,7 +1018,7 @@ app.post('/admin/reset-password', async (req, res) => {
     await updateAdmin(admin.id, resetToken, resetTokenExpires);
 
     // Trimitem email cu link-ul de resetare
-    const resetLink = `https://main.d28iato4526846.amplifyapp.com/admin/reset-password/${resetToken}`;
+    const resetLink = `https://www.devsite.cfd/admin/reset-password/${resetToken}`;
     const mailOptions = {
       from: process.env.SMTP_PASS,
       to: email2,
@@ -1058,7 +1058,7 @@ app.post('/admin/reset-password/:resetToken', async (req, res) => {
     const values = [hashedPassword, admin.id];
     await client.query(query, values);
 
-    res.redirect("https://main.d28iato4526846.amplifyapp.com/admin/reset-password/succes")
+    res.redirect("https://www.devsite.cfd/admin/reset-password/succes")
   } catch (err) {
     console.error('Eroare la resetarea parolei:', err);
     res.status(500).json({ error: 'Eroare la resetarea parolei', details: err.message });

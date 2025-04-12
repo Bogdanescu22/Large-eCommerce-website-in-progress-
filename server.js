@@ -16,7 +16,7 @@ import nodemailer from "nodemailer";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import cookieParser from "cookie-parser";
-import dotenv from "dotenv";  // Adăugat pentru încărcarea fișierului .env
+import dotenv from "dotenv";  
 import Stripe from "stripe";
 import { error } from "console";
 import path from "path";
@@ -51,16 +51,45 @@ const s3 = new S3Client({
   },
 });
 
-const upload = multer({
-  storage: multerS3({
-    s3: s3,
-    bucket: 'my-app-uploads-devsite', 
-    key: function (req, file, cb) {
-      // Numele fișierului pe care îl salvezi pe S3
-      cb(null, `profile-pictures/${req.params.user_id}-${Date.now()}.webp`);
-    }
-  })
+async function uploadToS3(fileBuffer, fileName, mimeType) {
+  const uploadParams = {
+    Bucket: process.env.AWS_BUCKET_NAME,
+    Key: fileName,
+    Body: fileBuffer,
+    ContentType: mimeType,
+    ACL: 'public-read', 
+  };
+
+  const command = new PutObjectCommand(uploadParams);
+  await s3.send(command);
+}
+
+app.post("/upload", upload.single("file"), async (req, res) => {
+  try {
+    const file = req.file;
+    await uploadToS3(file.buffer, file.originalname, file.mimetype);
+
+    const cloudfrontUrl = `https://${process.env.CLOUDFRONT_DOMAIN}/${file.originalname}`;
+    res.json({ success: true, url: cloudfrontUrl });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, error: err.message });
+  }
 });
+
+const handleFileUpload = async (event) => {
+  const formData = new FormData();
+  formData.append("file", event.target.files[0]);
+
+  const res = await fetch("/upload", {
+    method: "POST",
+    body: formData,
+  });
+
+  const data = await res.json();
+  console.log("File uploaded to:", data.url);
+};
+
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 

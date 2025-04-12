@@ -51,45 +51,6 @@ const s3 = new S3Client({
   },
 });
 
-async function uploadToS3(fileBuffer, fileName, mimeType) {
-  const uploadParams = {
-    Bucket: process.env.AWS_BUCKET_NAME,
-    Key: fileName,
-    Body: fileBuffer,
-    ContentType: mimeType,
-    ACL: 'public-read', 
-  };
-
-  const command = new PutObjectCommand(uploadParams);
-  await s3.send(command);
-}
-
-app.post("/upload", upload.single("file"), async (req, res) => {
-  try {
-    const file = req.file;
-    await uploadToS3(file.buffer, file.originalname, file.mimetype);
-
-    const cloudfrontUrl = `https://${process.env.CLOUDFRONT_DOMAIN}/${file.originalname}`;
-    res.json({ success: true, url: cloudfrontUrl });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ success: false, error: err.message });
-  }
-});
-
-const handleFileUpload = async (event) => {
-  const formData = new FormData();
-  formData.append("file", event.target.files[0]);
-
-  const res = await fetch("/upload", {
-    method: "POST",
-    body: formData,
-  });
-
-  const data = await res.json();
-  console.log("File uploaded to:", data.url);
-};
-
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 

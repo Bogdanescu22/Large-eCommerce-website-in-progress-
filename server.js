@@ -42,7 +42,7 @@ app.use(bodyParser.json());
 app.use(cookieParser()); 
 app.use(bodyParser.urlencoded({ extended: true }));
 
-
+const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
 const s3 = new S3Client({

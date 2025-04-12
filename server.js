@@ -43,6 +43,8 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 
+const upload = multer({ storage });
+
 const s3 = new S3Client({
   region: process.env.AWS_REGION, 
   credentials: {

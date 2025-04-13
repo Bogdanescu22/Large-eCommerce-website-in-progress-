@@ -6,11 +6,7 @@ import cardsinfo from "./HomePageArray";
 import { data } from "react-router";
 
 // 🔁 Array cu imaginile de fundal (fără url() aici!)
-const heroBackgrounds = [
-  "https://www.ookla.com/s/media/2024/11/iPhone-16-5G-Performance-Header-2024.png",
-  "https://images.mlssoccer.com/image/private/t_editorial_landscape_8_desktop_mobile/mls/ezu7nroj7ucmx78qe3su.jpg",
-  "https://www.apple.com/newsroom/images/product/imac/standard/apple_new-imac-spring21_hero_04202021_Full-Bleed-Image.jpg.large.jpg"
-];
+
 
 //const [categories, setCategories] = useState(null)
 
@@ -30,6 +26,11 @@ const heroBackgrounds = [
 
 function HomePage() {
   const [currentBgIndex, setCurrentBgIndex] = useState(0);
+  const heroBackgrounds = [
+    "https://www.ookla.com/s/media/2024/11/iPhone-16-5G-Performance-Header-2024.png",
+    "https://images.mlssoccer.com/image/private/t_editorial_landscape_8_desktop_mobile/mls/ezu7nroj7ucmx78qe3su.jpg",
+    "https://www.apple.com/newsroom/images/product/imac/standard/apple_new-imac-spring21_hero_04202021_Full-Bleed-Image.jpg.large.jpg"
+  ];
 
   //useEffect(()=>{
   //fetch("http://localhost:5000/products/categories")

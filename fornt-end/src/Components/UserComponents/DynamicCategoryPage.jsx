@@ -44,7 +44,7 @@ return(
         <CardTelefoanePage
           key={produs.id}
           productId={produs.id}
-          imgURL={produs.image_url}
+          imgURL={decodeURIComponent(produs.image_url)}
           name={produs.name}
           price={produs.price}
           category={produs.category}

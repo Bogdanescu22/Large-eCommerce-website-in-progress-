@@ -371,11 +371,11 @@ app.get('/products/:product_id', async(req, res) => {
 
   
   app.get("/search_product/:category", async(req,res)=>{
-  const decodedCategory = req.params.decodedCategory
+  const category = req.params.category
   
   try{
   const query="SELECT * FROM products WHERE category=$1";
-  const result= await client.query(query,[decodedCategory]);
+  const result= await client.query(query,[category]);
   
   res.status(200).json(result.rows)
   

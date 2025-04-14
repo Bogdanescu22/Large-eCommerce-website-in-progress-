@@ -7,23 +7,22 @@ import CardTelefoanePage from "./CardTelefoanePage";
 const DynamicCategoryPage = () => {
 
 const {category} = useParams();
-const decodedCategory = decodeURIComponent(category);
 
 const [categories, setCategories] = useState([])
 const [product, setProduct] = useState([])
 
 
   useEffect(()=>{
-  fetch("https://api.devsite.cfd/category_pages")
+  fetch("http://localhost:5000/category_pages")
   .then((res)=>res.json())
   .then((data)=>{setCategories(data) ;console.log("Asta e data:",data)})
   .catch((err)=>console.log("Eroare la fetch", err))
   },[])
 
   useEffect(()=>{
-    fetch(`https://api.devsite.cfd/search_product/${decodedCategory}`)
+    fetch(`http://localhost:5000/search_product/${decodeURIComponent(category)}`)
     .then((res)=>res.json())
-    .then((data)=>{setProduct(data) ;console.log("Asta e data:",data)})
+    .then((data)=>{setProduct(data) ;console.log("Asta e data:",data); console.log(category)})
     .catch((err)=>console.log("Eroare la fetch", err))
     },[])
   
@@ -44,7 +43,7 @@ return(
         <CardTelefoanePage
           key={produs.id}
           productId={produs.id}
-          imgURL={decodeURIComponent(produs.image_url)}
+          imgURL={produs.image_url}
           name={produs.name}
           price={produs.price}
           category={produs.category}

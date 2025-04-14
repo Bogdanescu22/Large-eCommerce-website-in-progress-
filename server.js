@@ -414,7 +414,6 @@ app.get("/tablete-cards", async (req, res) => {
     );
     res.json(result.rows); 
   } catch (err) {
-    console.error("EROARE LA /category_pages:", err);
     res.status(500).json({ error: "Eroare la interogarea bazei de date!" });
   }
 });

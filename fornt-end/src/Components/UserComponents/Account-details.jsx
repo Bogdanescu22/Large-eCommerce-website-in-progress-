@@ -24,7 +24,7 @@ function AccountDetails() {
 
   // Fetch user
   useEffect(() => {
-    fetch("http://13.61.15.214:5000/auth/user", { credentials: "include" })
+    fetch("https://api.devsite.cfd/auth/user", { credentials: "include" })
       .then((res) => res.json())
       .then(({ user }) => {
         setUser(user);  // Setează user-ul când datele au fost încărcate
@@ -38,7 +38,7 @@ function AccountDetails() {
   // Fetch orders
   useEffect(() => {
     if (user && user.id) {
-      fetch(`http://13.61.15.214:5000/orders_fetch/${user.id}`, { credentials: "include" })
+      fetch(`https://api.devsite.cfd/orders_fetch/${user.id}`, { credentials: "include" })
         .then((res) => res.json())
         .then((data) => setOrders(data))
         .catch((error) => console.error("Eroare:", error));
@@ -48,7 +48,7 @@ function AccountDetails() {
   // Șterge fotografia de profil
   const deleteProfilePhoto = () => {
     if (!user || !user.id) return;  // Verifică dacă user-ul și user.id sunt disponibile
-    fetch(`http://13.61.15.214:5000/profile-picture/delete/${user.id}`, {
+    fetch(`https://api.devsite.cfd/profile-picture/delete/${user.id}`, {
       credentials: "include",
       method: "DELETE",
     })

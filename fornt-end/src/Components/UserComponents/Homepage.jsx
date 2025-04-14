@@ -11,19 +11,22 @@ const heroBackgrounds = [
 
 function HomePage() {
   const [currentBgIndex, setCurrentBgIndex] = useState(0);
-  const [categories, setCategories] = useState([])
+  const [categories, setCategories] = useState([]);
 
-  useEffect(()=>{
-  fetch("https://api.devsite.cfd/category_pages")
-  .then((res)=>res.json())
-  .then((data)=>{setCategories(data) ;console.log("Asta e data:",data)})
-  .catch((err)=>console.log("Eroare la fetch", err))
-  },[])
+  useEffect(() => {
+    fetch("https://api.devsite.cfd/category_pages")
+      .then((res) => res.json())
+      .then((data) => {
+        setCategories(data);
+        console.log("Asta e data:", data);
+      })
+      .catch((err) => console.log("Eroare la fetch", err));
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentBgIndex((prevIndex) => (prevIndex + 1) % heroBackgrounds.length);
-    }, 5000); // schimbă fundalul la fiecare 5 secunde
+    }, 5000); 
 
     return () => clearInterval(interval);
   }, []);
@@ -47,19 +50,23 @@ function HomePage() {
           </div>
         </div>
         <div className="product-cards-div">
-        {categories.length > 0 ? (
-  categories.map((category) => (
-    <CardHomePage
-      key={category.id}
-      title={category.page_title}
-      imgURL={category.image}
-      category_name={category.category_name}
-    />
-  ))
-) : (
-  <p>Se încarcă cards...</p>
-)}
+          {categories.length > 0 ? (
+            categories.map((category) => {
+              const imgPath = "/Images/";
+              const imgName = decodeURIComponent(category.image.split('/').pop()); 
 
+              return (
+                <CardHomePage
+                  key={category.id}
+                  title={category.page_title}
+                  imgURL={imgPath + imgName} 
+                  category_name={category.category_name}
+                />
+              );
+            })
+          ) : (
+            <p>Se încarcă cards...</p>
+          )}
         </div>
       </main>
       <Footer />

@@ -2,42 +2,23 @@ import React, { useEffect, useState } from "react";
 import Header from "../UserComponents/Header";
 import Footer from "./Footer";
 import CardHomePage from "./CardHomePage";
-import cardsinfo from "./HomePageArray";
-import { data } from "react-router";
 
-// 🔁 Array cu imaginile de fundal (fără url() aici!)
-
-
-//const [categories, setCategories] = useState(null)
-
-//function CreateCard(info) {
-  //return (
-  //<div>
-  //{categories.map((category)=>(
-   //<CardHomePage
-    //  key={category.id}
-    // title={info.title}
-    //  imgURL={info.imgURL}
-     // buttonURL={info.buttonURL}
-   // />))}
-  //</div>
- // );
-//}
+const heroBackgrounds = [
+  "https://www.ookla.com/s/media/2024/11/iPhone-16-5G-Performance-Header-2024.png",
+  "https://images.mlssoccer.com/image/private/t_editorial_landscape_8_desktop_mobile/mls/ezu7nroj7ucmx78qe3su.jpg",
+  "https://www.apple.com/newsroom/images/product/imac/standard/apple_new-imac-spring21_hero_04202021_Full-Bleed-Image.jpg.large.jpg"
+];
 
 function HomePage() {
   const [currentBgIndex, setCurrentBgIndex] = useState(0);
-  const heroBackgrounds = [
-    "https://www.ookla.com/s/media/2024/11/iPhone-16-5G-Performance-Header-2024.png",
-    "https://images.mlssoccer.com/image/private/t_editorial_landscape_8_desktop_mobile/mls/ezu7nroj7ucmx78qe3su.jpg",
-    "https://www.apple.com/newsroom/images/product/imac/standard/apple_new-imac-spring21_hero_04202021_Full-Bleed-Image.jpg.large.jpg"
-  ];
+  const [categories, setCategories] = useState([])
 
-  //useEffect(()=>{
-  //fetch("http://localhost:5000/products/categories")
-  //.then((res)=>res.json())
-  //.then((data)=>setCategories(data))
-  //.catch((err)=>console.log("Eroare la fetch", err))
-  //},[])
+  useEffect(()=>{
+  fetch("https://api.devsite.cfd/category_pages")
+  .then((res)=>res.json())
+  .then((data)=>{setCategories(data) ;console.log("Asta e data:",data)})
+  .catch((err)=>console.log("Eroare la fetch", err))
+  },[])
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -66,7 +47,19 @@ function HomePage() {
           </div>
         </div>
         <div className="product-cards-div">
-         
+        {categories.length > 0 ? (
+  categories.map((category) => (
+    <CardHomePage
+      key={category.id}
+      title={category.page_title}
+      imgURL={category.image}
+      category_name={category.category_name}
+    />
+  ))
+) : (
+  <p>Se încarcă cards...</p>
+)}
+
         </div>
       </main>
       <Footer />
@@ -75,3 +68,4 @@ function HomePage() {
 }
 
 export default HomePage;
+

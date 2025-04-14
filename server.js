@@ -336,6 +336,51 @@ app.get('/products/:product_id', async(req, res) => {
   }
   });
 
+  
+  
+  
+  app.get(`/product-category/:category`, async(req,res)=> {
+  const {category}= req.body;
+  try{
+  const query= "SELECT id, image_url, name, price, category FROM products WHERE category =$1";
+  const result= await client.query(query, [category]);
+  
+  res.status(200).json(result.rows)
+  
+  } catch (err) {
+  res.status(500).json({error: "Eroare la interogrea bazei de date"})
+  }
+  })
+  
+  
+  
+  
+  app.get("/category_pages" ,async(req,res)=> {
+  try{
+  const query="SELECT * FROM category_pages";
+  const result = await client.query(query);
+  
+  res.status(200).json(result.rows);
+  } catch (err) {
+  res.status(500).json({err: "Eroare la obtinerea datelor din category_pages"})
+  }
+  });
+  
+  
+  app.get("/search_product/:category", async(req,res)=>{
+  const {decodedCategory} = req.params.decodedCategory
+  
+  try{
+  const query="SELECT * FROM products WHERE category=$1";
+  const result= await client.query(query,[decodedCategory]);
+  
+  res.status(200).json(result.rows)
+  
+  } catch(err){
+  res.status(500).json(err,"Eroare la obtinerea produselor dupa categorie")
+  }
+  })
+  
 
 
 

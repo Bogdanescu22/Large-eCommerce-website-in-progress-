@@ -353,19 +353,22 @@ app.get('/products/:product_id', async(req, res) => {
   })
   
   
+  app.get("/category_pages", async (req, res) => {
+    try {
+      const query = "SELECT * FROM category_pages";
+      const result = await client.query(query);
   
+      console.log("📦 category_pages rows:", result.rows); // 👈 vezi exact ce se întoarce
   
-  app.get("/category_pages" ,async(req,res)=> {
-  try{
-  const query="SELECT * FROM category_pages";
-  const result = await client.query(query);
-  
-  res.status(200).json(result.rows);
-  } catch (err) {
-  res.status(500).json({err: "Eroare la obtinerea datelor din category_pages"})
-  }
+      res.status(200).json(result.rows);
+    } catch (err) {
+      console.error("❌ Eroare la category_pages:", err); // 👈 full error log
+      res.status(500).json({ err: err.message });
+    }
   });
   
+  
+
   
   app.get("/search_product/:category", async(req,res)=>{
   const {decodedCategory} = req.params.decodedCategory

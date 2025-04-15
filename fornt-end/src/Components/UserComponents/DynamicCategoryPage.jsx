@@ -13,7 +13,7 @@ const [product, setProduct] = useState([])
 
 
   useEffect(()=>{
-  fetch("http://localhost:5000/category_pages")
+  fetch("https://api.devsite.cfd/category_pages")
   .then((res)=>res.json())
   .then((data) => {
     const filtered = data.filter((cat) => cat.category_name === decodeURIComponent(category));
@@ -24,13 +24,13 @@ const [product, setProduct] = useState([])
   },[])
 
   useEffect(()=>{
-    fetch(`http://localhost:5000/search_product/${decodeURIComponent(category)}`)
+    fetch(`https://api.devsite.cfd/search_product/${decodeURIComponent(category)}`)
     .then((res)=>res.json())
     .then((data)=>{setProduct(data) ;console.log("Asta e data:",data); console.log(category)})
     .catch((err)=>console.log("Eroare la fetch", err))
     },[])
   
-    console.log("URL-ul imaginii:", `http://localhost:3000${categories[0]?.image.replace(/ /g, "%20")}`)
+    console.log("URL-ul imaginii:", `https://www.devsite.cfd${categories[0]?.image.replace(/ /g, "%20")}`)
 
 return(
 
@@ -41,7 +41,7 @@ return(
   <div
     className="hero-div-telefoanePage"
     style={{
-      backgroundImage: `url("http://localhost:3000${categories[0]?.image.replace(/ /g, "%20")}")`,
+      backgroundImage: `url("https://www.devsite.cfd${categories[0]?.image.replace(/ /g, "%20")}")`,
     }}
   >
     <div className="hero-text-Telefoane">

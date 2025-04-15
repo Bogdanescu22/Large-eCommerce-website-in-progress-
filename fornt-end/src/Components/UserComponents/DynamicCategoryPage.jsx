@@ -15,7 +15,11 @@ const [product, setProduct] = useState([])
   useEffect(()=>{
   fetch("http://localhost:5000/category_pages")
   .then((res)=>res.json())
-  .then((data)=>{setCategories(data) ;console.log("Asta e data:",data)})
+  .then((data) => {
+    const filtered = data.filter((cat) => cat.category_name === decodeURIComponent(category));
+    console.log("Filtered",filtered)
+    setCategories(filtered);
+  })
   .catch((err)=>console.log("Eroare la fetch", err))
   },[])
 
@@ -26,18 +30,28 @@ const [product, setProduct] = useState([])
     .catch((err)=>console.log("Eroare la fetch", err))
     },[])
   
-
+    console.log("URL-ul imaginii:", `http://localhost:3000${categories[0]?.image.replace(/ /g, "%20")}`)
 
 return(
 
 <div className="telefoane-container">
 <Header />
 <main>
-<div className="hero-div-telefoanePage">
-      <div className="hero-text-Telefoane"> {/* corectat className */}
-      <h1 className="hero-title-Telefoane">Telefoane</h1>
-      </div>
-</div>
+{categories.length > 0 ? (
+  <div
+    className="hero-div-telefoanePage"
+    style={{
+      backgroundImage: `url("http://localhost:3000${categories[0]?.image.replace(/ /g, "%20")}")`,
+    }}
+  >
+    <div className="hero-text-Telefoane">
+      <h1 className="hero-title-Telefoane">{categories[0]?.page_title}</h1>
+    </div>
+  </div>
+) : (
+  <div className="hero-div-telefoanePage">Se încarcă...</div>
+)}
+
 <div className="product-cards-div">
       {product.length>0 ? (product.map((produs) => (
         <CardTelefoanePage

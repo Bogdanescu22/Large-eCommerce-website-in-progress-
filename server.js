@@ -1097,7 +1097,7 @@ app.post('/admin/reset-password/:resetToken', async (req, res) => {
     const values = [hashedPassword, admin.id];
     await client.query(query, values);
 
-    res.redirect("https://www.devsite.cfd/admin/reset-password/succes")
+    res.status(200).json("Fetch-ul a fost facut cu succes")
   } catch (err) {
     console.error('Eroare la resetarea parolei:', err);
     res.status(500).json({ error: 'Eroare la resetarea parolei', details: err.message });

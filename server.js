@@ -257,8 +257,7 @@ app.get('/search-result/:text', async(req,res) =>{
 const text = req.params.text;
 
 try{
-const query= "SELECT * FROM products WHERE to_tsvector('romanian', unaccent(name || ' ' || product_details || ' ' || color || ' ' || brand)) @@ plainto_tsquery('romanian', unaccent($1)) OR unaccent(name) % unaccent($1) OR unaccent(product_details) % unaccent($1) OR unaccent(color) % unaccent($1) OR brand  %  $1;";
-
+const query= "SELECT * FROM products WHERE to_tsvector('romanian', unaccent(name || ' ' || product_details || ' ' || color || ' ' || brand || ' ' || category)) @@ websearch_to_tsquery('romanian', unaccent($1)) OR unaccent(name) % unaccent($1) OR unaccent(product_details) % unaccent($1) OR unaccent(color) % unaccent($1) OR unaccent(brand) % unaccent($1) OR unaccent(category) % unaccent($1);"
 
 
 const result = await client.query(query,[text]);

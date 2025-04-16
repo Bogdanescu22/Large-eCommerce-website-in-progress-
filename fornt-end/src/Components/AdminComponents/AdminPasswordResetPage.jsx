@@ -10,25 +10,24 @@ const {resetToken} = useParams();
 
 console.log("Token:", resetToken)
 
-const ResetPassword = () => {
-    fetch(`https://api.devsite.cfd/admin/reset-password/${resetToken}`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ newPassword }),
-      credentials: "include"
+const ResetPassword =() => {fetch(`https://api.devsite.cfd/admin/reset-password/${resetToken}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ newPassword }),
+    credentials: "include"
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      if (data.redirect) {
+        window.location.href = data.redirect;
+      } else {
+        alert("Parola a fost resetată.");
+      }
     })
-      .then((res) => {
-        // Nu mai așteptăm JSON, pentru că serverul face redirect
-        if (res.redirected) {
-          window.location.href = res.url; // browserul va merge acolo
-        } else {
-          throw new Error("Eroare la resetarea parolei");
-        }
-      })
-      .catch((error) => {
-        console.error("Eroare la fetch-ul pt resetarea parolei:", error);
-      });
-  };
+    .catch((error) => {
+      console.error("Eroare la fetch-ul pt resetarea parolei:", error);
+    })};
+  
   
 
 return(

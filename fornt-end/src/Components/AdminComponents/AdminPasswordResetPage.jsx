@@ -9,25 +9,29 @@ const[newPassword, setNewPassword] = useState("")
 const {resetToken} = useParams();
 
 const ResetPassword = () => {
-fetch(`https://api.devsite.cfd/admin/reset-password/${resetToken}`, {
-method:"POST",
-headers:{"Content-Type":"application/json"},
-body: JSON.stringify({
-newPassword
-})
-})
-.then((res) => {
-if(!res.ok) {
-throw new Error("Eroare la fetch-ul pt resetarea parolei"),
-res.json()
-}
-})
-.then((data) => {
-console.log("Parola resetata cu succes:", data)
-window.location.href = "/admin/reset-password/succes"
-})
-.catch((error)=> console.error("Eroare la fetch-ul pt resetarea parolei:", error))
-}
+    fetch(`https://api.devsite.cfd/admin/reset-password/${resetToken}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ newPassword }),
+      credentials: "include" // doar dacă ai nevoie de cookie-uri
+    })
+      .then(async (res) => {
+        if (!res.ok) {
+          const errorData = await res.json();
+          throw new Error(errorData.error || "Eroare la resetarea parolei");
+        }
+        return res.json(); // 🟢 Important: returnăm data
+      })
+      .then((data) => {
+        if (data.redirect) {
+          window.location.href = data.redirect;
+        }
+      })
+      .catch((error) =>
+        console.error("Eroare la fetch-ul pt resetarea parolei:", error)
+      );
+  };
+  
 
 return(
 <div className="admin-password-reset-page">

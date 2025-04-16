@@ -1027,7 +1027,7 @@ const transporter = nodemailer.createTransport({
 
 // Endpoint pentru solicitarea resetării parolei
 const updateAdmin = async (adminId, resetPasswordToken, resetPasswordExpires) => {
-  console.log('Updating admin with ID:', adminId); // 🔍 Debugging
+  console.log('Updating admin with ID:', adminId); 
 
   const query = 'UPDATE admins SET resetPasswordToken=$1, resetPasswordExpires=$2 WHERE id=$3 RETURNING *;';
   const values = [resetPasswordToken, resetPasswordExpires, adminId];
@@ -1037,26 +1037,21 @@ const updateAdmin = async (adminId, resetPasswordToken, resetPasswordExpires) =>
   console.log('Admin updated:', result.rows[0]);
 };
 
-// Endpoint pentru resetarea parolei
 app.post('/admin/reset-password', async (req, res) => {
   const { email2 } = req.body;
 
   try {
-    // Căutăm admin-ul după email
     const resAdmin = await client.query('SELECT * FROM admins WHERE email = $1', [email2]);
     const admin = resAdmin.rows[0];
     if (!admin) {
       return res.status(404).json({ error: 'Adminul nu a fost găsit in tabel!' });
     }
 
-    // Generăm un token securizat pentru resetare
     const resetToken = crypto.randomBytes(32).toString('hex');
-    const resetTokenExpires = new Date(Date.now() + 3600000); // Valabil 1 oră
+    const resetTokenExpires = new Date(Date.now() + 3600000); 
 
-    // Salvăm token-ul în baza de date folosind funcția de mai sus
     await updateAdmin(admin.id, resetToken, resetTokenExpires);
 
-    // Trimitem email cu link-ul de resetare
     const resetLink = `https://www.devsite.cfd/admin/reset-password/${resetToken}`;
     const mailOptions = {
       from: process.env.SMTP_PASS,
@@ -1074,30 +1069,27 @@ app.post('/admin/reset-password', async (req, res) => {
   }
 });
 
-// Endpoint pentru schimbarea parolei folosind token-ul de resetare
+
 app.post('/admin/reset-password/:resetToken', async (req, res) => {
   const { resetToken } = req.params;
   const { newPassword } = req.body;
 
   try {
-    // Căutăm admin-ul folosind token-ul de resetare
     const resAdmin = await client.query('SELECT * FROM admins WHERE resetPasswordToken = $1', [resetToken]);
     const admin = resAdmin.rows[0];
     if (!admin || new Date(admin.resetPasswordExpires) < new Date()) {
       return res.status(400).json({ error: 'Token invalid sau expirat!' });
     }
 
-    // Criptăm noua parolă
     const hashedPassword = await bcrypt.hash(newPassword, 10);
 
-    // Actualizăm admin-ul cu noile informații (folosim parametri anonimi)
-    await updateAdmin(admin.id, null, null); // Resetăm token-ul și data de expirare, deoarece s-au schimbat
+    await updateAdmin(admin.id, null, null); 
 
     const query = 'UPDATE admins SET password=$1, resetPasswordToken=null, resetPasswordExpires=null WHERE id=$2 RETURNING *;';
     const values = [hashedPassword, admin.id];
     await client.query(query, values);
 
-    res.status(200).json("Fetch-ul a fost facut cu succes")
+   res.status(200).json({ redirect: '/admin/reset-password/succes' });
   } catch (err) {
     console.error('Eroare la resetarea parolei:', err);
     res.status(500).json({ error: 'Eroare la resetarea parolei', details: err.message });

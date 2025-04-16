@@ -11,7 +11,7 @@ const {resetToken} = useParams();
 console.log("Token:", resetToken)
 
 const ResetPassword = () => {
-    fetch(`https://api.devsite.cfd/admin/reset-password-token/${resetToken}`, {
+    fetch(`https://api.devsite.cfd/admin/reset-password/${resetToken}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ newPassword }),

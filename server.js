@@ -1070,7 +1070,7 @@ app.post('/admin/reset-password', async (req, res) => {
 });
 
 
-app.post('/admin/reset-password-token/:resetToken', async (req, res) => {
+app.post('/admin/reset-password/:resetToken', async (req, res) => {
   const { resetToken } = req.params;
   const { newPassword } = req.body;
 

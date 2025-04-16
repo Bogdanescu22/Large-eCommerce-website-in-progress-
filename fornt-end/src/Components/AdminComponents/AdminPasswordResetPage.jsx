@@ -15,23 +15,19 @@ const ResetPassword = () => {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ newPassword }),
-      credentials: "include" // doar dacă ai nevoie de cookie-uri
+      credentials: "include"
     })
-      .then(async (res) => {
-        if (!res.ok) {
-          const errorData = await res.json();
-          throw new Error(errorData.error || "Eroare la resetarea parolei");
-        }
-        return res.json(); // 🟢 Important: returnăm data
-      })
-      .then((data) => {
-        if (data.redirect) {
-          window.location.href = data.redirect;
+      .then((res) => {
+        // Nu mai așteptăm JSON, pentru că serverul face redirect
+        if (res.redirected) {
+          window.location.href = res.url; // browserul va merge acolo
+        } else {
+          throw new Error("Eroare la resetarea parolei");
         }
       })
-      .catch((error) =>
-        console.error("Eroare la fetch-ul pt resetarea parolei:", error)
-      );
+      .catch((error) => {
+        console.error("Eroare la fetch-ul pt resetarea parolei:", error);
+      });
   };
   
 

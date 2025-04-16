@@ -31,7 +31,7 @@ function App() {
           <Route path="/search-result/:text" element={<SearchResultPage />} />
           <Route path="/admin-panel" element={<MainPage/>} />
           <Route path="/admin-login-page" element={<AdminLoginPage />} />
-          <Route path="/admin/reset-password/:token" element={<AdminPasswordResetPage />} />
+          <Route path="/admin/reset-password/:resetToken" element={<AdminPasswordResetPage />} />
           <Route path="/admin/reset-password/succes" element={<ResetPasswordSucces />} />
           <Route path="/product-category/:category" element={<DynamicCategoryPage />} />
         </Routes>

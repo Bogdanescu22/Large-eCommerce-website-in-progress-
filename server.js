@@ -42,8 +42,7 @@ app.use(bodyParser.json());
 app.use(cookieParser()); 
 app.use(bodyParser.urlencoded({ extended: true }));
 
-const storage = multer.memoryStorage();
-const upload = multer({ storage });
+const memoryUpload = multer({ storage: multer.memoryStorage() });
 
 const s3 = new S3Client({
   region: process.env.AWS_REGION, 
@@ -52,6 +51,59 @@ const s3 = new S3Client({
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY_ID,
   },
 });
+
+const profilePictureUpload = multer({
+  storage: multerS3({
+    s3: s3,
+    bucket: 'my-app-uploads-devsite',
+    key: function (req, file, cb) {
+      cb(null, `profile-pictures/${req.params.user_id}-${Date.now()}.webp`);
+    }
+  })
+});
+
+app.post('/upload-image', uploadMiddleware.single('file'), async (req, res) => {
+  try {
+    const file = req.file;
+    if (!file) return res.status(400).send('No file uploaded');
+
+    const ext = path.extname(file.originalname).toLowerCase();
+    const fileName = path.basename(file.originalname, ext);
+    const key = `uploads/${fileName}.webp`;
+
+    // Convertire imagine în WebP
+    const converted = await sharp(file.buffer).webp({ quality: 80 }).toBuffer();
+
+    const command = new PutObjectCommand({
+      Bucket: process.env.AWS_S3_BUCKET_NAME,
+      Key: key,
+      Body: converted,
+      ContentType: 'image/webp',
+      ACL: 'public-read',
+    });
+
+    await s3.send(command);
+
+    const fileUrl = `https://${process.env.CLOUDFRONT_DOMAIN}/${key}`;
+    res.json({ url: fileUrl });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Upload failed');
+  }
+});
+
+chokidar.watch(directoryPath, { ignored: /^\./, persistent: true })
+  .on('add', (filePath) => {
+    console.log(`🔔 Fișier adăugat: ${filePath}`);
+    uploadFile(filePath); // Apelează funcția de upload
+  })
+  .on('change', (filePath) => {
+    console.log(`✏️ Fișier modificat: ${filePath}`);
+    uploadFile(filePath); // Apelează funcția de upload pentru fișierele modificate
+  })
+  .on('unlink', (filePath) => {
+    console.log(`❌ Fișier șters: ${filePath}`);
+  });
 
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);

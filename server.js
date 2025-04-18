@@ -64,7 +64,7 @@ const profilePictureUpload = multer({
   })
 });
 
-app.post('/upload-image', uploadMiddleware.single('file'), async (req, res) => {
+app.post('/upload-image', memoryUpload.single('file'), async (req, res) => {
   try {
     const file = req.file;
     if (!file) return res.status(400).send('No file uploaded');
@@ -253,7 +253,7 @@ res.status(500).json({error:"Eroare la stergerea fotografiei de profil", details
 })
 
 
-app.patch('/profile-picture/addPicture/:user_id', upload.single("profile_picture"), async (req, res) => {
+app.patch('/profile-picture/addPicture/:user_id', profilePictureUpload.single("profile_picture"), async (req, res) => {
   const user_id = req.params.user_id.trim();
 
   // Verificăm dacă imaginea a fost încărcată cu succes

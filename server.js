@@ -1087,7 +1087,7 @@ app.post('/admin/reset-password/:resetToken', async (req, res) => {
     const query = 'UPDATE admins SET password=$1, resetPasswordToken=null, resetPasswordExpires=null WHERE id=$2 RETURNING *;';
     await client.query(query, [hashedPassword, admin.id]);
 
-    res.status(200).json({ redirect: 'https://www.devsite.cfd/admin/reset-password/succes' });
+    res.status(200).json("Parola a fost schimbata!");
 
   } catch (err) {
     console.error('Eroare la resetarea parolei:', err);

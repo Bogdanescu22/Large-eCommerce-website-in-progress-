@@ -17,11 +17,11 @@ const ResetPassword =() => {fetch(`https://api.devsite.cfd/admin/reset-password/
     credentials: "include"
   })
     .then((res) => res.json())
-    .then((data) => {
+    .then(data => {
       if (data.redirect) {
         window.location.href = data.redirect;
       } else {
-        alert("Parola a fost resetată.");
+        alert("Parola NU a fost resetată.");
       }
     })
     .catch((error) => {

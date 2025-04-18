@@ -41,7 +41,7 @@ console.error("Plata a eșuat:", error.message);
 alert("Eroare la plata cu cardul!")
 } else if (
 paymentIntent.status === "succeeded"
-){console.log("Plata reusita!"); alert("Plata finalizata cu succes!"); navigate("payment/success") }
+){console.log("Plata reusita!"); alert("Plata finalizata cu succes!"); navigate("/succes_payment") }
 };
 
 

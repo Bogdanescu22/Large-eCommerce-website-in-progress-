@@ -27,7 +27,7 @@ const AdminPasswordResetPage = () => {
 
   useEffect(() => {
     if (resetPassword) {
-      navigate("/admin/reset-password/succes");
+      navigate("https://www.devsite.cfd/admin/reset-password/succes");
     }
   }, [resetPassword, navigate]);
 

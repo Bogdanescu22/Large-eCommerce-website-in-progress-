@@ -94,19 +94,6 @@ app.post('/upload-image', memoryUpload.single('file'), async (req, res) => {
   }
 });
 
-chokidar.watch(directoryPath, { ignored: /^\./, persistent: true })
-  .on('add', (filePath) => {
-    console.log(`🔔 Fișier adăugat: ${filePath}`);
-    uploadFile(filePath); // Apelează funcția de upload
-  })
-  .on('change', (filePath) => {
-    console.log(`✏️ Fișier modificat: ${filePath}`);
-    uploadFile(filePath); // Apelează funcția de upload pentru fișierele modificate
-  })
-  .on('unlink', (filePath) => {
-    console.log(`❌ Fișier șters: ${filePath}`);
-  });
-
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 

@@ -12,7 +12,7 @@ import {getAllProducts,getProductById,addProduct,updateProduct,deleteProduct} fr
 import {addOrder,getOrdersByUserId,getOrderDetails} from "./models/ordersModel.js";
 import { getAdminByEmail, addAdmin, getAdminByResetToken} from "./models/adminModel.js";
 import crypto from "crypto";
-//import nodemailer from "nodemailer";
+import nodemailer from "nodemailer";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import cookieParser from "cookie-parser";
@@ -1058,13 +1058,12 @@ app.post("/admin/logout", (req, res) => {
 
 
 
-//const transporter = nodemailer.createTransport({
-  //service: "gmail", // Poți schimba providerul
-  //auth: {
-   // user: process.env.SMTP_USER, // Înlocuiește cu emailul tău
-   // pass: process.env.SMTP_PASS // Folosește un app password, nu parola reală
-  //}
-//});
+const transporter = nodemailer.createTransport({
+  service: "gmail", // Poți schimba providerul
+  auth: {
+   user: process.env.SMTP_USER, // Înlocuiește cu emailul tău
+   pass: process.env.SMTP_PASS // Folosește un app password, nu parola reală
+  }});
 
 // Endpoint pentru solicitarea resetării parolei
 const updateAdmin = async (adminId, resetPasswordToken, resetPasswordExpires) => {

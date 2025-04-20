@@ -25,6 +25,7 @@ import aws from "aws-sdk";
 import { S3Client } from "@aws-sdk/client-s3";
 import sharp from "sharp";
 import chokidar from 'chokidar';
+import nodemailer from "nodemailer"
 
 
 dotenv.config();  // Încărcăm variabilele de mediu din .env
@@ -1052,12 +1053,13 @@ app.post("/admin/logout", (req, res) => {
 
 
 
-
-
-
-
-
-
+const transporter = nodemailer.createTransport({
+  service: "gmail", // Poți schimba providerul
+  auth: {
+    user: process.env.SMTP_USER, // Înlocuiește cu emailul tău
+    pass: process.env.SMTP_PASS // Folosește un app password, nu parola reală
+  }
+});
 
 // Endpoint pentru solicitarea resetării parolei
 const updateAdmin = async (adminId, resetPasswordToken, resetPasswordExpires) => {

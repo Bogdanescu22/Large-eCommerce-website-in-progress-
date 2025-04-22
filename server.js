@@ -3,7 +3,7 @@ import client from "./db.js";
 import cors from './lib/cors-wrapper.js';
 import bodyParser from "body-parser";
 import session from "express-session";
-import passport from "passport";
+import passport from './lib/passport-wrapper.js';
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import { Strategy as FacebookStrategy } from "passport-facebook";
 import { v4 as uuidv4 } from "uuid";

@@ -1,4 +1,4 @@
-import express from "express";
+import express from './lib/express-wrapper.js';
 import client from "./db.js";
 import cors from "cors";
 import bodyParser from "body-parser";

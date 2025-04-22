@@ -1,4 +1,30 @@
-
+import express from './lib/express-wrapper.js';
+import client from "./db.js";
+import cors from "cors";
+import bodyParser from "body-parser";
+import session from "express-session";
+import passport from "passport";
+import { Strategy as GoogleStrategy } from "passport-google-oauth20";
+import { Strategy as FacebookStrategy } from "passport-facebook";
+import { v4 as uuidv4 } from "uuid";
+import {getUserByEmail,addUser,getUserById} from "./models/userModel.js";
+import {getAllProducts,getProductById,addProduct,updateProduct,deleteProduct} from "./models/productModel.js";
+import {addOrder,getOrdersByUserId,getOrderDetails} from "./models/ordersModel.js";
+import { getAdminByEmail, addAdmin, getAdminByResetToken} from "./models/adminModel.js";
+import crypto from "crypto";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import cookieParser from "cookie-parser";
+import dotenv from "dotenv";  
+import Stripe from "stripe";
+import { error } from "console";
+import path from "path";
+import multer from "multer";
+import multerS3 from "multer-s3";
+import aws from "aws-sdk";
+import { S3Client } from "@aws-sdk/client-s3";
+import sharp from "sharp";
+import chokidar from 'chokidar';
 
 
 dotenv.config();  // Încărcăm variabilele de mediu din .env

@@ -1,6 +1,6 @@
 import express from './lib/express-wrapper.js';
 import client from "./db.js";
-import cors from "cors";
+import cors from './lib/cors-wrapper.js';
 import bodyParser from "body-parser";
 import session from "express-session";
 import passport from "passport";

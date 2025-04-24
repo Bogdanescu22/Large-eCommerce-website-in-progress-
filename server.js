@@ -15,7 +15,7 @@ import crypto from "crypto";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import cookieParser from "cookie-parser";
-import dotenv from "dotenv";  
+import dotenv from "./lib/dotenv-wrapper.js";
 import Stripe from "stripe";
 import { error } from "console";
 import path from "path";

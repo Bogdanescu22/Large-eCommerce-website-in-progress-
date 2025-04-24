@@ -94,7 +94,6 @@ app.post('/upload-image', memoryUpload.single('file'), async (req, res) => {
 });
 
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 // Configurarea Passport pentru Google OAuth
 passport.use(

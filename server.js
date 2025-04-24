@@ -1,12 +1,12 @@
 const express = require('express');
 const client = require("./db.js");
-const cors = require('./lib/cors-wrapper.js');
+const cors = require('cors');
 const bodyParser = require("body-parser");
 const session = require("express-session");
-const passport = require('./lib/passport-wrapper.js');
+const passport = require('passport');
 const { Strategy: GoogleStrategy } = require("passport-google-oauth20");
-const { FacebookStrategy } = require("./lib/passport-facebook-wrapper.js");
-const { uuidv4 } = require("./lib/uuid-wrapper.js");
+const { FacebookStrategy } = require("passport-facebook");
+const { v4: uuidv4 } = require("uuid");
 const { getUserByEmail, addUser, getUserById } = require("./models/userModel.js");
 const { getAllProducts, getProductById, addProduct, updateProduct, deleteProduct } = require("./models/productModel.js");
 const { addOrder, getOrdersByUserId, getOrderDetails } = require("./models/ordersModel.js");
@@ -15,16 +15,16 @@ const crypto = require("crypto");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
-const dotenv = require("./lib/dotenv-wrapper.js");
-const stripe = require("./lib/stripe-wrapper.js");
-const { error } = require("console");
+const dotenv = require("dotenv");
+const stripe = require("stripe");
 const path = require("path");
-const multer = require("./lib/multer-wrapper.js");
+const multer = require("multer");
 const multerS3 = require("multer-s3");
-const aws = require("./lib/aws-wrapper.js");
-const S3Client = require("./lib/s3-wrapper.js");
-const sharp = require("./lib/sharp-wrapper.js");
-const chokidar = require("./lib/chokidar-wrapper.js");
+const aws = require("aws-sdk");
+const { S3Client } = require("@aws-sdk/client-s3");
+const sharp = require("sharp");
+const chokidar = require('chokidar');
+
 
 
 

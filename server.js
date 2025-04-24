@@ -24,7 +24,7 @@ import multerS3 from "multer-s3";
 import aws from "./lib/aws-wrapper.js";
 import S3Client from "./lib/s3-wrapper.js";
 import sharp from "./lib/sharp-wrapper.js";
-import chokidar from 'chokidar';
+import chokidar from "./lib/chokidar-wrapper.js";
 
 
 dotenv.config();  // Încărcăm variabilele de mediu din .env

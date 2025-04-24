@@ -1,11 +1,12 @@
-import fs from 'fs/promises';
-import path from 'path';
-import sharp from 'sharp';
-import mime from 'mime';
-import dotenv from 'dotenv';
-import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
-import { fileURLToPath } from 'url';
-import chokidar from 'chokidar';
+const fs = require('fs/promises');
+const path = require('path');
+const sharp = require('sharp');
+const mime = require('mime');
+const dotenv = require('dotenv');
+const { S3Client, PutObjectCommand } = require('@aws-sdk/client-s3');
+const { fileURLToPath } = require('url');
+const chokidar = require('chokidar');
+
 
 // Configurare variabile de mediu
 dotenv.config();

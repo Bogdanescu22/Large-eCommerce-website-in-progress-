@@ -22,7 +22,7 @@ import path from "path";
 import multer from "./lib/multer-wrapper.js";
 import multerS3 from "multer-s3";
 import aws from "./lib/aws-wrapper.js";
-import { S3Client } from "@aws-sdk/client-s3";
+import S3Client from "./lib/s3-wrapper.js";
 import sharp from "sharp";
 import chokidar from 'chokidar';
 

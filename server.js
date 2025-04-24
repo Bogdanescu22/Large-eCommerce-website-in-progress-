@@ -5,7 +5,7 @@ import bodyParser from "body-parser";
 import session from "express-session";
 import passport from './lib/passport-wrapper.js';
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
-import { Strategy as FacebookStrategy } from "passport-facebook";
+import {FacebookStrategy } from "./lib/passport-facebook-wrapper.js";
 import { v4 as uuidv4 } from "uuid";
 import {getUserByEmail,addUser,getUserById} from "./models/userModel.js";
 import {getAllProducts,getProductById,addProduct,updateProduct,deleteProduct} from "./models/productModel.js";

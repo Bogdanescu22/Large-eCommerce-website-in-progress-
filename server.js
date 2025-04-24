@@ -6,7 +6,7 @@ import session from "express-session";
 import passport from './lib/passport-wrapper.js';
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import {FacebookStrategy } from "./lib/passport-facebook-wrapper.js";
-import { v4 as uuidv4 } from "uuid";
+import { uuidv4 } from "./lib/uuid-wrapper.js";
 import {getUserByEmail,addUser,getUserById} from "./models/userModel.js";
 import {getAllProducts,getProductById,addProduct,updateProduct,deleteProduct} from "./models/productModel.js";
 import {addOrder,getOrdersByUserId,getOrderDetails} from "./models/ordersModel.js";

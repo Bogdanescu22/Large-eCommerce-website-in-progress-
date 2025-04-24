@@ -1,30 +1,31 @@
-import express from './lib/express-wrapper.js';
-import client from "./db.js";
-import cors from './lib/cors-wrapper.js';
-import bodyParser from "body-parser";
-import session from "express-session";
-import passport from './lib/passport-wrapper.js';
-import { Strategy as GoogleStrategy } from "passport-google-oauth20";
-import {FacebookStrategy } from "./lib/passport-facebook-wrapper.js";
-import { uuidv4 } from "./lib/uuid-wrapper.js";
-import {getUserByEmail,addUser,getUserById} from "./models/userModel.js";
-import {getAllProducts,getProductById,addProduct,updateProduct,deleteProduct} from "./models/productModel.js";
-import {addOrder,getOrdersByUserId,getOrderDetails} from "./models/ordersModel.js";
-import { getAdminByEmail, addAdmin, getAdminByResetToken} from "./models/adminModel.js";
-import crypto from "crypto";
-import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
-import cookieParser from "cookie-parser";
-import dotenv from "./lib/dotenv-wrapper.js";
-import stripe from "./lib/stripe-wrapper.js";
-import { error } from "console";
-import path from "path";
-import multer from "./lib/multer-wrapper.js";
-import multerS3 from "multer-s3";
-import aws from "./lib/aws-wrapper.js";
-import S3Client from "./lib/s3-wrapper.js";
-import sharp from "./lib/sharp-wrapper.js";
-import chokidar from "./lib/chokidar-wrapper.js";
+const express = require('express');
+const client = require("./db.js");
+const cors = require('./lib/cors-wrapper.js');
+const bodyParser = require("body-parser");
+const session = require("express-session");
+const passport = require('./lib/passport-wrapper.js');
+const { Strategy: GoogleStrategy } = require("passport-google-oauth20");
+const { FacebookStrategy } = require("./lib/passport-facebook-wrapper.js");
+const { uuidv4 } = require("./lib/uuid-wrapper.js");
+const { getUserByEmail, addUser, getUserById } = require("./models/userModel.js");
+const { getAllProducts, getProductById, addProduct, updateProduct, deleteProduct } = require("./models/productModel.js");
+const { addOrder, getOrdersByUserId, getOrderDetails } = require("./models/ordersModel.js");
+const { getAdminByEmail, addAdmin, getAdminByResetToken } = require("./models/adminModel.js");
+const crypto = require("crypto");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const cookieParser = require("cookie-parser");
+const dotenv = require("./lib/dotenv-wrapper.js");
+const stripe = require("./lib/stripe-wrapper.js");
+const { error } = require("console");
+const path = require("path");
+const multer = require("./lib/multer-wrapper.js");
+const multerS3 = require("multer-s3");
+const aws = require("./lib/aws-wrapper.js");
+const S3Client = require("./lib/s3-wrapper.js");
+const sharp = require("./lib/sharp-wrapper.js");
+const chokidar = require("./lib/chokidar-wrapper.js");
+
 
 
 dotenv.config();  // Încărcăm variabilele de mediu din .env

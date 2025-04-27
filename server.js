@@ -1050,6 +1050,15 @@ app.post("/admin/logout", (req, res) => {
 
 
 
+const transporter = nodemailer.createTransport({
+  service: "gmail", // Poți schimba providerul
+  auth: {
+    user: process.env.SMTP_USER, // Înlocuiește cu emailul tău
+    pass: process.env.SMTP_PASS // Folosește un app password, nu parola reală
+  }
+});
+
+
 
 
 

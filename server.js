@@ -1,28 +1,29 @@
-const express = require('express');
-const client = require("./db.js");
-const bodyParser = require("body-parser");
-const session = require("express-session");
-const passport = require('passport');
-const { Strategy: GoogleStrategy } = require("passport-google-oauth20");
-const { FacebookStrategy } = require("passport-facebook");
-const { v4: uuidv4 } = require("uuid");
-const { getUserByEmail, addUser, getUserById } = require("./models/userModel.js");
-const { getAllProducts, getProductById, addProduct, updateProduct, deleteProduct } = require("./models/productModel.js");
-const { addOrder, getOrdersByUserId, getOrderDetails } = require("./models/ordersModel.js");
-const { getAdminByEmail, addAdmin, getAdminByResetToken } = require("./models/adminModel.js");
-const crypto = require("crypto");
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const cookieParser = require("cookie-parser");
-const dotenv = require("dotenv");
-const stripe = require("stripe");
-const path = require("path");
-const multer = require("multer");
-const multerS3 = require("multer-s3");
-const aws = require("aws-sdk");
-const { S3Client } = require("@aws-sdk/client-s3");
-const sharp = require("sharp");
-const chokidar = require('chokidar');
+import express from 'express';
+import client from './db.js';
+import bodyParser from 'body-parser';
+import session from 'express-session';
+import passport from 'passport';
+import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
+import { FacebookStrategy } from 'passport-facebook';
+import { v4 as uuidv4 } from 'uuid';
+import { getUserByEmail, addUser, getUserById } from './models/userModel.js';
+import { getAllProducts, getProductById, addProduct, updateProduct, deleteProduct } from './models/productModel.js';
+import { addOrder, getOrdersByUserId, getOrderDetails } from './models/ordersModel.js';
+import { getAdminByEmail, addAdmin, getAdminByResetToken } from './models/adminModel.js';
+import crypto from 'crypto';
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import cookieParser from 'cookie-parser';
+import dotenv from 'dotenv';
+import stripe from 'stripe';
+import path from 'path';
+import multer from 'multer';
+import multerS3 from 'multer-s3';
+import aws from 'aws-sdk';
+import { S3Client } from '@aws-sdk/client-s3';
+import sharp from 'sharp';
+import chokidar from 'chokidar';
+
 
 
 

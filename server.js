@@ -4,7 +4,6 @@ import bodyParser from 'body-parser';
 import session from 'express-session';
 import passport from 'passport';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
-import { FacebookStrategy } from 'passport-facebook';
 import { v4 as uuidv4 } from 'uuid';
 import { getUserByEmail, addUser, getUserById } from './models/userModel.js';
 import { getAllProducts, getProductById, addProduct, updateProduct, deleteProduct } from './models/productModel.js';
@@ -24,6 +23,7 @@ import { S3Client } from '@aws-sdk/client-s3';
 import sharp from 'sharp';
 import chokidar from 'chokidar';
 
+import { Strategy as FacebookStrategy } from 'passport-facebook';
 
 
 

@@ -39,7 +39,7 @@ const AdminPasswordRessetPage = () => {
             placeholder="Parola nouă"
           />
           <div className="admin-password-reset-page-button-div">
-            <button onClick={ResetPassword}>Trimite</button>
+            <button type="button" onClick={ResetPassword}>Trimite</button>
           </div>
         </div>
       </main>

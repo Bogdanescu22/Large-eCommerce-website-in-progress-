@@ -11,9 +11,9 @@ import SuccesPage from "./UserComponents/SuccesPaymentPage.jsx";
 import SearchResultPage from "./UserComponents/SearchResultPage.jsx";
 import MainPage from "./AdminComponents/MainPage.jsx";
 import AdminLoginPage from "./AdminComponents/AdminLogInPage.jsx";
-import AdminPasswordResetPage from "./AdminComponents/AdminPasswordResetPage.jsx";
 import ResetPasswordSucces from "./AdminComponents/ResetPasswordSucces.jsx";
 import DynamicCategoryPage from "./UserComponents/DynamicCategoryPage.jsx";
+import AdminPasswordRessetPage from "./AdminComponents/AdminPasswordRessetPage.jsx";
 
 function App() {
   return (
@@ -31,7 +31,7 @@ function App() {
           <Route path="/search-result/:text" element={<SearchResultPage />} />
           <Route path="/admin-panel" element={<MainPage/>} />
           <Route path="/admin-login-page" element={<AdminLoginPage />} />
-          <Route path="/admin/reset-password/:resetToken" element={<AdminPasswordResetPage />} />
+          <Route path="/admin/reset-password/:resetToken" element={<AdminPasswordRessetPage />} />
           <Route path="/admin/reset-password/succes" element={<ResetPasswordSucces />} />
           <Route path="/product-category/:category" element={<DynamicCategoryPage />} />
         </Routes>

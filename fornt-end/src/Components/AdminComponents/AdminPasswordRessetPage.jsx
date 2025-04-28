@@ -2,7 +2,7 @@ import React, { useState} from "react";
 import AdminHeader from "./AdminHeader";
 import { useParams, useNavigate } from "react-router-dom";
 
-const AdminPasswordResetPage = () => {
+const AdminPasswordRessetPage = () => {
   const [newPassword, setNewPassword] = useState("");
   const { resetToken } = useParams();
   const navigate = useNavigate();
@@ -47,4 +47,4 @@ const AdminPasswordResetPage = () => {
   );
 };
 
-export default AdminPasswordResetPage;
+export default AdminPasswordRessetPage;

@@ -8,7 +8,7 @@ const AdminPasswordResetPage = () => {
   const navigate = useNavigate();
 
   const ResetPassword = () => {
-    fetch(`https://api.devsite.cfd/admin/reset-password/${resetToken}`, {
+    fetch(`https://www.devsite.cfd/admin/reset-password/${resetToken}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ newPassword }),
@@ -17,7 +17,7 @@ const AdminPasswordResetPage = () => {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        navigate("/admin/reset-password/succes");
+        navigate("http://www.devsite.cfd/admin-login-page");
       })
       .catch((error) => {
         console.error("Eroare la fetch-ul pt resetarea parolei:", error);

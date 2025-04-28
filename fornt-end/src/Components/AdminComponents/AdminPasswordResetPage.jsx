@@ -4,7 +4,6 @@ import { useParams, useNavigate } from "react-router-dom";
 
 const AdminPasswordResetPage = () => {
   const [newPassword, setNewPassword] = useState("");
-  const [resetPassword, setResetPassword] = useState(false);
   const { resetToken } = useParams();
   const navigate = useNavigate();
 
@@ -18,18 +17,14 @@ const AdminPasswordResetPage = () => {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        setResetPassword(true);
+        navigate("/admin/reset-password/succes");
       })
       .catch((error) => {
         console.error("Eroare la fetch-ul pt resetarea parolei:", error);
       });
   };
 
-  useEffect(() => {
-    if (resetPassword) {
-      navigate("https://www.devsite.cfd/admin/reset-password/succes");
-    }
-  }, [resetPassword, navigate]);
+
 
   return (
     <div className="admin-password-reset-page">

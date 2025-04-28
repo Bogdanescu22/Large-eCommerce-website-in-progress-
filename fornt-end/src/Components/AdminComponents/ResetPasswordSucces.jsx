@@ -13,7 +13,7 @@ return(
 <div className="reset-password-succes-page-form-div">
 <div className="reset-password-succes-page-form-div-animation"></div>
 <h1>Parola ta a fost resetata cu succes</h1>
-<button onClick={()=> navigate("http://www.devsite.cfd/admin-login-page")}>Log in</button>
+<button onClick={()=> navigate("/admin-login-page")}>Log in</button>
 </div>
 </main>
 </div>

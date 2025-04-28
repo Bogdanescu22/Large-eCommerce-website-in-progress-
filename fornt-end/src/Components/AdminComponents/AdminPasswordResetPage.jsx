@@ -17,7 +17,7 @@ const AdminPasswordResetPage = () => {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        navigate("http://www.devsite.cfd/admin-login-page");
+        navigate("/admin/reset-password/succes");
       })
       .catch((error) => {
         console.error("Eroare la fetch-ul pt resetarea parolei:", error);

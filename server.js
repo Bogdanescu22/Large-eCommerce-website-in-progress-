@@ -22,6 +22,7 @@ import aws from 'aws-sdk';
 import { S3Client } from '@aws-sdk/client-s3';
 import sharp from 'sharp';
 import chokidar from 'chokidar';
+import nedemailer from 'nodemailer';
 
 import { Strategy as FacebookStrategy } from 'passport-facebook';
 

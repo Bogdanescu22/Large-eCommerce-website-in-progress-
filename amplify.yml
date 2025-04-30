@@ -3,14 +3,20 @@ frontend:
   phases:
     preBuild:
       commands:
-        - npm ci  # Instalează dependențele
+        - curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+        - export NVM_DIR=$HOME/.nvm
+        - [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+        - nvm install
+        - nvm use
+        - node -v
+        - npm ci
     build:
       commands:
-        - npm run build  # Rulează build-ul pentru frontend
+        - npm run build
   artifacts:
-    baseDirectory: fornt-end/build  # Directorul unde se află fișierele build
+    baseDirectory: front-end/build
     files:
-      - '**/*'  # Include toate fișierele din directorul build
+      - '**/*'
   cache:
     paths:
       - node_modules/**/*

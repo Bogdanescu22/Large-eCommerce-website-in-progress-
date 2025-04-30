@@ -1,15 +1,16 @@
-
 version: 1
 frontend:
   phases:
     preBuild:
       commands:
         - curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
-        - export NVM_DIR=$HOME/.nvm
-        - source $NVM_DIR/nvm.sh
+        - export NVM_DIR="$HOME/.nvm"
+        - . "$NVM_DIR/nvm.sh"
         - nvm install
         - nvm use
-        - yarn install
+        - node -v
+        - npm install -g yarn
+        - yarn install --frozen-lockfile
     build:
       commands:
         - yarn build
@@ -20,4 +21,3 @@ frontend:
   cache:
     paths:
       - node_modules/**/*
-      - yarn.lock

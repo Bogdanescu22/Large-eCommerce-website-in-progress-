@@ -1,22 +1,23 @@
+
 version: 1
 frontend:
   phases:
     preBuild:
       commands:
-        - curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash  # Instalează nvm
-        - export NVM_DIR="$HOME/.nvm"  # Setează calea către nvm
+        - curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+        - export NVM_DIR=$HOME/.nvm
         - "[ -s \"$NVM_DIR/nvm.sh\" ] && . \"$NVM_DIR/nvm.sh\""   # Activează nvm
-        - nvm install 22.15.0  # Instalează versiunea specifică de Node.js
-        - nvm use 22.15.0  # Folosește versiunea specifică
-        - node -v  # Verifică versiunea de Node.js
-        - npm ci  # Instalează dependențele
+        - nvm install
+        - nvm use
+        - yarn install
     build:
       commands:
-        - npm run build  # Rulează build-ul frontend-ului
+        - yarn build
   artifacts:
-    baseDirectory: front-end/build  # Directorul unde se află fișierele generate
+    baseDirectory: front-end/build
     files:
-      - '**/*'  # Include toate fișierele generate în build
+      - '**/*'
   cache:
     paths:
-      - node_modules/**/*  # Cache pentru node_modules pentru a accelera build-urile
+      - node_modules/**/*
+      - yarn.lock

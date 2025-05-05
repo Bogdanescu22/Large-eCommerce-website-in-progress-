@@ -15,7 +15,7 @@ frontend:
       commands:
         - yarn build  # Construiește aplicația
   artifacts:
-    baseDirectory: front-end/build
+    baseDirectory: fornt-end/build
     files:
       - '**/*'
   cache:

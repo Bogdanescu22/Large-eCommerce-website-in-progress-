@@ -3,17 +3,17 @@ frontend:
   phases:
     preBuild:
       commands:
-        - curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
-        - export NVM_DIR="$HOME/.nvm"
-        - . "$NVM_DIR/nvm.sh"
-        - nvm install
-        - nvm use
-        - node -v
-        - npm install -g yarn
-        - yarn install --frozen-lockfile
+        - curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash  # Instalează nvm
+        - export NVM_DIR="$HOME/.nvm"  # Setează variabila de mediu pentru nvm
+        - . "$NVM_DIR/nvm.sh"  # Încarcă nvm
+        - nvm install 20.11.1  # Instalează Node.js 20.11.1
+        - nvm use 20.11.1  # Folosește Node.js 20.11.1
+        - node -v  # Verifică versiunea de Node.js
+        - npm install -g yarn  # Instalează yarn global
+        - yarn install --frozen-lockfile  # Instalează dependințele cu yarn
     build:
       commands:
-        - yarn build
+        - yarn build  # Construiește aplicația
   artifacts:
     baseDirectory: front-end/build
     files:
@@ -21,3 +21,4 @@ frontend:
   cache:
     paths:
       - node_modules/**/*
+

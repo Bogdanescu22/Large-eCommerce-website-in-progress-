@@ -8,7 +8,7 @@ const AdminPasswordRessetPage = () => {
   const navigate = useNavigate();
 
   const ResetPassword = () => {
-    fetch(`https://www.devsite.cfd/admin/reset-password/${resetToken}`, {
+    fetch(`https://api.devsite.cfd/admin/reset-password/${resetToken}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ newPassword }),

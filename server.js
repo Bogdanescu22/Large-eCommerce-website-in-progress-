@@ -1109,7 +1109,7 @@ app.post('/admin/reset-password', async (req, res) => {
 });
 
 
-app.post('/admin/resetpassword/:resetToken', async (req, res) => {
+app.post('/admin/reset-password/:resetToken', async (req, res) => {
   const  resetToken = req.params.resetToken;
   const { newPassword } = req.body;
 
@@ -1121,14 +1121,13 @@ app.post('/admin/resetpassword/:resetToken', async (req, res) => {
     }
 
     const hashedPassword = await bcrypt.hash(newPassword, 10);
-
     await updateAdmin(admin.id, null, null); 
 
     const query = 'UPDATE admins SET password=$1, resetPasswordToken=null, resetPasswordExpires=null WHERE id=$2 RETURNING *;';
-    const values = [hashedPassword, admin.id];
-    await client.query(query, values);
+    await client.query(query, [hashedPassword, admin.id]);
 
-    res.status(200).json({ message: 'Parola a fost resetată cu succes!' });
+    res.status(200).json("Parola a fost schimbata!");
+
   } catch (err) {
     console.error('Eroare la resetarea parolei:', err);
     res.status(500).json({ error: 'Eroare la resetarea parolei', details: err.message });

@@ -78,7 +78,7 @@ const ForgotPasswordForm = ({ setEmail2, ForgotPassword, setForgotForm }) => {
       <div className="admin-forgot-password-form-input">
         <input 
           onChange={(e) => setEmail2(e.target.value)} 
-          type="text" 
+          type="email" 
           placeholder="Introdu adresa de email" 
         />
       </div>

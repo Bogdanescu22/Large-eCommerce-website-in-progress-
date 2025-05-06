@@ -14,7 +14,10 @@ const AdminPasswordRessetPage = () => {
       body: JSON.stringify({ newPassword }),
       credentials: "include",
     })
-      .then((res) => res.json())
+
+      .then((res) => {
+        if(!res.ok){return console.error("Eroare la fetch-ul pentru resetarea parolei/parola nu a fost resetata")}
+        res.json()})
       .then((data) => {
         console.log(data);
         navigate("/admin/reset-password/succes");

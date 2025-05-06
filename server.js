@@ -991,7 +991,7 @@ app.post("/admin/login", async (req, res) => {
       maxAge: 3600000   // Expiră după 1 oră (3600000 ms)
     });
 
-    res.redirect("/admin-panel")
+    res.status(200).json({ message: "Autentificare reușită!", admin: { id: admin.id, email: admin.email } });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Eroare la autentificare" });

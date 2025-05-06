@@ -274,6 +274,21 @@ app.patch('/profile-picture/addPicture/:user_id', profilePictureUpload.single("p
 
 //Rute pt Informatii users
 
+app.get("/my-reviews/:userId", async(req,res)=>{
+  const userId = req.params.userId;
+  try{
+  const query = "SELECT * FROM reviews WHERE user_id=$1";
+  const result = await client.query(query,[userId]);
+  
+  res.status(200).json(result.rows);
+  
+  }catch (err) {
+  console.error(err);
+  res.status(500).json({error:"Eroare la obitnerea reviews", details:err.details})
+  }
+  })
+
+
 
 app.get("/logout", (req, res) => {
   req.logout(() => {
@@ -311,6 +326,9 @@ res.status(500).json({err:"Eroare la obtinerea datelor produsului filtrat", deta
 }
 });
 
+
+
+  
 
 
 app.post(`/reviews_approval/:product_id/:user_id`, async(req,res) =>{
@@ -1133,6 +1151,50 @@ app.post('/admin/reset-password/:resetToken', async (req, res) => {
     res.status(500).json({ error: 'Eroare la resetarea parolei', details: err.message });
   }
 });
+
+app.get("/admin/reviews_for_approval",protectAdminRoute, async(req,res)=> {
+  try{
+  const result= await client.query("SELECT * FROM reviews_approval;"); 
+  
+  res.status(200).json(result.rows)
+  }
+  catch (err) {
+  console.error(err);
+  res.status(500).json({error:"Eroare la obtinerea review-urilor", details: err.message})
+  }
+  });
+
+  app.post("/admin/send_reviews",protectAdminRoute, async(req,res)=> {
+    const {user_id, product_id, review_stars, description, profile_picture, image_url, motiv_respingere, status} = req.body;
+    
+    if (!user_id || !product_id || !review_stars || !description || !status) { return res.status(400).json({message:"Toate campurile sunt obligatorii!"})};
+    try {
+    const query="INSERT INTO reviews (user_id, product_id, review_stars, description, profile_picture,motiv_respingere, image_url, status) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *;";
+    const result= await client.query(query,[user_id, product_id, review_stars, description, profile_picture, motiv_respingere, image_url, status]);
+    
+    res.status(200).json(result.rows);
+    } catch(err) {
+    console.error(err);
+    res.status(500).json({error:"Eroare la inserarea review-ului in tabelul reviews", details: err.message})
+    }});
+
+    app.delete("/verified_review/:id", async(req,res)=> {
+      const id = req.params.id;
+      
+      try{
+      const query="DELETE FROM reviews_approval WHERE id=$1";
+      const result= await client.query(query,[id]);
+      
+      res.json(result.rows);
+      
+      } catch (err){
+      console.error(err);
+      res.status(500).json({err:"Eroarea la steregerea review-ului verificat"}
+      )
+      }
+      });
+      
+
 
 
 

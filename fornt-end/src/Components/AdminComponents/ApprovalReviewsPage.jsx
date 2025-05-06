@@ -11,7 +11,7 @@ const ApprovalReviewsPage = () => {
   const [prop1, setProp1] = useState(null);
 
   useEffect(() => {
-    fetch("http://api.devsite.cfd/admin/reviews_for_approval", { credentials: "include" })
+    fetch("https://api.devsite.cfd/admin/reviews_for_approval", { credentials: "include" })
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
@@ -29,7 +29,7 @@ const ApprovalReviewsPage = () => {
       return;
     }
 
-    fetch("http://api.devsite.cfd/admin/send_reviews", {
+    fetch("https://api.devsite.cfd/admin/send_reviews", {
       credentials: "include",
       method: "POST",
       headers: { "Content-Type": "application/json" },

@@ -14,6 +14,7 @@ import AdminLoginPage from "./AdminComponents/AdminLogInPage.jsx";
 import ResetPasswordSucces from "./AdminComponents/ResetPasswordSucces.jsx";
 import DynamicCategoryPage from "./UserComponents/DynamicCategoryPage.jsx";
 import AdminPasswordRessetPage from "./AdminComponents/AdminPasswordRessetPage.jsx";
+import ApprovalReviewsPage from "./AdminComponents/ApprovalReviewsPage.jsx";
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
           <Route path="/admin/reset-password/:resetToken" element={<AdminPasswordRessetPage />} />
           <Route path="/admin/reset-password/succes" element={<ResetPasswordSucces />} />
           <Route path="/product-category/:category" element={<DynamicCategoryPage />} />
+          <Route path="/admin/approval-reviews" element={<ApprovalReviewsPage />} />
         </Routes>
       </div>
     </Router>

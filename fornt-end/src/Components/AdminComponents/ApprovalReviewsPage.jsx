@@ -13,7 +13,7 @@ const ApprovalReviewsPage = () => {
   const [card, setCard] = useState(false)
 
   useEffect(() => {
-    fetch("http://api.devsite.cfd/admin/reviews_for_approval", { credentials: "include" })
+    fetch("https://api.devsite.cfd/admin/reviews_for_approval", { credentials: "include" })
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
@@ -31,7 +31,7 @@ const ApprovalReviewsPage = () => {
       return;
     }
 
-    fetch("http://api.devsite.cfd/admin/send_reviews", {
+    fetch("https://api.devsite.cfd/admin/send_reviews", {
       credentials: "include",
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -80,7 +80,7 @@ const ApprovalReviewsPage = () => {
   };
 
   const deleteReview = (id) => {
-  fetch(`http://api.devsite.cfd/verified_review/${id}`, {
+  fetch(`https://api.devsite.cfd/verified_review/${id}`, {
   credentials: "include",
   method: "DELETE",
   })

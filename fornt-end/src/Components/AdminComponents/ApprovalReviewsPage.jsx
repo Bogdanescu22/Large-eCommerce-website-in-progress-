@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import AdminHeader from "./AdminHeader";
 import ApprovalReviewsCard from "../AdminComponents/ApprovalReviewCards";
@@ -9,9 +10,10 @@ const ApprovalReviewsPage = () => {
   const [forbid, setForbid] = useState(false);
   const [forbidReason, setForbidReason] = useState(null);
   const [prop1, setProp1] = useState(null);
+  const [card, setCard] = useState(false)
 
   useEffect(() => {
-    fetch("https://api.devsite.cfd/admin/reviews_for_approval", { credentials: "include" })
+    fetch("http://localhost:5000/admin/reviews_for_approval", { credentials: "include" })
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
@@ -29,7 +31,7 @@ const ApprovalReviewsPage = () => {
       return;
     }
 
-    fetch("https://api.devsite.cfd/admin/send_reviews", {
+    fetch("http://localhost:5000/admin/send_reviews", {
       credentials: "include",
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -48,6 +50,7 @@ const ApprovalReviewsPage = () => {
       .then((data) => {
         alert("Recenzia a fost trimisă cu succes!");
         console.log(data);
+        deleteReview(prop.id)
       })
       .catch((error) => {
         console.error("Eroare:", error);
@@ -64,6 +67,7 @@ const ApprovalReviewsPage = () => {
     setForbid(true);
     setProp1(
       prop.map((prop2) => ({
+        id: prop2.id,
         user_id: prop2.user_id,
         product_id: prop2.product_id,
         review_stars: prop2.review_stars,
@@ -73,6 +77,16 @@ const ApprovalReviewsPage = () => {
         status: "forbid",
       }))
     );
+  };
+
+  const deleteReview = (id) => {
+  fetch(`http://localhost:5000/verified_review/${id}`, {
+  credentials: "include",
+  method: "DELETE",
+  })
+  .then((res) => res.json())
+  .then((data) => console.log(data))
+  .catch((err)=> console.error("Eroare la fetch:", err))
   };
 
   const setForbidReasonFunction = (event) => {
@@ -100,7 +114,7 @@ const ApprovalReviewsPage = () => {
               zoomImageFunction={zoomImageFunction}
               handleForbidButton1={(e) => {
                 e.target.value = "forbid";
-                handleForbidButton1([prop]); // Împachetat într-un array ca să meargă cu `map`
+                handleForbidButton1([prop]); 
               }}
             />
           ))}

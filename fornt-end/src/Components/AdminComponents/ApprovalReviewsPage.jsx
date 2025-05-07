@@ -50,12 +50,16 @@ const ApprovalReviewsPage = () => {
       .then((data) => {
         alert("Recenzia a fost trimisă cu succes!");
         console.log(data);
-        deleteReview(prop.id)
+        deleteReview(prop.id);
+        if (card === true) {
+          setReview((prevReviews) => prevReviews.filter((item) => item.id !== prop.id));
+        }
       })
       .catch((error) => {
         console.error("Eroare:", error);
       });
   };
+
 
   const zoomImageFunction = (img) => {
     setZoomImage(true);
@@ -149,7 +153,7 @@ const ApprovalReviewsPage = () => {
                   placeholder="Scrie motivul respingerii"
                 ></textarea>
               </div>
-              <button value="forbid" onClick={(e) => handleButton(e, prop1?.[0])}>
+              <button value="forbid" onClick={(e) => {handleButton(e, prop1?.[0]); setCard(true)}} className="forbid-overlay-button">
                 Trimite
               </button>
             </div>

@@ -153,7 +153,7 @@ const ApprovalReviewsPage = () => {
                   placeholder="Scrie motivul respingerii"
                 ></textarea>
               </div>
-              <button value="forbid" onClick={(e) => {handleButton(e, prop1?.[0]); setCard(true)}} className="forbid-overlay-button">
+              <button value="forbid" onClick={(e) => {setCard(true); handleButton(e, prop1?.[0])}} className="forbid-overlay-button">
                 Trimite
               </button>
             </div>

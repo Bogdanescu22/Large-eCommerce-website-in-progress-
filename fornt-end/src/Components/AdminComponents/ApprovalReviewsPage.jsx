@@ -30,7 +30,7 @@ const ApprovalReviewsPage = () => {
       alert("Nu sunt recenzii de aprobat!");
       return;
     }
-
+  
     fetch("https://api.devsite.cfd/admin/send_reviews", {
       credentials: "include",
       method: "POST",
@@ -50,22 +50,32 @@ const ApprovalReviewsPage = () => {
       .then((data) => {
         alert("Recenzia a fost trimisă cu succes!");
         console.log(data);
-        deleteReview(prop.id);
-        if (card === true) {
-          setReview((prevReviews) => prevReviews.filter((item) => item.id !== prop.id));
-        }
+  
+        // Șterge recenzia din backend
+        deleteReview(prop.id)
+          .then(() => {
+            // Apoi actualizează UI-ul
+            setReview((prev) => prev.filter((item) => item.id !== prop.id));
+          })
+          .catch((err) => console.error("Eroare la ștergere recenzie:", err));
+  
+        // Închide overlay-ul și curăță state-urile
+        setForbid(false);
+        setProp1(null);
+        setForbidReason(null);
       })
       .catch((error) => {
         console.error("Eroare:", error);
       });
   };
+  // 
 
 
-  const zoomImageFunction = (img) => {
+  function zoomImageFunction(img) {
     setZoomImage(true);
     setSrcImage(img.target.src);
     console.log(img.target.src);
-  };
+  }
 
   const handleForbidButton1 = (prop) => {
     setForbid(true);

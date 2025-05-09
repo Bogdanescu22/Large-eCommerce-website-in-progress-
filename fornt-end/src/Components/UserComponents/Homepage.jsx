@@ -14,7 +14,7 @@ function HomePage() {
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
-    fetch("https://api.devsite.cfd/category_pages")
+    fetch("http://localhost:5000/category_pages")
       .then((res) => res.json())
       .then((data) => {
         setCategories(data);
@@ -26,7 +26,7 @@ function HomePage() {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentBgIndex((prevIndex) => (prevIndex + 1) % heroBackgrounds.length);
-    }, 5000); 
+    }, 5000); // schimbă fundalul la fiecare 5 secunde
 
     return () => clearInterval(interval);
   }, []);
@@ -35,15 +35,17 @@ function HomePage() {
     <div className="telefoaneHero-container">
       <Header />
       <main className="main-content">
-        <div
-          className="hero-div"
-          style={{
-            backgroundImage: `url(${heroBackgrounds[currentBgIndex]})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            transition: "background-image 1s ease-in-out"
-          }}
-        >
+        <div className="hero-div">
+          {/* Imaginea ca fundal */}
+          <img
+            src={heroBackgrounds[currentBgIndex]}
+            alt="Hero"
+            className="hero-img"
+            loading="eager"
+            fetchpriority="high"
+            width="1920"
+            height="800"
+          />
           <div className="hero-text">
             <h1 className="titleHomePageHero">Bun venit pe site-ul nostru</h1>
             <h2 className="subtitleHomePageHero">Descoperă cele mai bune oferte</h2>
@@ -51,19 +53,14 @@ function HomePage() {
         </div>
         <div className="product-cards-div">
           {categories.length > 0 ? (
-            categories.map((category) => {
-              const imgPath = "/Images/";
-              const imgName = decodeURIComponent(category.image.split('/').pop()); 
-
-              return (
-                <CardHomePage
-                  key={category.id}
-                  title={category.page_title}
-                  imgURL={imgPath + imgName} 
-                  category_name={category.category_name}
-                />
-              );
-            })
+            categories.map((category) => (
+              <CardHomePage
+                key={category.id}
+                title={category.page_title}
+                imgURL={category.image}
+                category_name={category.category_name}
+              />
+            ))
           ) : (
             <p>Se încarcă cards...</p>
           )}
@@ -75,4 +72,3 @@ function HomePage() {
 }
 
 export default HomePage;
-

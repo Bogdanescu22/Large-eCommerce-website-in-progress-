@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import AdminHeader from "./AdminHeader";
 import ApprovalReviewsCard from "../AdminComponents/ApprovalReviewCards";
@@ -8,30 +7,30 @@ const ApprovalReviewsPage = () => {
   const [zoomImage, setZoomImage] = useState(false);
   const [srcImage, setSrcImage] = useState(null);
   const [forbid, setForbid] = useState(false);
-  const [forbidReason, setForbidReason] = useState(null);
-  const [prop1, setProp1] = useState(null);
-  const [card, setCard] = useState(false)
+  const [forbidReason, setForbidReason] = useState("");
+  const [selectedReview, setSelectedReview] = useState(null);
 
   useEffect(() => {
-    fetch("https://api.devsite.cfd/admin/reviews_for_approval", { credentials: "include" })
+    fetch("http://localhost:5000/admin/reviews_for_approval", {
+      credentials: "include",
+    })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
-        console.log("✅ Este array?", Array.isArray(data));
+        console.log("Recenzii:", data);
         setReview(data);
       })
       .catch((error) => {
-        console.error("Eroare:", error);
+        console.error("Eroare la fetch recenzii:", error);
       });
   }, []);
 
-  const handleButton = (events, prop) => {
+  const handleButton = (event, prop) => {
     if (review.length === 0) {
       alert("Nu sunt recenzii de aprobat!");
       return;
     }
-  
-    fetch("https://api.devsite.cfd/admin/send_reviews", {
+
+    fetch("http://localhost:5000/admin/send_reviews", {
       credentials: "include",
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -43,69 +42,39 @@ const ApprovalReviewsPage = () => {
         profile_picture: prop.profile_picture,
         image_url: prop.image_url,
         motiv_respingere: forbidReason,
-        status: events.target.value,
+        status: event.target.value,
       }),
     })
       .then((res) => res.json())
-      .then((data) => {
-        alert("Recenzia a fost trimisă cu succes!");
-        console.log(data);
-  
-        // Șterge recenzia din backend
-        deleteReview(prop.id)
+      .then(() => {
+        // Șterge review din backend și apoi din state
+        fetch(`http://localhost:5000/verified_review/${prop.id}`, {
+          credentials: "include",
+          method: "DELETE",
+        })
+          .then((res) => res.json())
           .then(() => {
-            // Apoi actualizează UI-ul
             setReview((prev) => prev.filter((item) => item.id !== prop.id));
           })
-          .catch((err) => console.error("Eroare la ștergere recenzie:", err));
-  
-        // Închide overlay-ul și curăță state-urile
-        setForbid(false);
-        setProp1(null);
-        setForbidReason(null);
+          .catch((err) => console.error("Eroare la DELETE:", err));
       })
       .catch((error) => {
-        console.error("Eroare:", error);
+        console.error("Eroare la trimiterea recenziei:", error);
       });
   };
-  // 
 
-
-  function zoomImageFunction(img) {
+  const zoomImageFunction = (img) => {
     setZoomImage(true);
     setSrcImage(img.target.src);
-    console.log(img.target.src);
-  }
+  };
 
   const handleForbidButton1 = (prop) => {
     setForbid(true);
-    setProp1(
-      prop.map((prop2) => ({
-        id: prop2.id,
-        user_id: prop2.user_id,
-        product_id: prop2.product_id,
-        review_stars: prop2.review_stars,
-        description: prop2.description,
-        profile_picture: prop2.profile_picture,
-        image_url: prop2.image_url,
-        status: "forbid",
-      }))
-    );
-  };
-
-  const deleteReview = (id) => {
-  fetch(`https://api.devsite.cfd/verified_review/${id}`, {
-  credentials: "include",
-  method: "DELETE",
-  })
-  .then((res) => res.json())
-  .then((data) => console.log(data))
-  .catch((err)=> console.error("Eroare la fetch:", err))
+    setSelectedReview(prop);
   };
 
   const setForbidReasonFunction = (event) => {
     setForbidReason(event.target.value);
-    console.log(event.target.value);
   };
 
   return (
@@ -124,12 +93,9 @@ const ApprovalReviewsPage = () => {
               starsReviews={prop.review_stars}
               imageUrl={prop.image_url}
               motiv_respingere={forbidReason}
-              handleButton={(events) => handleButton(events, prop)}
+              handleButton={(e) => handleButton(e, prop)}
               zoomImageFunction={zoomImageFunction}
-              handleForbidButton1={(e) => {
-                e.target.value = "forbid";
-                handleForbidButton1([prop]); 
-              }}
+              handleForbidButton1={() => handleForbidButton1(prop)}
             />
           ))}
         </div>
@@ -146,10 +112,16 @@ const ApprovalReviewsPage = () => {
         </div>
       )}
 
-      {forbid && (
+      {forbid && selectedReview && (
         <div className="forbid-overlay">
           <div className="close-fobid-button-div">
-            <button onClick={() => setForbid(false)} className="close-fobid-button">
+            <button
+              onClick={() => {
+                setForbid(false);
+                setForbidReason("");
+              }}
+              className="close-fobid-button"
+            >
               X
             </button>
           </div>
@@ -158,12 +130,18 @@ const ApprovalReviewsPage = () => {
               <h2>Motiv respingere</h2>
               <div className="forbid-overlay-form">
                 <textarea
-                  onChange={(e) => setForbidReasonFunction(e)}
+                  onChange={setForbidReasonFunction}
                   className="forbid-overlay-textarea"
                   placeholder="Scrie motivul respingerii"
                 ></textarea>
               </div>
-              <button value="forbid" onClick={(e) => {setCard(true); handleButton(e, prop1?.[0])}} className="forbid-overlay-button">
+              <button
+                value="forbid"
+                onClick={(e) => {
+                  handleButton(e, selectedReview);
+                  setForbid(false);
+                }}
+              >
                 Trimite
               </button>
             </div>
@@ -175,3 +153,4 @@ const ApprovalReviewsPage = () => {
 };
 
 export default ApprovalReviewsPage;
+

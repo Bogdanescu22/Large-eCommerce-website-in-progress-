@@ -1,18 +1,22 @@
 
 import React, { useState, useEffect } from "react";
-import Header from "./Header.jsx";
-import Footer from "./Footer.jsx";
+import Header from "./Header";
+import Footer from "./Footer";
 
 function ProductPageHtml({ name_product, image_product, stock_product, product_price, product_details, product_id }) {
-  const [starsReviews, setStarsReviews] = useState(0); // 🔥 Corectat numele
+  const [starsReviews, setStarsReviews] = useState(0); 
   const [description, setDescription] = useState("");
   const [user_id, setUser_Id] = useState(null);
   const [hoveredStars, setHoveredStars] = useState(0);
+  const [userProfilePicture, setUserProfilePicture] = useState(null);
+  const [verifyOrder, setVerifyOrder] = useState("");
+  const [reviewImage, setReviewImage] = useState(null);
+
 
   useEffect(() => {
     const getUserId = async () => {
       try {
-        const response = await fetch("https://api.devsite.cfd/auth/user", {
+        const response = await fetch("http://localhost:5000/auth/user", {
           credentials: "include",
         });
 
@@ -24,6 +28,7 @@ function ProductPageHtml({ name_product, image_product, stock_product, product_p
 
         if (data.user) {
           setUser_Id(data.user.id);
+          setUserProfilePicture(data.user.profile_picture);
         } else {
           alert("Nu ești autentificat");
         }
@@ -32,8 +37,18 @@ function ProductPageHtml({ name_product, image_product, stock_product, product_p
       }
     };
 
-    getUserId(); // 🔥 Trebuia apelată funcția!
-  }, []); // 🔥 Închide corect `useEffect`
+    getUserId(); 
+  }, []); 
+
+
+  useEffect(()=>{
+    if(!user_id) {return console.log("Nu exista user_id")} ;
+    fetch(`http://localhost:5000/orders_fetch/${user_id}`, {credentials: "include"})
+   .then((res) => res.json())
+   .then((data) => {setVerifyOrder(data); console.log("Astea sunt datele primite",data)})
+   .catch((err) => console.log("Eroare la obtinerea comenzilor", err));
+    },[user_id])
+
 
   const postReview = () => {
     if(!product_id || !user_id) {
@@ -43,13 +58,23 @@ function ProductPageHtml({ name_product, image_product, stock_product, product_p
     if(!starsReviews || !description) {
     return alert("Campurile nota si descriere sunt obligatorii!")
     }
-    fetch(`https://api.devsite.cfd/reviews_approval/${product_id}/${user_id}`, {
+
+
+    const verifyBoughtProduct = verifyOrder.some((order)=> order.product_name === name_product)
+
+   if(!verifyBoughtProduct) {
+    return alert("Nu ai cumparat acest produs!") }
+
+    fetch(`http://localhost:5000/reviews_approval/${product_id}/${user_id}`, {
       method: "POST",
       credentials: "include",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         review_stars: starsReviews,
         description: description,
+        profile_picture: userProfilePicture,
+        image_url: reviewImage,
+
       }),
     })
       .then((res) => {
@@ -70,6 +95,19 @@ function ProductPageHtml({ name_product, image_product, stock_product, product_p
   const handleStarClick = (index) => {
     setStarsReviews(index);
   };
+
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setReviewImage(reader.result); // imaginea în base64
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+  
 
 
   const handleProductDescription = (e) => {
@@ -133,6 +171,17 @@ function ProductPageHtml({ name_product, image_product, stock_product, product_p
          placeholder="Descrie experienta ta cu produsul">
         </textarea>
           <p className={`char-limit-details-div ${description.length > 500 ? "active" : ""}`}>Ai depasit numarul maxim de caractere (500)!</p>
+          </div>
+          <div className="product-page-reviews-image-div">
+
+          <div className="product-page-reviews-image-div-text">
+            <p>Adauga o imagine</p>
+            </div>      
+
+          <input type="file" onChange={handleImageChange} accept="image/*" />
+          {reviewImage && <img src={reviewImage} alt="Preview" style={{ width: '100px', height: '100px' }} />}
+
+               
           </div>
           <div className="product-page-reviews-button-div">
           <button onClick={(e)=>postReview(e)}>Trimite</button>

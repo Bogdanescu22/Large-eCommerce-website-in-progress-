@@ -14,7 +14,7 @@ function HomePage() {
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
-    fetch("http://api.devsite.cfd/category_pages")
+    fetch("https://api.devsite.cfd/category_pages")
       .then((res) => res.json())
       .then((data) => {
         setCategories(data);

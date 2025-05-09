@@ -23,8 +23,10 @@ import { S3Client } from '@aws-sdk/client-s3';
 import sharp from 'sharp';
 import chokidar from 'chokidar';
 import nodemailer from 'nodemailer';
-
 import { Strategy as FacebookStrategy } from 'passport-facebook';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
 
 
 
@@ -45,6 +47,8 @@ app.use(bodyParser.json());
 app.use(cookieParser()); 
 app.use(bodyParser.urlencoded({ extended: true }));
 
+
+const upload = multer()
 const memoryUpload = multer({ storage: multer.memoryStorage() });
 
 const s3 = new S3Client({
@@ -331,7 +335,7 @@ res.status(500).json({err:"Eroare la obtinerea datelor produsului filtrat", deta
   
 
 
-app.post(`/reviews_approval/:product_id/:user_id`, async(req,res) =>{
+app.post(`/reviews_approval/:product_id/:user_id`,upload.none(), async(req,res) =>{
 const product_id = req.params.product_id;
 const user_id = req.params.user_id;
 const {review_stars, description} = req.body

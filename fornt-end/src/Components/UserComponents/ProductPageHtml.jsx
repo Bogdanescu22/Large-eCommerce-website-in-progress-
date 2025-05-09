@@ -16,7 +16,7 @@ function ProductPageHtml({ name_product, image_product, stock_product, product_p
   useEffect(() => {
     const getUserId = async () => {
       try {
-        const response = await fetch("http://localhost:5000/auth/user", {
+        const response = await fetch("http://api.devsite.cfd/auth/user", {
           credentials: "include",
         });
 
@@ -43,7 +43,7 @@ function ProductPageHtml({ name_product, image_product, stock_product, product_p
 
   useEffect(()=>{
     if(!user_id) {return console.log("Nu exista user_id")} ;
-    fetch(`http://localhost:5000/orders_fetch/${user_id}`, {credentials: "include"})
+    fetch(`http://api.devsite.cfd/orders_fetch/${user_id}`, {credentials: "include"})
    .then((res) => res.json())
    .then((data) => {setVerifyOrder(data); console.log("Astea sunt datele primite",data)})
    .catch((err) => console.log("Eroare la obtinerea comenzilor", err));
@@ -65,7 +65,7 @@ function ProductPageHtml({ name_product, image_product, stock_product, product_p
    if(!verifyBoughtProduct) {
     return alert("Nu ai cumparat acest produs!") }
 
-    fetch(`http://localhost:5000/reviews_approval/${product_id}/${user_id}`, {
+    fetch(`http://api.devsite.cfd/reviews_approval/${product_id}/${user_id}`, {
       method: "POST",
       credentials: "include",
       headers: { "Content-Type": "application/json" },

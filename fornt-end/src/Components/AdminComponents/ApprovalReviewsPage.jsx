@@ -11,7 +11,7 @@ const ApprovalReviewsPage = () => {
   const [selectedReview, setSelectedReview] = useState(null);
 
   useEffect(() => {
-    fetch("http://localhost:5000/admin/reviews_for_approval", {
+    fetch("http://api.devsite.cfd/admin/reviews_for_approval", {
       credentials: "include",
     })
       .then((res) => res.json())
@@ -30,7 +30,7 @@ const ApprovalReviewsPage = () => {
       return;
     }
 
-    fetch("http://localhost:5000/admin/send_reviews", {
+    fetch("http://api.devsite.cfd/admin/send_reviews", {
       credentials: "include",
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -48,7 +48,7 @@ const ApprovalReviewsPage = () => {
       .then((res) => res.json())
       .then(() => {
         // Șterge review din backend și apoi din state
-        fetch(`http://localhost:5000/verified_review/${prop.id}`, {
+        fetch(`http://api.devsite.cfd/verified_review/${prop.id}`, {
           credentials: "include",
           method: "DELETE",
         })

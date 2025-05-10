@@ -1,11 +1,9 @@
 import React, { Suspense } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
-// Componente esențiale (afișate imediat pe homepage sau login)
 import HomePage from "./UserComponents/Homepage.jsx";
 import LogInPage from "./UserComponents/LogIn.jsx";
 
-// Lazy-loaded componente (neesențiale la prima încărcare)
 const TelefoanePage = React.lazy(() => import("./UserComponents/TelefoanePage.jsx"));
 const UserCartPage = React.lazy(() => import("./UserComponents/UserCartPage.jsx"));
 const CheckOutPage = React.lazy(() => import("./UserComponents/CheckoutPage.jsx"));

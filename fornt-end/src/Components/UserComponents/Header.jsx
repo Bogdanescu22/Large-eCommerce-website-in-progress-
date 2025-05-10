@@ -64,7 +64,7 @@ function Header() {
 
       <div className={`logo ${menu ? "active" : ""}`}>
         <a href="/">
-          <img src="/Images/Black Circle Icon Business Logo.png" width="80" alt="Logo" />
+          <img src="/Images/Black Circle Icon Business Logo (3).png" width="80" alt="Logo" />
         </a>
       </div>
 

@@ -1,25 +1,29 @@
-import React from "react";
+import React, { Suspense } from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+
+// Componente esențiale (afișate imediat pe homepage sau login)
 import HomePage from "./UserComponents/Homepage.jsx";
-import { BrowserRouter as Router, Route, Routes,} from "react-router-dom";
 import LogInPage from "./UserComponents/LogIn.jsx";
-import TelefoanePage from "./UserComponents/TelefoanePage.jsx";
-import UserCartPage from "./UserComponents/UserCartPage.jsx";
-import CheckOutPage from "./UserComponents/CheckoutPage.jsx";
-import AccountDetails from "./UserComponents/Account-details.jsx";
-import ProductPage from "./UserComponents/ProductPage.jsx";
-import SuccesPage from "./UserComponents/SuccesPaymentPage.jsx";
-import SearchResultPage from "./UserComponents/SearchResultPage.jsx";
-import MainPage from "./AdminComponents/MainPage.jsx";
-import AdminLoginPage from "./AdminComponents/AdminLogInPage.jsx";
-import ResetPasswordSucces from "./AdminComponents/ResetPasswordSucces.jsx";
-import DynamicCategoryPage from "./UserComponents/DynamicCategoryPage.jsx";
-import AdminPasswordRessetPage from "./AdminComponents/AdminPasswordRessetPage.jsx";
-import ApprovalReviewsPage from "./AdminComponents/ApprovalReviewsPage.jsx";
+
+// Lazy-loaded componente (neesențiale la prima încărcare)
+const TelefoanePage = React.lazy(() => import("./UserComponents/TelefoanePage.jsx"));
+const UserCartPage = React.lazy(() => import("./UserComponents/UserCartPage.jsx"));
+const CheckOutPage = React.lazy(() => import("./UserComponents/CheckoutPage.jsx"));
+const AccountDetails = React.lazy(() => import("./UserComponents/Account-details.jsx"));
+const ProductPage = React.lazy(() => import("./UserComponents/ProductPage.jsx"));
+const SuccesPage = React.lazy(() => import("./UserComponents/SuccesPaymentPage.jsx"));
+const SearchResultPage = React.lazy(() => import("./UserComponents/SearchResultPage.jsx"));
+const MainPage = React.lazy(() => import("./AdminComponents/MainPage.jsx"));
+const AdminLoginPage = React.lazy(() => import("./AdminComponents/AdminLogInPage.jsx"));
+const ResetPasswordSucces = React.lazy(() => import("./AdminComponents/ResetPasswordSucces.jsx"));
+const DynamicCategoryPage = React.lazy(() => import("./UserComponents/DynamicCategoryPage.jsx"));
+const AdminPasswordRessetPage = React.lazy(() => import("./AdminComponents/AdminPasswordRessetPage.jsx"));
+const ApprovalReviewsPage = React.lazy(() => import("./AdminComponents/ApprovalReviewsPage.jsx"));
 
 function App() {
   return (
     <Router>
-      <div>
+      <Suspense fallback={<div style={{ padding: "2rem", textAlign: "center" }}>Se încarcă pagina...</div>}>
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<LogInPage />} />
@@ -30,14 +34,14 @@ function App() {
           <Route path="/products/:name" element={<ProductPage />} />
           <Route path="/succes_payment" element={<SuccesPage />} />
           <Route path="/search-result/:text" element={<SearchResultPage />} />
-          <Route path="/admin-panel" element={<MainPage/>} />
+          <Route path="/admin-panel" element={<MainPage />} />
           <Route path="/admin-login-page" element={<AdminLoginPage />} />
           <Route path="/admin/reset-password/:resetToken" element={<AdminPasswordRessetPage />} />
           <Route path="/admin/reset-password/succes" element={<ResetPasswordSucces />} />
           <Route path="/product-category/:category" element={<DynamicCategoryPage />} />
           <Route path="/admin/reviews-approval" element={<ApprovalReviewsPage />} />
         </Routes>
-      </div>
+      </Suspense>
     </Router>
   );
 }

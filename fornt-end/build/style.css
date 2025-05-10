@@ -1,6 +1,41 @@
-body {
-  font-family: "Arimo", serif;
+@font-face {
+  font-family: 'Arimo';
+  src: url('fornt-end/public/Fonts/Arimo-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
 }
+
+@font-face {
+  font-family: 'Arimo';
+  src: url('fornt-end/public/Fonts/Arimo-Bold (1).woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Arimo';
+  src: url('fornt-end/public/Fonts/Arimo-Italic.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Arimo';
+  src: url('fornt-end/public/Fonts/Arimo-BoldItalic.woff2') format('woff2');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+
+body {
+  font-family: 'Arimo', sans-serif;
+}
+
+
 
 html, body {
   overflow-x: hidden;

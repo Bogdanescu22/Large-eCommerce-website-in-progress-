@@ -24,7 +24,6 @@ import sharp from 'sharp';
 import chokidar from 'chokidar';
 import nodemailer from 'nodemailer';
 import { Strategy as FacebookStrategy } from 'passport-facebook';
-import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 

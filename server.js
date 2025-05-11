@@ -18,7 +18,6 @@ import stripe from 'stripe';
 import path from 'path';
 import multer from 'multer';
 import multerS3 from 'multer-s3';
-import aws from 'aws-sdk';
 import { S3Client, PutObjectCommand} from '@aws-sdk/client-s3';
 import sharp from 'sharp';
 import chokidar from 'chokidar';

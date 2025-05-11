@@ -61,7 +61,7 @@ const profilePictureUpload = multer({
   storage: multerS3({
     s3: s3,
     bucket: 'my-app-uploads-devsite',
-    acl: undefined,
+    acl: null,
     key: function (req, file, cb) {
       cb(null, `profile-pictures/${req.params.user_id}-${Date.now()}.webp`);
     }

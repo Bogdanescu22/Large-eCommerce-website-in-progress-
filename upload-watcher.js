@@ -54,11 +54,10 @@ async function uploadFile(filePath) {
     }
 
     const command = new PutObjectCommand({
-      Bucket: process.env.AWS_S3_BUCKET_NAME,
+      Bucket: process.env.AWS_BUCKET_NAME,
       Key: uploadKey,
       Body: fileContent,
       ContentType: contentType,
-      ACL: 'public-read',
     });
 
     await s3.send(command);

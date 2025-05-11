@@ -84,7 +84,6 @@ app.post('/upload-image', memoryUpload.single('file'), async (req, res) => {
       Key: key,
       Body: converted,
       ContentType: 'image/webp',
-      ACL: 'public-read',
     });
 
     await s3.send(command);

@@ -47,7 +47,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 
 const upload = multer()
-const memoryUpload = multer({ storage: multer.memoryStorage() });
+const memoryUpload = multer({
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 50 * 1024 * 1024 } // Permite fișiere de maxim 50MB
+});
+
 
 const s3 = new S3Client({
   region: process.env.AWS_REGION, 
@@ -61,7 +65,6 @@ const profilePictureUpload = multer({
   storage: multerS3({
     s3: s3,
     bucket: 'my-app-uploads-devsite',
-      acl: undefined, 
    key: function (req, file, cb) {
       cb(null, `profile-pictures/${req.params.user_id}-${Date.now()}.webp`);
     }

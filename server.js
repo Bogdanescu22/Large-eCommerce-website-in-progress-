@@ -343,7 +343,7 @@ const {review_stars, description, imageUrl, profile_picture} = req.body
 
 try{
 
-const query = `INSERT INTO reviews_approval (user_id, product_id, review_stars, description, image_url) VALUES ($1, $2, $3, $4, $5) RETURNING *`;
+const query = `INSERT INTO reviews_approval (user_id, product_id, review_stars, description, image_url, profile_picture) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`;
 const values =[user_id, product_id, review_stars, description, imageUrl, profile_picture];
 
 const result= await client.query(query,values);

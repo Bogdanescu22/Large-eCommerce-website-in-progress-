@@ -339,12 +339,12 @@ res.status(500).json({err:"Eroare la obtinerea datelor produsului filtrat", deta
 app.post(`/reviews_approval/:product_id/:user_id`,upload.none(), async(req,res) =>{
 const product_id = req.params.product_id;
 const user_id = req.params.user_id;
-const {review_stars, description} = req.body
+const {review_stars, description, imageUrl, profile_picture} = req.body
 
 try{
 
-const query = `INSERT INTO reviews_approval (user_id, product_id, review_stars, description) VALUES ($1, $2, $3, $4) RETURNING *`;
-const values =[user_id, product_id, review_stars, description];
+const query = `INSERT INTO reviews_approval (user_id, product_id, review_stars, description, image_url) VALUES ($1, $2, $3, $4, $5) RETURNING *`;
+const values =[user_id, product_id, review_stars, description, imageUrl, profile_picture];
 
 const result= await client.query(query,values);
 

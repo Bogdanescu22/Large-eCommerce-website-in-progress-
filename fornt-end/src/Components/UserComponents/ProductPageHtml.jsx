@@ -44,7 +44,7 @@ function ProductPageHtml({ name_product, image_product, stock_product, product_p
     const verifyBoughtProduct = verifyOrder.some((order) => order.product_name === name_product);
     if (!verifyBoughtProduct) return alert("Nu ai cumpărat acest produs!");
   
-    let uploadedImageUrl = "";
+    let imageUrl = "";
   
     // 1. Uploadează imaginea dacă există
     if (reviewImage) {
@@ -57,7 +57,7 @@ function ProductPageHtml({ name_product, image_product, stock_product, product_p
           body: imageForm,
         });
         const uploadData = await uploadRes.json();
-        uploadedImageUrl = uploadData.url; // link-ul de CloudFront
+        imageUrl = uploadData.url; // link-ul de CloudFront
       } catch (error) {
         console.error("❌ Eroare la upload imagine:", error);
         alert("Eroare la urcarea imaginii.");
@@ -70,7 +70,7 @@ function ProductPageHtml({ name_product, image_product, stock_product, product_p
     reviewForm.append("review_stars", starsReviews);
     reviewForm.append("description", description);
     reviewForm.append("profile_picture", userProfilePicture || "");
-    reviewForm.append("image_url", uploadedImageUrl);
+    reviewForm.append("image_url", imageUrl);
   
     try {
       const res = await fetch(`https://api.devsite.cfd/reviews_approval/${product_id}/${user_id}`, {

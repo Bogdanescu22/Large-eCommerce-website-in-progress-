@@ -9,7 +9,7 @@ function ProductPageHtml({ name_product, image_product, stock_product, product_p
   const [hoveredStars, setHoveredStars] = useState(0);
   const [userProfilePicture, setUserProfilePicture] = useState(null);
   const [verifyOrder, setVerifyOrder] = useState("");
-  const [reviewImage, setReviewImage] = useState(null); // va fi un file, nu base64
+  const [reviewImage, setReviewImage] =useState("");
 
   useEffect(() => {
     const getUserId = async () => {

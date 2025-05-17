@@ -71,7 +71,7 @@ function ProductPageHtml({ name_product, image_product, stock_product, product_p
     reviewForm.append("review_stars", starsReviews);
     reviewForm.append("description", description);
     reviewForm.append("profile_picture", userProfilePicture || "");
-    reviewForm.append("image_url", imageUrl);
+    reviewForm.append("imageUrl", imageUrl);
   
     try {
       const res = await fetch(`https://api.devsite.cfd/reviews_approval/${product_id}/${user_id}`, {

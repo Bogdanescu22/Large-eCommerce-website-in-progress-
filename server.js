@@ -363,26 +363,7 @@ res.status(500).json({message:"Eroare la inserarea reviews in reviews_aproval", 
 })
 
 
-app.post(`/reviews_approval/:product_id/:user_id`, async(req,res) =>{
-  const product_id = req.params.product_id;
-  const user_id = req.params.user_id;
-  const {review_stars, description, profile_picture, image_url} = req.body
-  
-  try{
-  
-  const query = `INSERT INTO reviews_approval (user_id, product_id, review_stars, description, profile_picture, image_url) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`;
-  const values =[user_id, product_id, review_stars, description, profile_picture, image_url];
-  
-  const result= await client.query(query,values);
-  
-  res.status(200).json(result.rows);
-  
-  }
-  catch (err){
-  console.error(err);
-  res.status(500).json({message:"Eroare la inserarea reviews in reviews_aproval", details: err.message})
-  }
-  }); 
+
 
 
 

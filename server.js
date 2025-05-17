@@ -77,7 +77,12 @@ app.post('/upload-image', memoryUpload.single('file'), async (req, res) => {
     if (!file) return res.status(400).send('No file uploaded');
 
     const ext = path.extname(file.originalname).toLowerCase();
-    const fileName = path.basename(file.originalname, ext);
+    const fileName = path
+   .basename(file.originalname, ext)
+   .replace(/\s+/g, '-') // înlocuiește spațiile cu -
+   .replace(/[()]/g, '') // elimină parantezele
+   .replace(/[^\w\-]/g, ''); // elimină alte caractere speciale
+
     const key = `uploads/${fileName}.webp`;
 
     // Convertire imagine în WebP

@@ -438,6 +438,7 @@ app.get('/products/:product_id', async(req, res) => {
   })
   
   
+    
   app.get("/category_pages", async (req, res) => {
     try {
       const query = "SELECT * FROM category_pages";

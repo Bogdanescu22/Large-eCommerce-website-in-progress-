@@ -58,6 +58,7 @@ function ProductPageHtml({ name_product, image_product, stock_product, product_p
         });
         const uploadData = await uploadRes.json();
         imageUrl = uploadData.url; // link-ul de CloudFront
+        console.log(imageUrl)
       } catch (error) {
         console.error("❌ Eroare la upload imagine:", error);
         alert("Eroare la urcarea imaginii.");

@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import Header from "../UserComponents/Header";
 import Footer from "./Footer";
 import CardHomePage from "./CardHomePage";
+import { Helmet } from 'react-helmet';
+
 
 const heroBackgrounds = [
   "https://www.ookla.com/s/media/2024/11/iPhone-16-5G-Performance-Header-2024.png",
@@ -33,6 +35,15 @@ function HomePage() {
 
   return (
     <div className="telefoaneHero-container">
+
+     <Helmet>
+      <title>DevSite - Cel mai bun magazin online pentru electronice, haine și accesorii</title>
+      <meta
+        name="description"
+        content="Descoperă produse de calitate la prețuri excelente. Livrare rapidă, oferte speciale și o experiență de cumpărare simplă și sigură pe DevSite."
+      />
+    </Helmet>
+
       <Header />
       <main className="main-content">
         <div className="hero-div">

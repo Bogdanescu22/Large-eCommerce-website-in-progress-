@@ -86,7 +86,7 @@ app.post('/upload-image', memoryUpload.single('file'), async (req, res) => {
     const key = `uploads/${fileName}.webp`;
 
     // Convertire imagine în WebP
-    const converted = await sharp(file.buffer).webp({ quality: 80 }).toBuffer();
+    const converted = await sharp(file.buffer).webp({ quality: 50 }).toBuffer();
 
     const command = new PutObjectCommand({
       Bucket: process.env.AWS_BUCKET_NAME,

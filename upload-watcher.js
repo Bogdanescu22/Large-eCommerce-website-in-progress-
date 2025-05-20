@@ -58,6 +58,7 @@ async function uploadFile(filePath) {
       Key: uploadKey,
       Body: fileContent,
       ContentType: contentType,
+      CacheControl: 'public, max-age=31536000'
     });
 
     await s3.send(command);

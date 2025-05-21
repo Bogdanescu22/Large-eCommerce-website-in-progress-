@@ -64,7 +64,7 @@ function Header() {
 
       <div className={`logo ${menu ? "active" : ""}`}>
         <a href="/">
-          <img src="/Images/Black Circle Icon Business Logo (3).png" width="80" alt="Logo" />
+          <img src="https://d20rvp9abs48mr.cloudfront.net/Images/Black+Circle+Icon+Business+Logo+(3).webp" width="80" alt="Logo" />
         </a>
       </div>
 
@@ -83,14 +83,14 @@ function Header() {
         {/* Buton de căutare */}
         <button className={`searchButton ${menu ? "active" : ""}`} onClick={() => setShowSearch(true)}>
           <div className="magnifierDiv">
-            <img src="/Images/[CITYPNG.COM]Magnifying Glass, Search White Icon Transparent PNG - 2000x2000.png" width="30" />
+            <img src="https://d20rvp9abs48mr.cloudfront.net/Images/%5BCITYPNG.COM%5DMagnifying+Glass%2C+Search+White+Icon+Transparent+PNG+-+2000x2000.webp" width="30" />
           </div>
         </button>
 
         {/* Buton de coș */}
         <button className={`cartButton ${menu ? "active" : ""}`} onClick={() => (window.location.href = "/cart")}>
           <div className="cartDiv">
-            <img className="cartButton-image" src="/Images/_Pngtree_vector_shopping_cart_icon_4142519-removebg-preview (1).png" width="40" />
+            <img className="cartButton-image" src="https://d20rvp9abs48mr.cloudfront.net/Images/_Pngtree_vector_shopping_cart_icon_4142519-removebg-preview+(1).webp" width="40" />
             {cartCount > 0 && <span className="cart-count">{cartCount}</span>}
           </div>
         </button>

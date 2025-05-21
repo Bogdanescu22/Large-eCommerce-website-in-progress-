@@ -6,9 +6,9 @@ import { Helmet } from 'react-helmet';
 
 
 const heroBackgrounds = [
-  "https://www.ookla.com/s/media/2024/11/iPhone-16-5G-Performance-Header-2024.png",
-  "https://images.mlssoccer.com/image/private/t_editorial_landscape_8_desktop_mobile/mls/ezu7nroj7ucmx78qe3su.jpg",
-  "https://www.apple.com/newsroom/images/product/imac/standard/apple_new-imac-spring21_hero_04202021_Full-Bleed-Image.jpg.large.jpg"
+  "https://d20rvp9abs48mr.cloudfront.net/Images/iPhone-16-5G-Performance-Header-2024.webp",
+  "https://d20rvp9abs48mr.cloudfront.net/Images/ezu7nroj7ucmx78qe3su.webp",
+  "https://d20rvp9abs48mr.cloudfront.net/Images/apple_new-imac-spring21_hero_04202021_Full-Bleed-Image.jpg.large.webp"
 ];
 
 function HomePage() {

@@ -1,5 +1,7 @@
 import React,{useEffect, useState} from "react";
 import AdminHeader from "./AdminHeader";
+import { Helmet } from "react-helmet"; // ✅ Adaugă acest import
+
 
 const MainPage = () => {
 
@@ -7,6 +9,11 @@ const MainPage = () => {
 
 return(
 <div className="admin-main-page">
+<Helmet>
+              <title>Admin Login - DevSite</title>
+              <meta name="robots" content="noindex, nofollow" />
+            </Helmet>
+<AdminHeader />
 <AdminHeader />
 <main className="admin-main-panel-page">
 <div>

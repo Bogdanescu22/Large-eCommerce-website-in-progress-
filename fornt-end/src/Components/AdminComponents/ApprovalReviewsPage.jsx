@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import AdminHeader from "./AdminHeader";
 import ApprovalReviewsCard from "../AdminComponents/ApprovalReviewCards";
+import { Helmet } from "react-helmet"; // ✅ Adaugă acest import
+
 
 const ApprovalReviewsPage = () => {
   const [review, setReview] = useState([]);
@@ -79,6 +81,10 @@ const ApprovalReviewsPage = () => {
 
   return (
     <div className="admin-approval-reviews-page">
+      <Helmet>
+                    <title>Admin Login - DevSite</title>
+                    <meta name="robots" content="noindex, nofollow" />
+      </Helmet>
       <AdminHeader />
       <main className="admin-approval-reviews-panel-main">
         <h1>Reviews Approval</h1>

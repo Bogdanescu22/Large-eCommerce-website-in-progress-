@@ -27,7 +27,7 @@ const addUser = async (user) => {
   const { googleId, facebookId, displayName, email } = user;
   try {
     const res = await client.query(
-      "INSERT INTO users (google_id, facebook_id, display_name, email) VALUES ($1, $2, $3, $4) RETURNING *",
+      "INSERT INTO users (googleid, facebook_id, display_name, email) VALUES ($1, $2, $3, $4) RETURNING *",
       [googleId, facebookId, displayName, email]
     );
     return res.rows[0]; // Returnează utilizatorul adăugat

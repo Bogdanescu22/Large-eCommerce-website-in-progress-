@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import AdminHeader from "./AdminHeader";
 import { useParams, useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet"; // ✅ Adaugă acest import
+
 
 const AdminPasswordRessetPage = () => {
   const [newPassword, setNewPassword] = useState("");
@@ -29,6 +31,10 @@ const AdminPasswordRessetPage = () => {
 
   return (
     <div className="admin-password-reset-page">
+      <Helmet>
+              <title>Admin Login - DevSite</title>
+              <meta name="robots" content="noindex, nofollow" />
+            </Helmet>
       <AdminHeader />
       <main>
         <div className="admin-password-reset-page-form-div">

@@ -1,5 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router";
+import { Helmet } from "react-helmet"; // ✅ Adaugă acest import
+
 
 
 
@@ -9,6 +11,10 @@ const navigate = useNavigate();
 
 return(
 <div className="reset-password-succes-page">
+<Helmet>
+              <title>Admin Login - DevSite</title>
+              <meta name="robots" content="noindex, nofollow" />
+</Helmet>
 <main>
 <div className="reset-password-succes-page-form-div">
 <div className="reset-password-succes-page-form-div-animation"></div>

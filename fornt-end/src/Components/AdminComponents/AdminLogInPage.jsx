@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { Helmet } from "react-helmet"; // ✅ Adaugă acest import
+
 
 const LoginFormDiv = ({ setEmail, setPassword, Login, setForgotForm }) => {
   return (
@@ -129,6 +131,10 @@ const AdminLoginPage = () => {
 
   return (
     <div className="admin-login-page">
+       <Helmet>
+        <title>Admin Login - DevSite</title>
+        <meta name="robots" content="noindex, nofollow" />
+      </Helmet>
       <main className="admin-login-page-main">
         {!forgotForm ? (
           <LoginFormDiv 

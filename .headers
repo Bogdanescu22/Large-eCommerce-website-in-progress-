@@ -1,4 +1,3 @@
-# .headers
 /*
   Content-Security-Policy: default-src 'self';
   X-Frame-Options: SAMEORIGIN

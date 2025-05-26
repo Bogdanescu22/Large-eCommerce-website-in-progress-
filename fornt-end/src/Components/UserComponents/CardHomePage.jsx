@@ -11,7 +11,7 @@ return (
       <img src={props.imgURL} />
       <div className="overlay-title"><h2>{props.title}</h2></div>
     </div>
-    <button onClick={() => navigate(`/product-category/${props.category_name}`)}>Vezi mai multe</button>
+    <button onClick={() => navigate(`/${props.category_name}`)}>Vezi mai multe</button>
   </div>
   )
 }

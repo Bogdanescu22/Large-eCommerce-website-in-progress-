@@ -6,6 +6,7 @@ function CardTelefoanePage({ productId, imgURL, name, price, category }) {
   const [cart, setCart] = useState([]); // Stocăm produsele adăugate în coș
   const navigate = useNavigate(); // Inițializăm navigate
 
+
   // Obținem userId la montarea componentei
   useEffect(() => {
     const getUserId = async () => {
@@ -89,7 +90,7 @@ function CardTelefoanePage({ productId, imgURL, name, price, category }) {
       />
       <h2
         className="phone-card-title"
-        onClick={() => navigate(`/products/${name}`)}
+        onClick={() => navigate(`/${category}/${name}`)}
         style={{ cursor: "pointer" }}
       >
         {name}

@@ -15,7 +15,7 @@ return(
         className="phone-card-image-SearchPage"
         src={imgURL}
         alt={name}
-        onClick={() => navigate(`/products/${name}`)} // Navighează fără refresh
+        onClick={() => navigate(`/:category/${name}`)} // Navighează fără refresh
         style={{ cursor: "pointer" }} // Schimbăm cursorul la hover
       />
       <div className="title-search-div">

@@ -29,7 +29,7 @@ function App() {
           <Route path="/cart" element={<UserCartPage />} />
           <Route path="/checkout" element={<CheckOutPage />} />
           <Route path="/account-details" element={<AccountDetails />} />
-          <Route path="/products/:name" element={<ProductPage />} />
+          <Route path="/:category/:name" element={<ProductPage />} />
           <Route path="/succes_payment" element={<SuccesPage />} />
           <Route path="/search-result/:text" element={<SearchResultPage />} />
           <Route path="/admin-panel" element={<MainPage />} />

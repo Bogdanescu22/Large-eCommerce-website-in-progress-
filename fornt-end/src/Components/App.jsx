@@ -1,5 +1,7 @@
 import React, { Suspense } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import "../i18n";
+
 
 import HomePage from "./UserComponents/Homepage.jsx";
 import LogInPage from "./UserComponents/LogIn.jsx";
@@ -18,12 +20,15 @@ const DynamicCategoryPage = React.lazy(() => import("./UserComponents/DynamicCat
 const AdminPasswordRessetPage = React.lazy(() => import("./AdminComponents/AdminPasswordRessetPage.jsx"));
 const ApprovalReviewsPage = React.lazy(() => import("./AdminComponents/ApprovalReviewsPage.jsx"));
 
+
 function App() {
   return (
     <Router>
       <Suspense fallback={<div style={{ padding: "2rem", textAlign: "center" }}>Se încarcă pagina...</div>}>
         <Routes>
-          <Route path="/" element={<HomePage />} />
+          <Route path="/en" element={<HomePage />} />
+          <Route path="/ro" element={<HomePage />} />
+          <Route path="/fr" element={<HomePage />} />
           <Route path="/login" element={<LogInPage />} />
           <Route path="/telefoane" element={<TelefoanePage />} />
           <Route path="/cart" element={<UserCartPage />} />
